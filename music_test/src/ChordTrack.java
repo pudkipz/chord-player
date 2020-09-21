@@ -1,9 +1,16 @@
 import javax.sound.midi.*;
 
+/**
+ * Adds features to Track through delegation.
+ */
 public class ChordTrack {
 
     Track track;
 
+    /**
+     * Initializes with Track track.
+     * @param track the track to be delegated.
+     */
     public ChordTrack(Track track) {
         this.track = track;
         init();
@@ -27,6 +34,10 @@ public class ChordTrack {
         return null;
     }*/
 
+    /**
+     * Use this if you need to add MidiEvents to the track externally.
+     * @param event event to be added.
+     */
     public void add(MidiEvent event) {
         track.add(event);
     }
@@ -69,6 +80,12 @@ public class ChordTrack {
         }
     }*/
 
+    /**
+     * @param n     midi value for the note to be added
+     * @param t     when to play the note
+     * @param l     length of the note
+     * @throws InvalidMidiDataException if method calls throw exceptions
+     */
     public void playNote(int n, long t, long l) throws InvalidMidiDataException {
         try {
             track.add(noteOnMessage(n, t));
@@ -80,9 +97,9 @@ public class ChordTrack {
 
     /**
      *
-     * @param root
-     * @param t
-     * @param l
+     * @param root midi value for the root note of the chord
+     * @param t when to play the chord
+     * @param l how long to play the chord
      * @param chord adds notes at the given intervals, counted from root.
      * @throws InvalidMidiDataException
      */
@@ -97,6 +114,9 @@ public class ChordTrack {
         }
     }
 
+    /**
+     * Presumably does meta stuff to set the ending for the track. Should probably be run before playing the track.
+     */
     public void setEnd() {
         try {
             MetaMessage mt = new MetaMessage();
@@ -109,6 +129,9 @@ public class ChordTrack {
         }
     }
 
+    /**
+     * Initializes the track.
+     */
     private void init() {
         try {
             //****  General MIDI sysex -- turn on General MIDI sound set  ****

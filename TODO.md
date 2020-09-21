@@ -25,3 +25,5 @@
     probably not going to happen.
 
 - How should inversions and playing in different octaves be treated?
+
+- Think of better names for playNote(...) and playChord(...) (since playing isn't what we're doing here).
