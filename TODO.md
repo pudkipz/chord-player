@@ -23,3 +23,5 @@
     
     One problem with this approach is if we want to have, for instance, all of b2, 2 and b3. On the other hand, this is
     probably not going to happen.
+
+- How should inversions and playing in different octaves be treated?

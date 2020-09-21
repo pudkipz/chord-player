@@ -1,5 +1,7 @@
 /**
  * Enum for easy access to the midi value of notes.
+ *
+ * For now, obsolete. Do not use! Instead use the constants in Note.java.
  */
 
 public enum Note {

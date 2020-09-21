@@ -67,8 +67,8 @@ public class Main {
             playNote(track, Note.G, 20, 120);
             playNote(track, Note.B, 5, 120);*/
 
-            playChord(track, Note.C, 1, 60, MAJOR_CHORD);
-            playChord(track, Note.C, 61, 60, MINOR_CHORD);
+            playChord(track, Notes.C, 1, 60, MAJOR_CHORD);
+            playChord(track, Notes.A, 61, 60, MINOR_CHORD);
 
 
             //****  set end of track (meta event) 19 ticks later  ****
@@ -98,23 +98,23 @@ public class Main {
 
     }
 
-    private static MidiEvent noteOnMessage(Note n, long t) throws InvalidMidiDataException {
+    /*private static MidiEvent noteOnMessage(Note n, long t) throws InvalidMidiDataException {
         try {
             return noteOnMessage(n.midiValue(), t);
         } catch (Exception e) {
             System.out.println("Exception caught " + e.toString());
         }
         return null;
-    }
+    }*/
 
-    private static MidiEvent noteOffMessage(Note n, long t) throws InvalidMidiDataException {
+    /*private static MidiEvent noteOffMessage(Note n, long t) throws InvalidMidiDataException {
         try {
             return noteOffMessage(n.midiValue(), t);
         } catch (Exception e) {
             System.out.println("Exception caught " + e.toString());
         }
         return null;
-    }
+    }*/
 
     private static MidiEvent noteOnMessage(int n, long t) throws InvalidMidiDataException {
         try {
@@ -145,14 +145,14 @@ public class Main {
      * @param l     length of note
      * @throws InvalidMidiDataException if method calls throw exceptions
      */
-    private static void playNote(Track track, Note n, long t, long l) throws InvalidMidiDataException {
+    /*private static void playNote(Track track, Note n, long t, long l) throws InvalidMidiDataException {
         try {
             track.add(noteOnMessage(n, t));
             track.add(noteOffMessage(n, t + l));
         } catch (Exception e) {
             System.out.println("Exception caught " + e.toString());
         }
-    }
+    }*/
 
     private static void playNote(Track track, int n, long t, long l) throws InvalidMidiDataException {
         try {
@@ -172,10 +172,10 @@ public class Main {
      * @param chord adds notes at the given intervals, counted from root.
      * @throws InvalidMidiDataException
      */
-    private static void playChord(Track track, Note root, long t, long l, int[] chord) throws InvalidMidiDataException {
+    private static void playChord(Track track, int root, long t, long l, int[] chord) throws InvalidMidiDataException {
         try {
             for (int i : chord) {
-                playNote(track, root.midiValue() + i, t, l);
+                playNote(track, root + i, t, l);
             }
 
         } catch (Exception e) {
