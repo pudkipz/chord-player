@@ -6,7 +6,7 @@ public class Main {
 
     // public static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
     public static final int[] MAJOR_CHORD = {0, 4, 7};
-    public static final int[] MINOR_CHORD = {0, 3, 8};
+    public static final int[] MINOR_CHORD = {0, 3, 7};
 
 
     public static void main(String[] args) throws Exception {
