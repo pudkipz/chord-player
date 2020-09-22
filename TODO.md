@@ -31,6 +31,8 @@ The contents of this file are my own personal records of what I'm thinking about
       However, it seems to only focus on the playing capabilities, and not the ability to create a midi file structure
       thingy (which the other library could). So it seems that I will have to do that myself. I should consider finding
       a more appropriate library for this.~~
+
+- I have found another library to aid me in my quest: https://github.com/LeffelMania/android-midi-lib.
       
 - Instead of having chords as an array of intervals, we could have a chord be an array with, for example, every scale
     degree and an indicator telling whether it is sharp (#), flat (b), unchanged (1), or quiet (0). Cmin7 could then
