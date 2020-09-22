@@ -1,8 +1,10 @@
 // import java.io.File;
 
-import javax.sound.midi.*;
+//import javax.sound.midi.*;
 
+/*
 public class Main {
+
 
     private static Sequence sequence;
 
@@ -24,7 +26,7 @@ public class Main {
             /*playNote(track, Note.C, 1, 120);
             playNote(track, Note.E, 25, 120);
             playNote(track, Note.G, 20, 120);
-            playNote(track, Note.B, 5, 120);*/
+            playNote(track, Note.B, 5, 120);
 
             track.playChord(Notes.C, 1, 60, Chord.MAJOR);
             track.playChord(Notes.E, 61, 60, Chord.MINOR);
@@ -58,3 +60,4 @@ public class Main {
 
 
 }
+*/

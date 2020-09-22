@@ -1,19 +1,40 @@
-import javax.sound.midi.*;
+package com.example.chordplayer.util;
+
+import com.leff.midi.MidiTrack;
 
 /**
  * Adds features to Track through delegation.
  */
-public class ChordTrack {
+public class MidiHandler {
 
-    Track track;
+    private final int DEFAULT_VELOCITY = 60;
+
+    MidiTrack midiTrack;
 
     /**
      * Initializes with Track track.
-     * @param track the track to be delegated.
      */
-    public ChordTrack(Track track) {
-        this.track = track;
-        init();
+    public MidiHandler() {
+        midiTrack = new MidiTrack();
+
+        final int NOTE_COUNT = 80;
+
+        for(int i = 0; i < NOTE_COUNT; i++)
+        {
+            int channel = 0;
+            int pitch = 1 + i;
+            int velocity = 100;
+            long tick = i * 480;
+            long duration = 120;
+
+            midiTrack.insertNote(channel, pitch, velocity, tick, duration);
+        }
+
+        // init();
+    }
+
+    public int getSize() {
+        return midiTrack.getSize();
     }
 
     /*private static MidiEvent noteOnMessage(Note n, long t) throws InvalidMidiDataException {
@@ -34,15 +55,7 @@ public class ChordTrack {
         return null;
     }*/
 
-    /**
-     * Use this if you need to add MidiEvents to the track externally.
-     * @param event event to be added.
-     */
-    public void add(MidiEvent event) {
-        track.add(event);
-    }
-
-    private MidiEvent noteOnMessage(int n, long t) throws InvalidMidiDataException {
+/*    private MidiEvent noteOnMessage(int n, long t) throws InvalidMidiDataException {
         try {
             ShortMessage midiMessage = new ShortMessage();
             midiMessage.setMessage(ShortMessage.NOTE_ON, n, 0x60);
@@ -51,9 +64,9 @@ public class ChordTrack {
             System.out.println("Exception caught " + e.toString());
         }
         return null;
-    }
+    }*/
 
-    private MidiEvent noteOffMessage(int n, long t) throws InvalidMidiDataException {
+/*    private MidiEvent noteOffMessage(int n, long t) throws InvalidMidiDataException {
         try {
             ShortMessage midiMessage = new ShortMessage();
             midiMessage.setMessage(ShortMessage.NOTE_OFF, n, 0x60);
@@ -62,10 +75,10 @@ public class ChordTrack {
             System.out.println("Exception caught " + e.toString());
         }
         return null;
-    }
+    }*/
 
     /**
-    // * @param track add note to this track
+     // * @param track add note to this track
      * @param n     which note to add
      * @param t     when to play the note
      * @param l     length of note
@@ -81,43 +94,32 @@ public class ChordTrack {
     }*/
 
     /**
-     * @param n     midi value for the note to be added
-     * @param t     when to play the note
-     * @param l     length of the note
-     * @throws InvalidMidiDataException if method calls throw exceptions
+     * @param n midi value for the note to be added
+     * @param t when to play the note
+     * @param l length of the note
      */
-    public void playNote(int n, long t, long l) throws InvalidMidiDataException {
-        try {
-            track.add(noteOnMessage(n, t));
-            track.add(noteOffMessage(n, t + l));
-        } catch (Exception e) {
-            System.out.println("Exception caught " + e.toString());
-        }
+    public void insertNote(int n, long t, long l) {
+
+        //int channel, int pitch, int velocity, long tick, long duration
+        midiTrack.insertNote(1, n, DEFAULT_VELOCITY, t, l);
     }
 
     /**
-     *
-     * @param root midi value for the root note of the chord
-     * @param t when to play the chord
-     * @param l how long to play the chord
+     * @param root  midi value for the root note of the chord
+     * @param t     when to play the chord
+     * @param l     how long to play the chord
      * @param chord adds notes at the given intervals, counted from root.
-     * @throws InvalidMidiDataException
      */
-    public void playChord(int root, long t, long l, int[] chord) throws InvalidMidiDataException {
-        try {
-            for (int i : chord) {
-                playNote(root + i, t, l);
-            }
-
-        } catch (Exception e) {
-            System.out.println("Exception caught " + e.toString());
+    public void playChord(int root, long t, long l, int[] chord) {
+        for (int i : chord) {
+            insertNote(root + i, t, l);
         }
     }
 
     /**
      * Presumably does meta stuff to set the ending for the track. Should probably be run before playing the track.
      */
-    public void setEnd() {
+    /*public void setEnd() {
         try {
             MetaMessage mt = new MetaMessage();
             byte[] bet = {}; // empty array
@@ -127,12 +129,12 @@ public class ChordTrack {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
+    }*/
 
     /**
      * Initializes the track.
      */
-    private void init() {
+    /*private void init() {
         try {
             //****  General MIDI sysex -- turn on General MIDI sound set  ****
             byte[] b = {(byte) 0xF0, 0x7E, 0x7F, 0x09, 0x01, (byte) 0xF7};
@@ -174,6 +176,5 @@ public class ChordTrack {
             track.add(midiEvent);
         } catch (Exception e) {
             System.out.println(e);
-        }
-    }
+        }*/
 }

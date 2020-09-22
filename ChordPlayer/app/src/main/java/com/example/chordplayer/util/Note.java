@@ -1,3 +1,5 @@
+package com.example.chordplayer.util;
+
 /**
  * Enum for easy access to the midi value of notes.
  *

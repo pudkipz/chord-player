@@ -1,3 +1,5 @@
+package com.example.chordplayer.util;
+
 public class Notes {
     public static final int C  = (0x3C);
     public static final int Db = (0x3D);
