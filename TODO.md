@@ -2,11 +2,15 @@
 
 The contents of this file are my own personal records of what I'm thinking about while I'm working on this project.
 
+## The point at which I am currently:
+
+(This is so that I can quickly recall what I was working on last.)
+
+I managed to get MidiProcessor to dispatch events to MidiAdapter when pressing a button. However, the content of
+the track looks strange, and it isn't playing any sound.
+
 ## Things that should be done:
 
-- ~~Move chord arrays into a constants file.~~
-- ~~Move notes into a constants file, thus removing the Note enum. This should also remove the need for overloading.~~
-- ~~Research how removing MidiEvents from a Track works.~~
 - Refactor things from FirstActivity into some kind of custom MidiDriver with scheduling capabilities. Also refactor
     constants to as it were before Android stuff was implemented.
   - ~~Step 1: I found a suitable library to help me with this.~~
@@ -46,3 +50,11 @@ The contents of this file are my own personal records of what I'm thinking about
 - How should inversions and playing in different octaves be treated?
 
 - ~~Think of better names for playNote(...) and playChord(...) (since playing isn't what we're doing here).~~
+
+## Things put on ice:
+
+## Things that aren't relevant anymore:
+
+- ~~Move chord arrays into a constants file.~~
+- ~~Move notes into a constants file, thus removing the Note enum. This should also remove the need for overloading.~~
+- ~~Research how removing MidiEvents from a Track works.~~

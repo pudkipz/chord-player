@@ -3,6 +3,7 @@ package com.example.chordplayer.util;
 import android.util.Log;
 
 import com.leff.midi.MidiFile;
+import com.leff.midi.MidiTrack;
 import com.leff.midi.event.ChannelEvent;
 import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOff;
@@ -19,20 +20,36 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     private MidiDriver midiDriver;
     private MidiProcessor midiProcessor;
+    //private MidiTrack track;
 
     public MidiAdapter() {
 
-        midiDriver = new MidiDriver();
-        midiProcessor = new MidiProcessor();
 
-        midiProcessor.registerEventListener(this, ChannelEvent.class);
+
+        midiDriver = new MidiDriver();
+        //midiProcessor = new MidiProcessor(midiFile);
+
+
+
+        midiDriver.setVolume(80);
+        //midiDriver.setOnMidiStartListener(this);
+    }
+
+    public void playTrack(MidiTrack track) {
+        System.out.println(track.getEvents().toString());
+        MidiFile midiFile = new MidiFile();
+        midiFile.addTrack(track);
+
+        midiProcessor = new MidiProcessor(midiFile);
+        midiProcessor.registerEventListener(this, MidiEvent.class);
+        midiProcessor.start();
     }
 
 // leff midi
 
     @Override
     public void onStart(boolean fromBeginning) {
-        midiDriver.setOnMidiStartListener(this);
+
     }
 
     @Override
@@ -42,10 +59,10 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     @Override
     public void onStop(boolean finished) {
-
     }
 
     private byte[] eventToByteArray(MidiEvent event) {
+        System.out.println("hejjjjjjjjjjjjjjjjjjjjj");
         byte[] b = new byte[3];;
 
         if (event.getClass() == NoteOn.class) {

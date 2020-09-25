@@ -9,13 +9,17 @@ public class MidiHandler {
 
     private final int DEFAULT_VELOCITY = 60;
 
-    MidiTrack midiTrack;
+    private MidiTrack midiTrack;
+    private MidiAdapter adapter;
 
     /**
      * Initializes with Track track.
      */
     public MidiHandler() {
         midiTrack = new MidiTrack();
+
+        midiTrack.insertNote(1, 1, 60, 1, 60);
+        midiTrack.insertNote(1, 5, 60, 60, 60);
 
         final int NOTE_COUNT = 80;
 
@@ -30,11 +34,17 @@ public class MidiHandler {
             midiTrack.insertNote(channel, pitch, velocity, tick, duration);
         }
 
+        adapter = new MidiAdapter();
+
         // init();
     }
 
     public int getSize() {
         return midiTrack.getSize();
+    }
+
+    public void playTrack() {
+        adapter.playTrack(midiTrack);
     }
 
     /*private static MidiEvent noteOnMessage(Note n, long t) throws InvalidMidiDataException {
@@ -102,6 +112,7 @@ public class MidiHandler {
 
         //int channel, int pitch, int velocity, long tick, long duration
         midiTrack.insertNote(1, n, DEFAULT_VELOCITY, t, l);
+        //adapter.playTrack();
     }
 
     /**

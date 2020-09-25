@@ -54,9 +54,17 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.btn_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                midiHandler.insertNote(0x3C, 1, 60);
+                //midiHandler.insertNote(0x3C, 1, 60);
+                midiHandler.playTrack();
             }
         });
+
+        /*view.findViewById(R.id.btn_play).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                midiHandler.playTrack();
+            }
+        });*/
     }
 
     private void noteSequence() {
