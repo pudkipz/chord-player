@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.leff.midi.MidiFile;
 import com.leff.midi.MidiTrack;
-import com.leff.midi.event.ChannelEvent;
 import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
@@ -24,18 +23,22 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     public MidiAdapter() {
 
-
-
         midiDriver = new MidiDriver();
         //midiProcessor = new MidiProcessor(midiFile);
-
-
 
         midiDriver.setVolume(80);
         //midiDriver.setOnMidiStartListener(this);
     }
 
+
+    /**
+     * Plays the provided track.
+     * @param track
+     */
     public void playTrack(MidiTrack track) {
+
+        midiDriver.start();
+
         System.out.println(track.getEvents().toString());
         MidiFile midiFile = new MidiFile();
         midiFile.addTrack(track);
@@ -62,7 +65,6 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     }
 
     private byte[] eventToByteArray(MidiEvent event) {
-        System.out.println("hejjjjjjjjjjjjjjjjjjjjj");
         byte[] b = new byte[3];;
 
         if (event.getClass() == NoteOn.class) {
@@ -87,27 +89,4 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     public void onMidiStart() {
         Log.d(this.getClass().getName(), "onMidiStart()");
     }
-
-/*    @Override
-    public void onResume() {
-        super.onResume();
-        midiDriver.start();
-
-        // Get the configuration.
-        int[] config = midiDriver.config();
-
-        // Print out the details.
-        Log.d(this.getClass().getName(), "maxVoices: " + config[0]);
-        Log.d(this.getClass().getName(), "numChannels: " + config[1]);
-        Log.d(this.getClass().getName(), "sampleRate: " + config[2]);
-        Log.d(this.getClass().getName(), "mixBufferSize: " + config[3]);
-    }*/
-
-/*    @Override
-    public void onPause() {
-        super.onPause();
-        midiDriver.stop();
-    }*/
-
-
 }

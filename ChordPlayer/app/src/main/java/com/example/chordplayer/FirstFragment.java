@@ -58,18 +58,5 @@ public class FirstFragment extends Fragment {
                 midiHandler.playTrack();
             }
         });
-
-        /*view.findViewById(R.id.btn_play).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                midiHandler.playTrack();
-            }
-        });*/
     }
-
-    private void noteSequence() {
-
-    }
-
-
 }
