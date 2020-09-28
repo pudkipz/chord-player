@@ -14,12 +14,17 @@ public class MidiHandler {
     private MidiTrack midiTrack;
     private MidiAdapter adapter;
     private ArrayList<Chord> listTrack; // TODO: replace this and midiTrack with your own implementation of a track.
+    private ArrayList<MidiHandlerListener> listeners;
 
     /**
      * Initializes with Track track.
      */
     public MidiHandler() {
         init();
+    }
+
+    public void register(MidiHandlerListener listener) {
+        listeners.add(listener);
     }
 
     public String getVisualTrack() {
@@ -59,6 +64,8 @@ public class MidiHandler {
      */
     public void insertNote(int n, long t, long l) {
 
+        adapter.stop();
+
         //int channel, int pitch, int velocity, long tick, long duration
         midiTrack.insertNote(1, n, DEFAULT_VELOCITY, t, l);
     }
@@ -75,6 +82,22 @@ public class MidiHandler {
         }
 
         listTrack.add(new Chord(root, chord));
+        notifyUpdateTrack();
+    }
+
+    public void insertChord(int root, long l, int[] chord) {
+        long t = midiTrack.getLengthInTicks();
+        insertChord(root, t, l, chord);
+    }
+
+    public void insertChord(int root, int[] chord) {
+        insertChord(root, 1000, chord);
+    }
+
+    private void notifyUpdateTrack() {
+        for (MidiHandlerListener l : listeners) {
+            l.onUpdateTrack();
+        }
     }
 
     /**
@@ -84,11 +107,12 @@ public class MidiHandler {
         midiTrack = new MidiTrack();
         adapter = new MidiAdapter();
         listTrack = new ArrayList<>();
+        listeners = new ArrayList<>();
 
-        insertChord(Note.C.getMidiValue(), 0, 1000, Chord.MAJOR);
-        insertChord(Note.G.getMidiValue(), 1000, 1000, Chord.MAJOR);
-        insertChord(Note.A.getMidiValue(), 2000, 1000, Chord.MINOR);
-        insertChord(Note.F.getMidiValue(), 3000, 1000, Chord.MAJOR);
+        insertChord(Note.C.getMidiValue(), Chord.MAJOR);
+        insertChord(Note.G.getMidiValue(), Chord.MAJOR);
+        insertChord(Note.A.getMidiValue(), Chord.MINOR);
+        insertChord(Note.F.getMidiValue(), Chord.MAJOR);
 
 
         //midiTrack.insertNote(0, Notes.C, 60, 480, 120);
