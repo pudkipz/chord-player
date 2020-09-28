@@ -1,29 +1,25 @@
 # TODO
 
 The contents of this file are my own personal records of what I'm thinking about while I'm working on this project.
+It can also be seen as a messy scrum-wannabe thing.
 
 ## The point at which I am currently:
 
 (This is so that I can quickly recall what I was working on last.)
 
-I think I found the culprit! Apparently I was using the wrong channel when writing to mididriver, and now somehow it
-    plays the track when pressing the button, as it should. Next I should start creating a new constants file for
-    the notes and make sure that chords can be played.
+A predetermined chord can now be added to the track. I should start looking into how to remove then as well. This
+may prove to be more difficult than I think (see point under Things that should be considered).
 
 ## Things that should be done:
 
 - Add some kind of UI.
     - ~~Step 1: being able to play a predetermined track.~~
-    - Step 2: being able to add and remove predetermined chords.
+    - ~~Step 2: being able to add~~ and remove predetermined chords.
     - Step 3: having a visual representation of the current track (see another point).
     - Step 4: being able to change the root of the chord that's being added.
     - Step 5: being able to change the colour of the chord that's being added.
     
     At this point, a new plan should be made.
-
-- Creating a visual representation:
-    - Create a layout for this.
-    - Find a way to convert from MidiTrack to actual chord names etc.
 
 ## Things that should be considered:
 
@@ -37,6 +33,11 @@ I think I found the culprit! Apparently I was using the wrong channel when writi
     probably not going to happen.
 
 - How should inversions and playing in different octaves be treated?
+
+- I might need a custom class to hold the MidiTrack, so that I can easily access both the visual and internal
+    representations of the track, since it's inefficient to have to go through the events and look for NoteOn and NoteOff
+    events. This should also make tempo related things easier, although I should also look into how the library treats
+    such things. Although I'm still unsure of how to remove chords.
 
 
 
@@ -68,3 +69,7 @@ I think I found the culprit! Apparently I was using the wrong channel when writi
         - I have found another library to aid me in my quest: https://github.com/LeffelMania/android-midi-lib.
 
 - ~~Think of better names for playNote(...) and playChord(...) (since playing isn't what we're doing here).~~
+
+- Creating a visual representation:
+    - Create a layout for this.
+    - Find a way to convert from MidiTrack to actual chord names etc.
