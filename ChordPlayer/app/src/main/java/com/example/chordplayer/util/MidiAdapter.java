@@ -19,7 +19,6 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     private MidiDriver midiDriver;
     private MidiProcessor midiProcessor;
-    //private MidiTrack track;
 
     public MidiAdapter() {
 
@@ -33,6 +32,7 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     /**
      * Plays the provided track.
+     *
      * @param track
      */
     public void playTrack(MidiTrack track) {
@@ -75,7 +75,8 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     }
 
     private byte[] eventToByteArray(MidiEvent event) {
-        byte[] b = new byte[3];;
+        byte[] b = new byte[3];
+        ;
 
         if (event.getClass() == NoteOn.class) {
             NoteOn e = (NoteOn) event;

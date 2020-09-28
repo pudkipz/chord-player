@@ -15,11 +15,15 @@ I think I found the culprit! Apparently I was using the wrong channel when writi
 - Add some kind of UI.
     - ~~Step 1: being able to play a predetermined track.~~
     - Step 2: being able to add and remove predetermined chords.
-    - Step 3: having a visual representation of the current track.
+    - Step 3: having a visual representation of the current track (see another point).
     - Step 4: being able to change the root of the chord that's being added.
     - Step 5: being able to change the colour of the chord that's being added.
     
     At this point, a new plan should be made.
+
+- Creating a visual representation:
+    - Create a layout for this.
+    - Find a way to convert from MidiTrack to actual chord names etc.
 
 ## Things that should be considered:
 

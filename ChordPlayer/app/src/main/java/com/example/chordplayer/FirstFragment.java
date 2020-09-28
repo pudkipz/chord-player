@@ -1,31 +1,26 @@
 package com.example.chordplayer;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.chordplayer.util.MidiHandler;
+import com.example.chordplayer.util.MidiHandlerListener;
 
-public class FirstFragment extends Fragment {
-
-    /**
-     * Command value for Note Off message (0x80, or 128).
-     */
-    public static final byte NOTE_OFF = (byte) 0x80;  // 128
-
-    /**
-     * Command value for Note On message (0x90, or 144).
-     */
-    public static final byte NOTE_ON = (byte) 0x90;  // 144
-
-    public static final int DEFAULT_VELOCITY = 0x60;
+public class FirstFragment extends Fragment  implements MidiHandlerListener {
 
     private MidiHandler midiHandler;
+
+    private LinearLayout linearLayout_chords;
+    private TextView chordBoxText;
 
     @Override
     public View onCreateView(
@@ -55,5 +50,25 @@ public class FirstFragment extends Fragment {
                 midiHandler.playButtonPressed();
             }
         });
+
+        linearLayout_chords = view.findViewById(R.id.linearLayout_chords);
+        chordBoxText = new TextView(this.getContext());
+        // chordBoxText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        // TODO: ensure that chordBoxText is the size of the parent scrollview. the above apparently doesn'chordBoxText work?
+        chordBoxText.setSingleLine(true);
+        chordBoxText.setTextSize(24);
+        chordBoxText.setGravity(Gravity.CENTER);
+        setChordBoxText();
+
+    }
+
+    private void setChordBoxText() {
+        chordBoxText.setText(midiHandler.getVisualTrack());
+        linearLayout_chords.addView(chordBoxText);
+    }
+
+    @Override
+    public void onUpdateTrack() {
+        setChordBoxText();
     }
 }

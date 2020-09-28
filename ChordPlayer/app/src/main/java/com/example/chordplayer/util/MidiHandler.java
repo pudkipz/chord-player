@@ -2,6 +2,8 @@ package com.example.chordplayer.util;
 
 import com.leff.midi.MidiTrack;
 
+import java.util.ArrayList;
+
 /**
  * Adds features to Track through delegation.
  */
@@ -11,12 +13,23 @@ public class MidiHandler {
 
     private MidiTrack midiTrack;
     private MidiAdapter adapter;
+    private ArrayList<Chord> listTrack; // TODO: replace this and midiTrack with your own implementation of a track.
 
     /**
      * Initializes with Track track.
      */
     public MidiHandler() {
         init();
+    }
+
+    public String getVisualTrack() {
+        StringBuilder chords = new StringBuilder();
+
+        for (Chord c : listTrack) {
+            chords.append(c.getName() + " ");
+        }
+
+        return chords.toString();
     }
 
     public void playButtonPressed() {
@@ -60,6 +73,8 @@ public class MidiHandler {
         for (int i : chord) {
             insertNote(root + i, t, l);
         }
+
+        listTrack.add(new Chord(root, chord));
     }
 
     /**
@@ -68,11 +83,12 @@ public class MidiHandler {
     private void init() {
         midiTrack = new MidiTrack();
         adapter = new MidiAdapter();
+        listTrack = new ArrayList<>();
 
-        insertChord(Notes.C, 0, 1000, Chords.MAJOR);
-        insertChord(Notes.G, 1000, 1000, Chords.MAJOR);
-        insertChord(Notes.A, 2000, 1000, Chords.MINOR);
-        insertChord(Notes.F, 3000, 1000, Chords.MAJOR);
+        insertChord(Note.C.getMidiValue(), 0, 1000, Chord.MAJOR);
+        insertChord(Note.G.getMidiValue(), 1000, 1000, Chord.MAJOR);
+        insertChord(Note.A.getMidiValue(), 2000, 1000, Chord.MINOR);
+        insertChord(Note.F.getMidiValue(), 3000, 1000, Chord.MAJOR);
 
 
         //midiTrack.insertNote(0, Notes.C, 60, 480, 120);
