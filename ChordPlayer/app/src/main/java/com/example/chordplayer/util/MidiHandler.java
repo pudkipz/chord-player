@@ -16,21 +16,15 @@ public class MidiHandler {
      * Initializes with Track track.
      */
     public MidiHandler() {
-
         init();
+    }
 
-        //final int NOTE_COUNT = 80;
-
-        /*for(int i = 0; i < NOTE_COUNT; i++)
-        {
-            int channel = 0;
-            int pitch = 1 + i;
-            int velocity = 100;
-            long tick = i * 480;
-            long duration = 120;
-
-            midiTrack.insertNote(channel, pitch, velocity, tick, duration);
-        }*/
+    public void playButtonPressed() {
+        if (adapter.isPlaying()) {
+            stop();
+        } else {
+            playTrack();
+        }
     }
 
     public int getSize() {
@@ -39,6 +33,10 @@ public class MidiHandler {
 
     public void playTrack() {
         adapter.playTrack(midiTrack);
+    }
+
+    public void stop() {
+        adapter.stop();
     }
 
     /**
@@ -58,7 +56,7 @@ public class MidiHandler {
      * @param l     how long to play the chord
      * @param chord adds notes at the given intervals, counted from root.
      */
-    public void playChord(int root, long t, long l, int[] chord) {
+    public void insertChord(int root, long t, long l, int[] chord) {
         for (int i : chord) {
             insertNote(root + i, t, l);
         }
@@ -71,8 +69,13 @@ public class MidiHandler {
         midiTrack = new MidiTrack();
         adapter = new MidiAdapter();
 
+        insertChord(Notes.C, 0, 1000, Chords.MAJOR);
+        insertChord(Notes.G, 1000, 1000, Chords.MAJOR);
+        insertChord(Notes.A, 2000, 1000, Chords.MINOR);
+        insertChord(Notes.F, 3000, 1000, Chords.MAJOR);
 
-        midiTrack.insertNote(0, 50, 60, 480, 120);
-        midiTrack.insertNote(0, 51, 60, 480 * 2, 120);
+
+        //midiTrack.insertNote(0, Notes.C, 60, 480, 120);
+        //midiTrack.insertNote(0, Notes.G, 60, 480 * 2, 120);
     }
 }

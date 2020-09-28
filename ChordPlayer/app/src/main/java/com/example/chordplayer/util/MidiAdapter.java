@@ -24,7 +24,7 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     public MidiAdapter() {
 
         midiDriver = new MidiDriver();
-        //midiProcessor = new MidiProcessor(midiFile);
+        midiProcessor = new MidiProcessor(new MidiFile());
 
         midiDriver.setVolume(80);
         //midiDriver.setOnMidiStartListener(this);
@@ -50,6 +50,15 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
 // leff midi
 
+    public boolean isPlaying() {
+        return midiProcessor.isRunning();
+    }
+
+    public void stop() {
+        midiProcessor.stop();
+        midiProcessor.reset();
+    }
+
     @Override
     public void onStart(boolean fromBeginning) {
 
@@ -62,6 +71,7 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     @Override
     public void onStop(boolean finished) {
+        midiDriver.stop();
     }
 
     private byte[] eventToByteArray(MidiEvent event) {

@@ -11,8 +11,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.chordplayer.util.MidiHandler;
 
-import org.billthefarmer.mididriver.MidiDriver;
-
 public class FirstFragment extends Fragment {
 
     /**
@@ -54,8 +52,7 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.btn_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //midiHandler.insertNote(0x3C, 1, 60);
-                midiHandler.playTrack();
+                midiHandler.playButtonPressed();
             }
         });
     }
