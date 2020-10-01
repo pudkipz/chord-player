@@ -1,15 +1,22 @@
 package com.example.chordplayer.util;
 
+import com.leff.midi.event.MidiEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Chord {
 
     public static final int[] MAJOR = {0, 4, 7};
     public static final int[] MINOR = {0, 3, 7};
     private final Note root;
     private final int color; // 0 = major, 1 = minor
+    private final List<MidiEvent> midiEvents;
 
     public Chord(Note root, int color) {
         this.root = root;
         this.color = color;
+        midiEvents = new ArrayList<>();
     }
 
     public Chord(Note root, int[] chord) {
@@ -21,6 +28,7 @@ public class Chord {
         } else {
             color = -1;
         }
+        midiEvents = new ArrayList<>();
     }
 
     public Chord(int root, int[] chord) {
@@ -32,8 +40,16 @@ public class Chord {
             return (root.name());
         } else if (color == 1) {
             return (root.name() + "m");
+        } else {
+            return "?";
         }
+    }
 
-        return "?";
+    public void addEvent(MidiEvent e) {
+        midiEvents.add(e);
+    }
+
+    public List<MidiEvent> getMidiEvents() {
+        return midiEvents;
     }
 }

@@ -49,7 +49,7 @@ public class FirstFragment extends Fragment  implements MidiHandlerListener {
         view.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                midiHandler.insertChord(Notes.D, Chord.MAJOR);
+                midiHandler.insertChord(Notes.C, Chord.MAJOR);
             }
         });
 
@@ -57,6 +57,13 @@ public class FirstFragment extends Fragment  implements MidiHandlerListener {
             @Override
             public void onClick(View view) {
                 midiHandler.playButtonPressed();
+            }
+        });
+
+        view.findViewById(R.id.button_remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                midiHandler.removeButtonPressed();
             }
         });
 

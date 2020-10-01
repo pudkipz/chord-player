@@ -7,17 +7,20 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-A predetermined chord can now be added to the track. I should start looking into how to remove then as well. This
-may prove to be more difficult than I think (see point under Things that should be considered).
+I solved the problem of removing chords by letting Chord hold a list of NoteOn events. It doesn't feel like a
+great solution, and I don't know if it's appropriate that Chord is dependent on the library, but maybe that's fine.
 
 ## Things that should be done:
 
 - Add some kind of UI.
     - ~~Step 1: being able to play a predetermined track.~~
-    - ~~Step 2: being able to add~~ and remove predetermined chords.
-    - Step 3: having a visual representation of the current track (see another point).
+    - ~~Step 2: being able to add and remove predetermined chords.~~
+    - ~~Step 3: having a visual representation of the current track (see another point).~~
     - Step 4: being able to change the root of the chord that's being added.
     - Step 5: being able to change the colour of the chord that's being added.
+    - Step 6: being able to pick which chord to remove.
+    - Step 7: being able to decide where to insert a new chord.
+    - Step 8: being able to change the root and colour of an already existing chord.
     
     At this point, a new plan should be made.
 
@@ -34,10 +37,7 @@ may prove to be more difficult than I think (see point under Things that should 
 
 - How should inversions and playing in different octaves be treated?
 
-- I might need a custom class to hold the MidiTrack, so that I can easily access both the visual and internal
-    representations of the track, since it's inefficient to have to go through the events and look for NoteOn and NoteOff
-    events. This should also make tempo related things easier, although I should also look into how the library treats
-    such things. Although I'm still unsure of how to remove chords.
+
 
 
 
@@ -46,8 +46,15 @@ may prove to be more difficult than I think (see point under Things that should 
 ## Things that aren't relevant anymore:
 
 - ~~Move chord arrays into a constants file.~~
+
 - ~~Move notes into a constants file, thus removing the Note enum. This should also remove the need for overloading.~~
+
 - ~~Research how removing MidiEvents from a Track works.~~
+
+- I might need a custom class to hold the MidiTrack, so that I can easily access both the visual and internal
+    representations of the track, since it's inefficient to have to go through the events and look for NoteOn and NoteOff
+    events. This should also make tempo related things easier, although I should also look into how the library treats
+    such things. Although I'm still unsure of how to remove chords.
 
 ## Things that are finished:
 
