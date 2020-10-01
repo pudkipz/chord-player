@@ -2,7 +2,6 @@ package com.example.chordplayer.util;
 
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
-import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
 
 import java.util.ArrayList;
@@ -118,6 +117,10 @@ public class MidiHandler {
 
     public void insertChord(int root, int[] chord) {
         insertChord(root, 1000, chord);
+    }
+
+    public void insertChord(Note root, int[] chord) {
+        insertChord(root.getMidiValue(), 1000, chord);
     }
 
     private void notifyUpdateTrack() {

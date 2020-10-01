@@ -12,6 +12,10 @@ import com.leff.midi.util.MidiProcessor;
 
 import org.billthefarmer.mididriver.MidiDriver;
 
+/**
+ * Contains functionality to convert between events from the midi library to the mididriver library
+ * (making it possible to actually play midi events).
+ */
 public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartListener {
 
     private static final byte NOTE_ON = (byte) 0x90;
