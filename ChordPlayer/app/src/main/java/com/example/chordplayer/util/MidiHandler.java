@@ -1,8 +1,12 @@
 package com.example.chordplayer.util;
 
 import com.leff.midi.MidiTrack;
+import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOff;
+import com.leff.midi.event.NoteOn;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Adds features to Track through delegation.
@@ -13,7 +17,7 @@ public class MidiHandler {
 
     private MidiTrack midiTrack;
     private MidiAdapter adapter;
-    private ArrayList<Chord> listTrack; // TODO: replace this and midiTrack with your own implementation of a track.
+    private List<Chord> listTrack; // TODO: replace this and midiTrack with your own implementation of a track.
     private ArrayList<MidiHandlerListener> listeners;
 
     /**
@@ -45,6 +49,17 @@ public class MidiHandler {
         }
     }
 
+    public void removeButtonPressed() {
+        adapter.stop();
+
+        for (MidiEvent e : listTrack.get(listTrack.size() - 1).getMidiEvents()) {
+            midiTrack.removeEvent(e);
+        }
+
+        listTrack.remove(listTrack.size() - 1);
+        notifyUpdateTrack();
+    }
+
     public int getSize() {
         return midiTrack.getSize();
     }
@@ -63,7 +78,6 @@ public class MidiHandler {
      * @param l length of the note
      */
     public void insertNote(int n, long t, long l) {
-
         adapter.stop();
 
         //int channel, int pitch, int velocity, long tick, long duration
@@ -71,17 +85,29 @@ public class MidiHandler {
     }
 
     /**
+     * Inserts events into midiTrack and listTrack.
+     *
      * @param root  midi value for the root note of the chord
      * @param t     when to play the chord
      * @param l     how long to play the chord
      * @param chord adds notes at the given intervals, counted from root.
      */
     public void insertChord(int root, long t, long l, int[] chord) {
+        adapter.stop();
+        Chord c = new Chord(root, chord);
+
         for (int i : chord) {
-            insertNote(root + i, t, l);
+            NoteOn on = new NoteOn(t, 0, root + i, DEFAULT_VELOCITY);
+            NoteOn off = new NoteOn(t + l, 0, root + i, 0);
+
+            c.addEvent(on);
+            c.addEvent(off);
+
+            midiTrack.insertEvent(on);
+            midiTrack.insertEvent(off);
         }
 
-        listTrack.add(new Chord(root, chord));
+        listTrack.add(c);
         notifyUpdateTrack();
     }
 
