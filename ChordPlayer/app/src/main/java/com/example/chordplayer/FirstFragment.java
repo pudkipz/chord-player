@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.chordplayer.util.Chord;
 import com.example.chordplayer.util.MidiHandler;
 import com.example.chordplayer.util.MidiHandlerListener;
-import com.example.chordplayer.util.Notes;
+import com.example.chordplayer.util.Note;
 
 public class FirstFragment extends Fragment  implements MidiHandlerListener {
 
@@ -38,18 +38,10 @@ public class FirstFragment extends Fragment  implements MidiHandlerListener {
         midiHandler = new MidiHandler();
         midiHandler.register(this);
 
-        /*view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });*/
-
         view.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                midiHandler.insertChord(Notes.C, Chord.MAJOR);
+                midiHandler.insertChord(Note.C, Chord.MAJOR);
             }
         });
 
