@@ -7,16 +7,8 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I added functionality for changing the root note of the added chord, although currently you can't pick sharps or flats.
-This is something I will have to think about how to implement. I also need to think about whether a spinner chooser is
-suitable for this, or if I should have a different way of picking the root note. I want it to be simple, so I don't think
-adding chords by means of entering each individual note, like musescore, is good.
-
-The next step should be to add functionality for changing the colour of the chord that's being added, and I don't think
-that that will be very difficult. However, there are things to be considered. Currently I only have two colours: major
-and minor. But I do want to add more stuff, and need to think about how to integrate that. Have another spinner with
-one option per colour? Maybe, but might become overly verbose. I should think about the possible colours thatI want to
-include.
+I added more functionality for adding a chord, so that should be finished for now. Next, I should either think
+about more chord editing features, playback, or timing.
 
 ## Things that should be done:
 
@@ -25,12 +17,18 @@ include.
     - ~~Step 2: being able to add and remove predetermined chords.~~
     - ~~Step 3: having a visual representation of the current track (see another point).~~
     - ~~Step 4: being able to change the root of the chord that's being added.~~
-    - Step 5: being able to change the colour of the chord that's being added.
+    - ~~Step 5: being able to change the colour of the chord that's being added.~~
     - Step 6: being able to pick which chord to remove.
     - Step 7: being able to decide where to insert a new chord.
     - Step 8: being able to change the root and colour of an already existing chord.
     
     At this point, a new plan should be made.
+
+- Make it possible to change the playback speed.
+
+- Make it possible to loop the track.
+
+- Make it possible to change the length of chords.
 
 ## Things that should be considered:
 
@@ -45,7 +43,19 @@ include.
 
 - How should inversions and playing in different octaves be treated?
 
+- How should editing the chord that you're adding supposed to work? I'm not really happy with the current situation. I
+    need to find a way that is simple, so I don't think adding chords by means of entering each individual note, like
+    musescore, is good. I also need to think about how to integrate having more colours and chord variations. I could
+    have another spinner with one option per variation, but might become overly verbose. I should think about the
+    possible colours that I want to include to decide whether that is a good idea or not. Regarding flats and sharps,
+    maybe I should use key signatures. But I fear that it would add unnecessary complexity.
+    - Maybe having a pop up for adding and editing chords could work. That way, it would also be uniform, and I don't
+        think that there is much use for being able to change the chord before adding it.
 
+
+    The next step should be to add functionality for changing the colour of the chord that's being added, and I don't think
+    that that will be very difficult. However, there are things to be considered. Currently I only have two colours: major
+    and minor. But I do want to add more stuff, and need to think about how to integrate that.
 
 
 
