@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,7 +20,7 @@ import com.example.chordplayer.util.MidiHandler;
 import com.example.chordplayer.util.MidiHandlerListener;
 import com.example.chordplayer.util.Note;
 
-public class FirstFragment extends Fragment  implements MidiHandlerListener, AdapterView.OnItemSelectedListener {
+public class FirstFragment extends Fragment implements MidiHandlerListener, AdapterView.OnItemSelectedListener {
 
     private MidiHandler midiHandler;
 
@@ -27,6 +28,10 @@ public class FirstFragment extends Fragment  implements MidiHandlerListener, Ada
     private TextView chordBoxText;
     private Spinner chordSpinner;
     private Note selectedNote;
+    private Spinner colourSpinner;
+    private int[] selectedColour;
+    // private ToggleButton toggleFlat;
+    private boolean toggleFlat;
 
     @Override
     public View onCreateView(
@@ -64,13 +69,17 @@ public class FirstFragment extends Fragment  implements MidiHandlerListener, Ada
             }
         });
 
+
+
         chordSpinner = view.findViewById(R.id.spinner_root_note);
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
+        ArrayAdapter<CharSequence> chordSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.chord_spinner, android.R.layout.simple_spinner_item);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        chordSpinner.setAdapter(spinnerAdapter);
+        chordSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chordSpinner.setAdapter(chordSpinnerAdapter);
         chordSpinner.setOnItemSelectedListener(this);
-        // selectedNote = Note.C;
+        selectedNote = Note.C;
+
+
 
 
         linearLayout_chords = view.findViewById(R.id.linearLayout_chords);
@@ -87,7 +96,6 @@ public class FirstFragment extends Fragment  implements MidiHandlerListener, Ada
 
     private void setChordBoxText() {
         chordBoxText.setText(midiHandler.getVisualTrack());
-
     }
 
     @Override
@@ -98,9 +106,14 @@ public class FirstFragment extends Fragment  implements MidiHandlerListener, Ada
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        System.out.println("CHOOSING AN ITEM");
-        selectedNote = Note.valueOf((String) parent.getSelectedItem());
-        // selectedNote = Note.valueOf((String) parent.getItemAtPosition(position));
+
+        switch (parent.getId()) {
+
+            case R.id.spinner_root_note:
+                selectedNote = Note.valueOf((String) parent.getSelectedItem());
+                // selectedNote = Note.valueOf((String) parent.getItemAtPosition(position));
+                break;
+        }
     }
 
     @Override
