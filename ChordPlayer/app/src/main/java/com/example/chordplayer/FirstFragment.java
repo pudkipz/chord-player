@@ -51,7 +51,11 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                midiHandler.insertChord(selectedNote, Chord.MAJOR);
+                if (toggleFlat) {
+                    midiHandler.insertChord(selectedNote.getMidiValue() - 1, selectedColour);
+                } else {
+                    midiHandler.insertChord(selectedNote, selectedColour);
+                }
             }
         });
 
@@ -69,7 +73,12 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             }
         });
 
-
+        view.findViewById(R.id.toggleButton_flat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleFlat = !toggleFlat;
+            }
+        });
 
         chordSpinner = view.findViewById(R.id.spinner_root_note);
         ArrayAdapter<CharSequence> chordSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
@@ -79,7 +88,13 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         chordSpinner.setOnItemSelectedListener(this);
         selectedNote = Note.C;
 
-
+        colourSpinner = view.findViewById(R.id.spinner_colour);
+        ArrayAdapter<CharSequence> colourSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.colour_spinner, android.R.layout.simple_spinner_item);
+        colourSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        colourSpinner.setAdapter(colourSpinnerAdapter);
+        colourSpinner.setOnItemSelectedListener(this);
+        selectedColour = Chord.MAJOR;
 
 
         linearLayout_chords = view.findViewById(R.id.linearLayout_chords);
@@ -108,7 +123,16 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         switch (parent.getId()) {
-
+            case R.id.spinner_colour:
+                switch ((String) parent.getSelectedItem()) {
+                    case "Major":
+                        selectedColour = Chord.MAJOR;
+                        break;
+                    case "Minor":
+                        selectedColour = Chord.MINOR;
+                        break;
+            }
+            break;
             case R.id.spinner_root_note:
                 selectedNote = Note.valueOf((String) parent.getSelectedItem());
                 // selectedNote = Note.valueOf((String) parent.getItemAtPosition(position));
