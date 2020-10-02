@@ -6,6 +6,7 @@ package com.example.chordplayer.util;
 
 public enum Note {
 
+    Cb(59),
     C(60),
     Db(61),
     D(62),
@@ -36,6 +37,6 @@ public enum Note {
             }
         }
 
-        return null;
+        return getNote(midiValue % 12 + 60);
     }
 }

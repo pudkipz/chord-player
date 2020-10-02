@@ -8,6 +8,7 @@
     <string name="button_play">Play</string>
     <string name="button_remove">Remove</string>
     <string name="previous">Previous</string>
+    <string name="toggleButton_flat">♭</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -20,5 +21,10 @@
         <item>G</item>
         <item>A</item>
         <item>B</item>
+    </string-array>
+
+    <string-array name="colour_spinner">
+        <item>Major</item>
+        <item>Minor</item>
     </string-array>
 </resources>
