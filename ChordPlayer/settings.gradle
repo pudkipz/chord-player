@@ -1,2 +1,2 @@
 rootProject.name='Chord Player'
-include ':app', ':MidiDriver-1.18'
+include ':app'

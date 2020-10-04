@@ -51,12 +51,14 @@ public class MidiHandler {
     public void removeButtonPressed() {
         adapter.stop();
 
-        for (MidiEvent e : listTrack.get(listTrack.size() - 1).getMidiEvents()) {
-            midiTrack.removeEvent(e);
-        }
+        if (!listTrack.isEmpty()) {
+            for (MidiEvent e : listTrack.get(listTrack.size() - 1).getMidiEvents()) {
+                midiTrack.removeEvent(e);
+            }
 
-        listTrack.remove(listTrack.size() - 1);
-        notifyUpdateTrack();
+            listTrack.remove(listTrack.size() - 1);
+            notifyUpdateTrack();
+        }
     }
 
     public int getSize() {
