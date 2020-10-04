@@ -5,10 +5,15 @@ import com.leff.midi.event.MidiEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contains information about its root and whether it's a major or minor chord. Also contains a
+ * reference to its corresponding MidiEvents.
+ */
 public class Chord {
 
     public static final int[] MAJOR = {0, 4, 7};
     public static final int[] MINOR = {0, 3, 7};
+
     private final Note root;
     private final int color; // 0 = major, 1 = minor
     private final List<MidiEvent> midiEvents;
@@ -35,6 +40,10 @@ public class Chord {
         this(Note.getNote(root), chord);
     }
 
+    /**
+     * Returns a String representation of the chord.
+     * @return a string representation of the chord.
+     */
     public String getName() {
         if (color == 0) {
             return (root.name());

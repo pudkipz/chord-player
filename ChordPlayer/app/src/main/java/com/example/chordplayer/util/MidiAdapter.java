@@ -78,6 +78,16 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         midiDriver.stop();
     }
 
+    /**
+     * Method to convert from a MidiEvent used by the Midi library to a byte array, used by
+     * MidiDriver.
+     *
+     * Due to how events are treated in MidiDriver, information about the timestamp and length are
+     * lost. This is, however, not a problem and can be taken account for in other ways.
+     *
+     * @param event event to be converted.
+     * @return byte array with relevant information.
+     */
     private byte[] eventToByteArray(MidiEvent event) {
         byte[] b = new byte[3];
         ;

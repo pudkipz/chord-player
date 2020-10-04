@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adds features to Track through delegation.
+ * Acts as the middleman between the UI and implementation.
  */
 public class MidiHandler {
 
@@ -26,10 +26,18 @@ public class MidiHandler {
         init();
     }
 
+    /**
+     * Register listener to be notified when the track is changed.
+     * @param listener listener to be notified.
+     */
     public void register(MidiHandlerListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * Returns a String representation of the track. Should consider changing the name.
+     * @return a String representation of the track.
+     */
     public String getVisualTrack() {
         StringBuilder chords = new StringBuilder();
 
@@ -40,6 +48,9 @@ public class MidiHandler {
         return chords.toString();
     }
 
+    /**
+     * Plays the current track.
+     */
     public void playButtonPressed() {
         if (adapter.isPlaying()) {
             stop();
@@ -48,6 +59,9 @@ public class MidiHandler {
         }
     }
 
+    /**
+     * Removes the most recently added chord.
+     */
     public void removeButtonPressed() {
         adapter.stop();
 
@@ -65,7 +79,7 @@ public class MidiHandler {
         return midiTrack.getSize();
     }
 
-    public void playTrack() {
+    private void playTrack() {
         adapter.playTrack(midiTrack);
     }
 
