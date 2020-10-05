@@ -1,4 +1,4 @@
-package com.example.chordplayer;
+package com.pudkipz.chordplayer;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,10 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.chordplayer.util.Chord;
-import com.example.chordplayer.util.MidiHandler;
-import com.example.chordplayer.util.MidiHandlerListener;
-import com.example.chordplayer.util.Note;
+import com.pudkipz.chordplayer.util.Chord;
+import com.pudkipz.chordplayer.util.MidiHandler;
+import com.pudkipz.chordplayer.util.MidiHandlerListener;
+import com.pudkipz.chordplayer.util.Note;
 
 public class FirstFragment extends Fragment implements MidiHandlerListener, AdapterView.OnItemSelectedListener {
 

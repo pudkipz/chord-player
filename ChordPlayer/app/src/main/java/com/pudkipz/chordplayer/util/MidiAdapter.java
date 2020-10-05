@@ -1,4 +1,4 @@
-package com.example.chordplayer.util;
+package com.pudkipz.chordplayer.util;
 
 import android.util.Log;
 

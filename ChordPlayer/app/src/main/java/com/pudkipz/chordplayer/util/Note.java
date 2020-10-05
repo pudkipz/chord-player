@@ -1,4 +1,4 @@
-package com.example.chordplayer.util;
+package com.pudkipz.chordplayer.util;
 
 /**
  * Enum for easy access to the midi value of notes and vice versa.

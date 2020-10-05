@@ -1,4 +1,4 @@
-package com.example.chordplayer;
+package com.pudkipz.chordplayer;
 
 import org.junit.Test;
 
