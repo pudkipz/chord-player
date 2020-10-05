@@ -7,8 +7,10 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I added more functionality for adding a chord, so that should be finished for now. Next, I should either think
-about more chord editing features, playback, or timing.
+I made it possible to change the root of an existing chord (although the UI only supports changing the most recently
+added chord). However, I do understand the limitations of such a feature, and to add to that, the UI is getting really
+clunky... I think I need to create some kind widget for each chord, as well as a popup for selecting and adding chords.
+I won't be able to add more functionality without doing that.
 
 ## Things that should be done:
 
@@ -20,7 +22,7 @@ about more chord editing features, playback, or timing.
     - ~~Step 5: being able to change the colour of the chord that's being added.~~
     - Step 6: being able to pick which chord to remove.
     - Step 7: being able to decide where to insert a new chord.
-    - Step 8: being able to change the root and colour of an already existing chord.
+    - Step 8: being able to change ~~the root~~ and colour of an already existing chord.
     
     At this point, a new plan should be made.
 

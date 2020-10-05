@@ -28,6 +28,7 @@ public class MidiHandler {
 
     /**
      * Register listener to be notified when the track is changed.
+     *
      * @param listener listener to be notified.
      */
     public void register(MidiHandlerListener listener) {
@@ -36,13 +37,14 @@ public class MidiHandler {
 
     /**
      * Returns a String representation of the track. Should consider changing the name.
+     *
      * @return a String representation of the track.
      */
     public String getVisualTrack() {
         StringBuilder chords = new StringBuilder();
 
         for (Chord c : listTrack) {
-            chords.append(c.getName() + " ");
+            chords.append(c.toString() + " ");
         }
 
         return chords.toString();
@@ -137,6 +139,16 @@ public class MidiHandler {
 
     public void insertChord(Note root, int[] chord) {
         insertChord(root.getMidiValue(), 1000, chord);
+    }
+
+    public void changeRoot(Chord c, Note n) {
+        c.changeRoot(n);
+        notifyUpdateTrack();
+    }
+
+    public void changeRoot(Note n) {
+        if (!listTrack.isEmpty())
+            changeRoot(listTrack.get(listTrack.size() - 1), n);
     }
 
     private void notifyUpdateTrack() {

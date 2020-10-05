@@ -79,6 +79,14 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             }
         });
 
+        view.findViewById(R.id.button_change_chord).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (toggleFlat) midiHandler.changeRoot(Note.getNote(selectedNote.getMidiValue() - 1));
+                else midiHandler.changeRoot(Note.getNote(selectedNote.getMidiValue()));
+            }
+        });
+
         chordSpinner = view.findViewById(R.id.spinner_root_note);
         ArrayAdapter<CharSequence> chordSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.chord_spinner, android.R.layout.simple_spinner_item);

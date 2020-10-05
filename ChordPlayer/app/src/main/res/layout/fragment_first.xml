@@ -107,4 +107,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
 
+    <Button
+        android:id="@+id/button_change_chord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/button_change_chord"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton_flat"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_colour" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

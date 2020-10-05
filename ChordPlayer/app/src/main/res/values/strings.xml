@@ -9,6 +9,7 @@
     <string name="button_remove">Remove</string>
     <string name="previous">Previous</string>
     <string name="toggleButton_flat">♭</string>
+    <string name="button_change_chord">Edit</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>

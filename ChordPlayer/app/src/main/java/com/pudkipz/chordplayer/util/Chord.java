@@ -1,6 +1,7 @@
 package com.pudkipz.chordplayer.util;
 
 import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,8 @@ public class Chord {
     public static final int[] MAJOR = {0, 4, 7};
     public static final int[] MINOR = {0, 3, 7};
 
-    private final Note root;
-    private final int color; // 0 = major, 1 = minor
+    private Note root;
+    private int color; // 0 = major, 1 = minor
     private final List<MidiEvent> midiEvents;
 
     public Chord(Note root, int color) {
@@ -44,7 +45,8 @@ public class Chord {
      * Returns a String representation of the chord.
      * @return a string representation of the chord.
      */
-    public String getName() {
+    @Override
+    public String toString() {
         if (color == 0) {
             return (root.name());
         } else if (color == 1) {
@@ -54,8 +56,25 @@ public class Chord {
         }
     }
 
+    /**
+     * Changes the root note to Note n.
+     * @param n note to change root to.
+     */
+    public void changeRoot(Note n) {
+        int dN = n.getMidiValue() - root.getMidiValue();
+        root = n;
+
+        for (MidiEvent e : midiEvents) {
+            ((NoteOn) e).setNoteValue(((NoteOn) e).getNoteValue() + dN);
+        }
+    }
+
     public void addEvent(MidiEvent e) {
         midiEvents.add(e);
+    }
+
+    public Note getRoot() {
+        return root;
     }
 
     public List<MidiEvent> getMidiEvents() {
