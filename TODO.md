@@ -7,10 +7,14 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I made it possible to change the root of an existing chord (although the UI only supports changing the most recently
-added chord). However, I do understand the limitations of such a feature, and to add to that, the UI is getting really
-clunky... I think I need to create some kind widget for each chord, as well as a popup for selecting and adding chords.
-I won't be able to add more functionality without doing that.
+I made it possible to highlight an existing chord and edit the properties (currently only root) of it. Not sure if
+I'm satisfied with the solution... But it works for now, I guess. I believe that removing an existing chord should now
+be relatively easy to do, so that might be the next step. I'll leave the last entry below for reference, though:
+
+    I made it possible to change the root of an existing chord (although the UI only supports changing the most recently
+    added chord). However, I do understand the limitations of such a feature, and to add to that, the UI is getting really
+    clunky... I think I need to create some kind widget for each chord, as well as a popup for selecting and adding chords.
+    I won't be able to add more functionality without doing that.
 
 ## Things that should be done:
 

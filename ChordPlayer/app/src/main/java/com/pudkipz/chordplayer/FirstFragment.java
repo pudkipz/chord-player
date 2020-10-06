@@ -1,7 +1,7 @@
 package com.pudkipz.chordplayer;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,12 +23,11 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     private MidiHandler midiHandler;
 
     private LinearLayout linearLayout_chords;
-    private TextView chordBoxText;
     private Spinner chordSpinner;
     private Note selectedNote;
     private Spinner colourSpinner;
     private int[] selectedColour;
-    // private ToggleButton toggleFlat;
+    private ChordButton selectedChordButton;
     private boolean toggleFlat;
 
     @Override
@@ -82,8 +80,8 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_change_chord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (toggleFlat) midiHandler.changeRoot(Note.getNote(selectedNote.getMidiValue() - 1));
-                else midiHandler.changeRoot(Note.getNote(selectedNote.getMidiValue()));
+                if (toggleFlat) midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1));
+                else midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()));
             }
         });
 
@@ -105,25 +103,32 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
 
         linearLayout_chords = view.findViewById(R.id.linearLayout_chords);
-        chordBoxText = new TextView(this.getContext());
-        // chordBoxText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        // TODO: ensure that chordBoxText is the size of the parent scrollview. the above apparently doesn't work?
-        chordBoxText.setSingleLine(true);
-        chordBoxText.setTextSize(24);
-        chordBoxText.setGravity(Gravity.CENTER);
-        linearLayout_chords.addView(chordBoxText);
-        setChordBoxText();
-
-    }
-
-    private void setChordBoxText() {
-        chordBoxText.setText(midiHandler.getVisualTrack());
+        onUpdateTrack();
     }
 
     @Override
     public void onUpdateTrack() {
-        System.out.println(midiHandler.getVisualTrack());
-        setChordBoxText();
+        linearLayout_chords.removeAllViews();
+
+        for (final Chord c : midiHandler.getChordTrack()) {
+            final ChordButton b = new ChordButton(this.getContext(), c);
+
+            b.setBackgroundColor(Color.LTGRAY);
+
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (selectedChordButton != null) //selectedChordButton.setBackgroundColor(Color.LTGRAY);
+                    selectedChordButton = b;
+                    b.setBackgroundColor(Color.CYAN);
+
+                    // TODO: update spinners to have the values of the selected chord.
+
+                }
+            });
+
+            linearLayout_chords.addView(b);
+        }
     }
 
     @Override
@@ -142,7 +147,6 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             break;
             case R.id.spinner_root_note:
                 selectedNote = Note.valueOf((String) parent.getSelectedItem());
-                // selectedNote = Note.valueOf((String) parent.getItemAtPosition(position));
                 break;
         }
     }

@@ -77,6 +77,11 @@ public class Chord {
         return root;
     }
 
+    public int[] getColour() {
+        if (color == 0) return MAJOR;
+        else return MINOR;
+    }
+
     public List<MidiEvent> getMidiEvents() {
         return midiEvents;
     }

@@ -16,7 +16,7 @@ public class MidiHandler {
 
     private MidiTrack midiTrack;
     private MidiAdapter adapter;
-    private List<Chord> listTrack; // TODO: replace this and midiTrack with your own implementation of a track.
+    private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
     private ArrayList<MidiHandlerListener> listeners;
 
     /**
@@ -43,7 +43,7 @@ public class MidiHandler {
     public String getVisualTrack() {
         StringBuilder chords = new StringBuilder();
 
-        for (Chord c : listTrack) {
+        for (Chord c : chordTrack) {
             chords.append(c.toString() + " ");
         }
 
@@ -67,12 +67,12 @@ public class MidiHandler {
     public void removeButtonPressed() {
         adapter.stop();
 
-        if (!listTrack.isEmpty()) {
-            for (MidiEvent e : listTrack.get(listTrack.size() - 1).getMidiEvents()) {
+        if (!chordTrack.isEmpty()) {
+            for (MidiEvent e : chordTrack.get(chordTrack.size() - 1).getMidiEvents()) {
                 midiTrack.removeEvent(e);
             }
 
-            listTrack.remove(listTrack.size() - 1);
+            chordTrack.remove(chordTrack.size() - 1);
             notifyUpdateTrack();
         }
     }
@@ -124,7 +124,7 @@ public class MidiHandler {
             midiTrack.insertEvent(off);
         }
 
-        listTrack.add(c);
+        chordTrack.add(c);
         notifyUpdateTrack();
     }
 
@@ -147,8 +147,8 @@ public class MidiHandler {
     }
 
     public void changeRoot(Note n) {
-        if (!listTrack.isEmpty())
-            changeRoot(listTrack.get(listTrack.size() - 1), n);
+        if (!chordTrack.isEmpty())
+            changeRoot(chordTrack.get(chordTrack.size() - 1), n);
     }
 
     private void notifyUpdateTrack() {
@@ -157,13 +157,17 @@ public class MidiHandler {
         }
     }
 
+    public List<Chord> getChordTrack() {
+        return chordTrack;
+    }
+
     /**
      * Initializes the track.
      */
     private void init() {
         midiTrack = new MidiTrack();
         adapter = new MidiAdapter();
-        listTrack = new ArrayList<>();
+        chordTrack = new ArrayList<>();
         listeners = new ArrayList<>();
 
         insertChord(Note.C.getMidiValue(), Chord.MAJOR);
