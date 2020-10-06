@@ -80,8 +80,13 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_change_chord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (toggleFlat) midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1));
-                else midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()));
+                if (selectedChordButton != null) {
+
+                    if (toggleFlat)
+                        midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1));
+                    else
+                        midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()));
+                }
             }
         });
 
@@ -109,18 +114,22 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     @Override
     public void onUpdateTrack() {
         linearLayout_chords.removeAllViews();
+        selectedChordButton = null;
 
         for (final Chord c : midiHandler.getChordTrack()) {
             final ChordButton b = new ChordButton(this.getContext(), c);
 
-            b.setBackgroundColor(Color.LTGRAY);
-
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (selectedChordButton != null) //selectedChordButton.setBackgroundColor(Color.LTGRAY);
-                    selectedChordButton = b;
-                    b.setBackgroundColor(Color.CYAN);
+                    if (selectedChordButton != null) selectedChordButton.setBackgroundColor(Color.LTGRAY);
+
+                    if (selectedChordButton == b) {
+                        selectedChordButton = null;
+                    } else {
+                        selectedChordButton = b;
+                        b.setBackgroundColor(Color.CYAN);
+                    }
 
                     // TODO: update spinners to have the values of the selected chord.
 
