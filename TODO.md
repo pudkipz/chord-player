@@ -7,14 +7,10 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I made it possible to highlight an existing chord and edit the properties (currently only root) of it. Not sure if
-I'm satisfied with the solution... But it works for now, I guess. I believe that removing an existing chord should now
-be relatively easy to do, so that might be the next step. I'll leave the last entry below for reference, though:
-
-    I made it possible to change the root of an existing chord (although the UI only supports changing the most recently
-    added chord). However, I do understand the limitations of such a feature, and to add to that, the UI is getting really
-    clunky... I think I need to create some kind widget for each chord, as well as a popup for selecting and adding chords.
-    I won't be able to add more functionality without doing that.
+I did some refactoring and made it possible to edit the colour of the chord. I have also made the decision to use
+intervals instead of colour, and I should do a refactor to make sure that that is uniform. Apart from that, I should be
+able to start thinking about how to move chords around. Do I need a more sophisticated holder for chords, or does the
+library maybe already support that?
 
 ## Things that should be done:
 
@@ -24,10 +20,11 @@ be relatively easy to do, so that might be the next step. I'll leave the last en
     - ~~Step 3: having a visual representation of the current track (see another point).~~
     - ~~Step 4: being able to change the root of the chord that's being added.~~
     - ~~Step 5: being able to change the colour of the chord that's being added.~~
+    - Step pre 6, 7: make it possible to move chords around (not necessarily with UI). Necessary for removal and insertion of chords.
     - Step 6: being able to pick which chord to remove.
     - Step 7: being able to decide where to insert a new chord.
-    - Step 8: being able to change ~~the root~~ and colour of an already existing chord.
-    
+    - ~~Step 8: being able to change the root and colour of an already existing chord.~~
+
     At this point, a new plan should be made.
 
 - Make it possible to change the playback speed.
@@ -35,6 +32,8 @@ be relatively easy to do, so that might be the next step. I'll leave the last en
 - Make it possible to loop the track.
 
 - Make it possible to change the length of chords.
+
+- Refactor colour -> intervals.
 
 ## Things that should be considered:
 
@@ -97,7 +96,7 @@ be relatively easy to do, so that might be the next step. I'll leave the last en
         However, it seems to only focus on the playing capabilities, and not the ability to create a midi file structure
         thingy (which the other library could). So it seems that I will have to do that myself. I should consider finding
         a more appropriate library for this.~~
-        - I have found another library to aid me in my quest: https://github.com/LeffelMania/android-midi-lib.
+    - I have found another library to aid me in my quest: https://github.com/LeffelMania/android-midi-lib.
 
 - ~~Think of better names for playNote(...) and playChord(...) (since playing isn't what we're doing here).~~
 

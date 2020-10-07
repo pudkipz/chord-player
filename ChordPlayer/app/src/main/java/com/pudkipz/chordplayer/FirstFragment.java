@@ -83,9 +83,9 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
                 if (selectedChordButton != null) {
 
                     if (toggleFlat)
-                        midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1));
+                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1), selectedColour);
                     else
-                        midiHandler.changeRoot(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()));
+                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedColour);
                 }
             }
         });

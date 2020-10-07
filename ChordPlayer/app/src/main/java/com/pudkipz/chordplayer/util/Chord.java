@@ -4,6 +4,7 @@ import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOn;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,7 +20,11 @@ public class Chord {
 
     private Note root;
     private int color; // 0 = major, 1 = minor
+    private int[] intervals;
     private final List<MidiEvent> midiEvents;
+
+    private long t;
+    private long l;
 
     public Chord(Note root, int color) {
         this.root = root;
@@ -28,23 +33,34 @@ public class Chord {
     }
 
     public Chord(Note root, int[] chord, long t, long l) {
+        this.t = t;
+        this.l = l;
+        intervals = chord;
+
         this.root = root;
-        if (chord.equals(MAJOR)) {
+        if (Arrays.equals(chord, MAJOR)) {
             color = 0;
-        } else if (chord.equals(MINOR)) {
+        } else if (Arrays.equals(chord, MINOR)) {
             color = 1;
         } else {
             color = -1;
         }
-        midiEvents = new ArrayList<>();
 
-        for (int i : chord) {
+        midiEvents = createAndGetEvents();
+    }
+
+    private List<MidiEvent> createAndGetEvents() {
+        List<MidiEvent> events = new ArrayList<>();
+
+        for (int i : intervals) {
             NoteOn on = new NoteOn(t, 0, root.getMidiValue() + i, DEFAULT_VELOCITY);
             NoteOn off = new NoteOn(t + l, 0, root.getMidiValue() + i, 0);
 
-            midiEvents.add(on);
-            midiEvents.add(off);
+            events.add(on);
+            events.add(off);
         }
+
+        return events;
     }
 
     public Chord(int root, int[] chord, long t, long l) {
@@ -77,6 +93,14 @@ public class Chord {
         for (MidiEvent e : midiEvents) {
             ((NoteOn) e).setNoteValue(((NoteOn) e).getNoteValue() + dN);
         }
+    }
+
+    public void changeIntervals(int[] intervals) {
+        this.intervals = intervals;
+        if (intervals.equals(MAJOR)) color = 0;
+        else color = 1;
+        midiEvents.clear();
+        midiEvents.addAll(createAndGetEvents());
     }
 
     public Note getRoot() {

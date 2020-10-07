@@ -70,6 +70,20 @@ public class MidiHandler {
     }
 
     /**
+     * Removes the most recently added chord. Currently does weird things (leaves a blank,
+     * unremoveable space where the removed chord used to be). Do not use until that is taken care
+     * of.
+     */
+    public void removeButtonPressed(Chord c) {
+        adapter.stop();
+
+        if (!chordTrack.isEmpty()) {
+            chordTrack.remove(c);
+            notifyUpdateTrack();
+        }
+    }
+
+    /**
      * Removes the most recently added chord.
      */
     public void removeButtonPressed() {
@@ -130,8 +144,9 @@ public class MidiHandler {
         insertChord(root.getMidiValue(), 1000, chord);
     }
 
-    public void changeRoot(Chord c, Note n) {
+    public void editChordButtonPressed(Chord c, Note n, int[] intervals) {
         c.changeRoot(n);
+        c.changeIntervals(intervals);
         notifyUpdateTrack();
     }
 
