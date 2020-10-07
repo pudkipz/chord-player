@@ -15,6 +15,8 @@ public class Chord {
     public static final int[] MAJOR = {0, 4, 7};
     public static final int[] MINOR = {0, 3, 7};
 
+    private static final int DEFAULT_VELOCITY = 60;
+
     private Note root;
     private int color; // 0 = major, 1 = minor
     private final List<MidiEvent> midiEvents;
@@ -25,7 +27,7 @@ public class Chord {
         midiEvents = new ArrayList<>();
     }
 
-    public Chord(Note root, int[] chord) {
+    public Chord(Note root, int[] chord, long t, long l) {
         this.root = root;
         if (chord.equals(MAJOR)) {
             color = 0;
@@ -35,10 +37,18 @@ public class Chord {
             color = -1;
         }
         midiEvents = new ArrayList<>();
+
+        for (int i : chord) {
+            NoteOn on = new NoteOn(t, 0, root.getMidiValue() + i, DEFAULT_VELOCITY);
+            NoteOn off = new NoteOn(t + l, 0, root.getMidiValue() + i, 0);
+
+            midiEvents.add(on);
+            midiEvents.add(off);
+        }
     }
 
-    public Chord(int root, int[] chord) {
-        this(Note.getNote(root), chord);
+    public Chord(int root, int[] chord, long t, long l) {
+        this(Note.getNote(root), chord, t, l);
     }
 
     /**
@@ -67,10 +77,6 @@ public class Chord {
         for (MidiEvent e : midiEvents) {
             ((NoteOn) e).setNoteValue(((NoteOn) e).getNoteValue() + dN);
         }
-    }
-
-    public void addEvent(MidiEvent e) {
-        midiEvents.add(e);
     }
 
     public Note getRoot() {
