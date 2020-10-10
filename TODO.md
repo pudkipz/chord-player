@@ -7,25 +7,25 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I did some refactoring and made it possible to edit the colour of the chord. I have also made the decision to use
-intervals instead of colour, and I should do a refactor to make sure that that is uniform. Apart from that, I should be
-able to start thinking about how to move chords around. Do I need a more sophisticated holder for chords, or does the
-library maybe already support that?
+I thought about removal of chords and it should be fine the way is is (see commit message for details). I also started
+tinkering with changing from a horizontal to a vertical (regular) ScrollView for the chord box, but ran into layout
+issues. Shouldn't be a big problem, though.
+
+I have also decided that I now have a basic yet functional UI! (So I was able to mark a huge task as finished.)
+
+I'm leaving the last entry here, since it is still relevant information:
+
+    I did some refactoring and made it possible to edit the colour of the chord. I have also made the decision to use
+    intervals instead of colour, and I should do a refactor to make sure that that is uniform. Apart from that, I should be
+    able to start thinking about how to move chords around. Do I need a more sophisticated holder for chords, or does the
+    library maybe already support that?
 
 ## Things that should be done:
 
-- Add some kind of UI.
-    - ~~Step 1: being able to play a predetermined track.~~
-    - ~~Step 2: being able to add and remove predetermined chords.~~
-    - ~~Step 3: having a visual representation of the current track (see another point).~~
-    - ~~Step 4: being able to change the root of the chord that's being added.~~
-    - ~~Step 5: being able to change the colour of the chord that's being added.~~
-    - Step pre 6, 7: make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords. (Not actually necessary for removal.)
-    - ~~Step 6: being able to pick which chord to remove.~~
-    - Step 7: being able to decide where to insert a new chord.
-    - ~~Step 8: being able to change the root and colour of an already existing chord.~~
+- Make it possible to decide where to insert a new chord.
 
-    At this point, a new plan should be made.
+- Make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords.
+  (Not actually necessary for removal.)
 
 - Make it possible to change the playback speed.
 
@@ -103,3 +103,14 @@ library maybe already support that?
 - Creating a visual representation:
     - Create a layout for this.
     - Find a way to convert from MidiTrack to actual chord names etc.
+
+- Add some kind of UI.
+    - ~~Step 1: being able to play a predetermined track.~~
+    - ~~Step 2: being able to add and remove predetermined chords.~~
+    - ~~Step 3: having a visual representation of the current track (see another point).~~
+    - ~~Step 4: being able to change the root of the chord that's being added.~~
+    - ~~Step 5: being able to change the colour of the chord that's being added.~~
+    - Step pre 6, 7: make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords. (Not actually necessary for removal.)
+    - ~~Step 6: being able to pick which chord to remove.~~
+    - Step 7: being able to decide where to insert a new chord.
+    - ~~Step 8: being able to change the root and colour of an already existing chord.~~
