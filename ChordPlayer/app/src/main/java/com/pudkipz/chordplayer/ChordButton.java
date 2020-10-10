@@ -15,7 +15,11 @@ public class ChordButton extends androidx.appcompat.widget.AppCompatButton {
     public ChordButton(Context context, Chord c) {
         this(context);
         this.chord = c;
-        setText(c.toString());
+        if (c.getRoot() == null) {
+            setText("");
+        } else {
+            setText(c.toString());
+        }
     }
 
     public Chord getChord() {

@@ -52,12 +52,14 @@ public class Chord {
     private List<MidiEvent> createAndGetEvents() {
         List<MidiEvent> events = new ArrayList<>();
 
-        for (int i : intervals) {
-            NoteOn on = new NoteOn(t, 0, root.getMidiValue() + i, DEFAULT_VELOCITY);
-            NoteOn off = new NoteOn(t + l, 0, root.getMidiValue() + i, 0);
+        if (root != null) {
+            for (int i : intervals) {
+                NoteOn on = new NoteOn(t, 0, root.getMidiValue() + i, DEFAULT_VELOCITY);
+                NoteOn off = new NoteOn(t + l, 0, root.getMidiValue() + i, 0);
 
-            events.add(on);
-            events.add(off);
+                events.add(on);
+                events.add(off);
+            }
         }
 
         return events;
@@ -87,12 +89,9 @@ public class Chord {
      * @param n note to change root to.
      */
     public void changeRoot(Note n) {
-        int dN = n.getMidiValue() - root.getMidiValue();
-        root = n;
-
-        for (MidiEvent e : midiEvents) {
-            ((NoteOn) e).setNoteValue(((NoteOn) e).getNoteValue() + dN);
-        }
+        this.root = n;
+        midiEvents.clear();
+        midiEvents.addAll(createAndGetEvents());
     }
 
     public void changeIntervals(int[] intervals) {
@@ -101,6 +100,11 @@ public class Chord {
         else color = 1;
         midiEvents.clear();
         midiEvents.addAll(createAndGetEvents());
+    }
+
+    public void setQuiet() {
+        root = null;
+        midiEvents.clear();
     }
 
     public Note getRoot() {

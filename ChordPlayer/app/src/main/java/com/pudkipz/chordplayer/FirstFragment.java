@@ -66,7 +66,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_remove).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                midiHandler.removeButtonPressed();
+                if (selectedChordButton != null) midiHandler.removeButtonPressed(selectedChordButton.getChord());
             }
         });
 

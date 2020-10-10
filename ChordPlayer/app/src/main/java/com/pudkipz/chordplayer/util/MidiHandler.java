@@ -77,10 +77,8 @@ public class MidiHandler {
     public void removeButtonPressed(Chord c) {
         adapter.stop();
 
-        if (!chordTrack.isEmpty()) {
-            chordTrack.remove(c);
-            notifyUpdateTrack();
-        }
+        c.setQuiet();
+        notifyUpdateTrack();
     }
 
     /**

@@ -20,8 +20,8 @@ library maybe already support that?
     - ~~Step 3: having a visual representation of the current track (see another point).~~
     - ~~Step 4: being able to change the root of the chord that's being added.~~
     - ~~Step 5: being able to change the colour of the chord that's being added.~~
-    - Step pre 6, 7: make it possible to move chords around (not necessarily with UI). Necessary for removal and insertion of chords.
-    - Step 6: being able to pick which chord to remove.
+    - Step pre 6, 7: make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords. (Not actually necessary for removal.)
+    - ~~Step 6: being able to pick which chord to remove.~~
     - Step 7: being able to decide where to insert a new chord.
     - ~~Step 8: being able to change the root and colour of an already existing chord.~~
 
