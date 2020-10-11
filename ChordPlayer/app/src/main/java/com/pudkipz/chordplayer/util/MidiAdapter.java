@@ -33,6 +33,9 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         shouldBePlaying = false;
 
         midiFile = new MidiFile(MidiFile.DEFAULT_RESOLUTION);
+
+        // The reason for doing the following is because it causes problems when the n.o. tracks in
+        // MidiFile changes after creating the MidiProcessor.
         midiFile.addTrack(new MidiTrack());
         midiFile.addTrack(new MidiTrack());
 
@@ -50,8 +53,9 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     }
 
 
+    // TODO:
     /**
-     *
+     * Starts playback of the current MidiFile. (Consider renaming.)
      */
     public void playTrack() {
         midiProcessor.reset();
@@ -60,6 +64,13 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         midiProcessor.start();
     }
 
+    // TODO:
+    /**
+     * Changes the current tracks of the MidiFile. The parameter order doesn't actually matter.
+     * (Consider renaming parameters.)
+     * @param noteTrack n
+     * @param tempoTrack t
+     */
     public void setTracks(MidiTrack noteTrack, MidiTrack tempoTrack) {
         clearMidiFile();
         midiFile.addTrack(noteTrack);

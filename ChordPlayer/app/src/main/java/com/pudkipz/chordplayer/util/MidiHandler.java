@@ -90,9 +90,8 @@ public class MidiHandler {
     }
 
     /**
-     * Removes the most recently added chord. Currently does weird things (leaves a blank,
-     * unremoveable space where the removed chord used to be). Do not use until that is taken care
-     * of.
+     * Nullifies the root of the provided Chord. Effectively, makes it quiet.
+     * @param c Chord to be silenced.
      */
     public void removeButtonPressed(Chord c) {
         adapter.stop();
