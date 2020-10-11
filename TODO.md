@@ -7,29 +7,17 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I thought about removal of chords and it should be fine the way is is (see commit message for details). I also started
-tinkering with changing from a horizontal to a vertical (regular) ScrollView for the chord box, but ran into layout
-issues. Shouldn't be a big problem, though.
-
-I have also decided that I now have a basic yet functional UI! (So I was able to mark a huge task as finished.)
-
-I'm leaving the last entry here, since it is still relevant information:
-
-    I did some refactoring and made it possible to edit the colour of the chord. I have also made the decision to use
-    intervals instead of colour, and I should do a refactor to make sure that that is uniform. Apart from that, I should be
-    able to start thinking about how to move chords around. Do I need a more sophisticated holder for chords, or does the
-    library maybe already support that?
+I added functionality for setting the BPM and made it so that the playback is looped. It's a bit jerky when starting over,
+but it should be fine. Maybe the problem is because I'm stopping MidiDriver in between? Should test that.
 
 ## Things that should be done:
+
+- Change the chord box to a vertical ScrollView.
 
 - Make it possible to decide where to insert a new chord.
 
 - Make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords.
   (Not actually necessary for removal.)
-
-- Make it possible to change the playback speed.
-
-- Make it possible to loop the track.
 
 - Make it possible to change the length of chords.
 
@@ -114,3 +102,7 @@ I'm leaving the last entry here, since it is still relevant information:
     - ~~Step 6: being able to pick which chord to remove.~~
     - Step 7: being able to decide where to insert a new chord.
     - ~~Step 8: being able to change the root and colour of an already existing chord.~~
+
+- Make it possible to change the playback speed.
+
+- Make it possible to loop the track.

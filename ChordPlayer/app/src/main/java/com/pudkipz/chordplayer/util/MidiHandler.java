@@ -114,10 +114,15 @@ public class MidiHandler {
     }
 
     private void playTrack() {
-        adapter.playTrack(getMidiTrack(), getTempoTrack());
+        if (adapter.isPlaying()) {
+            adapter.stop();
+        } else {
+            adapter.setTracks(getMidiTrack(), getTempoTrack());
+            adapter.playTrack();
+        }
     }
 
-    public void stop() {
+    private void stop() {
         adapter.stop();
     }
 

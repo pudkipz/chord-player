@@ -23,34 +23,48 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     private MidiDriver midiDriver;
     private MidiProcessor midiProcessor;
+    private MidiFile midiFile;
+    private boolean shouldBePlaying;
 
     public MidiAdapter() {
 
         midiDriver = new MidiDriver();
-        midiProcessor = new MidiProcessor(new MidiFile());
+
+        shouldBePlaying = false;
+
+        midiFile = new MidiFile(MidiFile.DEFAULT_RESOLUTION);
+        midiFile.addTrack(new MidiTrack());
+        midiFile.addTrack(new MidiTrack());
+
+        midiProcessor = new MidiProcessor(midiFile);
+        midiProcessor.registerEventListener(this, MidiEvent.class);
 
         midiDriver.setVolume(80);
-        //midiDriver.setOnMidiStartListener(this);
+        midiDriver.setOnMidiStartListener(this); // What is the point of this call?
+    }
+
+    private void clearMidiFile() {
+        while (!midiFile.getTracks().isEmpty()) {
+            midiFile.removeTrack(0);
+        }
     }
 
 
     /**
-     * Plays the provided track.
      *
-     * @param midiTrack
      */
-    public void playTrack(MidiTrack midiTrack, MidiTrack tempoTrack) {
-
+    public void playTrack() {
+        midiProcessor.reset();
+        shouldBePlaying = true;
         midiDriver.start();
-
-        System.out.println(midiTrack.getEvents().toString());
-        MidiFile midiFile = new MidiFile(MidiFile.DEFAULT_RESOLUTION);
-        midiFile.addTrack(midiTrack);
-        midiFile.addTrack(tempoTrack);
-
-        midiProcessor = new MidiProcessor(midiFile);
-        midiProcessor.registerEventListener(this, MidiEvent.class);
         midiProcessor.start();
+    }
+
+    public void setTracks(MidiTrack noteTrack, MidiTrack tempoTrack) {
+        clearMidiFile();
+        midiFile.addTrack(noteTrack);
+        midiFile.addTrack(tempoTrack);
+        System.out.println(midiFile.getTrackCount());
     }
 
 // leff midi
@@ -60,8 +74,10 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     }
 
     public void stop() {
+        shouldBePlaying = false;
         midiProcessor.stop();
         midiProcessor.reset();
+        midiDriver.stop();
     }
 
     @Override
@@ -77,6 +93,7 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     @Override
     public void onStop(boolean finished) {
         midiDriver.stop();
+        if (shouldBePlaying) playTrack();
     }
 
     /**
