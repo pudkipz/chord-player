@@ -93,13 +93,13 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         byte[] b = new byte[3];
         ;
 
-        if (event.getClass() == NoteOn.class) {
+        if (event instanceof NoteOn) {
             NoteOn e = (NoteOn) event;
 
             b[0] = NOTE_ON;
             b[1] = (byte) e.getNoteValue();
             b[2] = (byte) e.getVelocity();
-        } else if (event.getClass() == NoteOff.class) {
+        } else if (event instanceof NoteOff) {
             NoteOff e = (NoteOff) event;
             b[0] = NOTE_OFF;
             b[1] = (byte) e.getNoteValue();
