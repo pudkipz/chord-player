@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -29,6 +30,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     private int[] selectedColour;
     private ChordButton selectedChordButton;
     private boolean toggleFlat;
+    private EditText setBPM;
 
     @Override
     public View onCreateView(
@@ -59,6 +61,9 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!setBPM.getText().toString().equals("")) {
+                    midiHandler.setBPM(Integer.parseInt(setBPM.getText().toString()));
+                }
                 midiHandler.playButtonPressed();
             }
         });
@@ -89,6 +94,9 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
                 }
             }
         });
+
+        setBPM = view.findViewById(R.id.editTextSetBPM);
+        setBPM.setText(String.valueOf(midiHandler.getBPM()));
 
         chordSpinner = view.findViewById(R.id.spinner_root_note);
         ArrayAdapter<CharSequence> chordSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),

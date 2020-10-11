@@ -16,10 +16,12 @@ import java.util.List;
 public class MidiHandler {
 
     private static int DEFAULT_RESOLUTION = 480; // Constant from MidiFile.
+    private static int DEFAULT_BPM = 120;
 
     private MidiAdapter adapter;
     private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
     private ArrayList<MidiHandlerListener> listeners;
+    private int bpm;
 
     /**
      * Initializes with Track track.
@@ -69,7 +71,7 @@ public class MidiHandler {
         TimeSignature ts = new TimeSignature();
         ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
         Tempo tempo = new Tempo();
-        tempo.setBpm(120);
+        tempo.setBpm(bpm);
         tempoTrack.insertEvent(ts);
         tempoTrack.insertEvent(tempo);
 
@@ -181,6 +183,14 @@ public class MidiHandler {
         return chordTrack;
     }
 
+    public void setBPM(int bpm) {
+        this.bpm = bpm;
+    }
+
+    public int getBPM() {
+        return bpm;
+    }
+
     /**
      * Initializes the track.
      */
@@ -188,6 +198,8 @@ public class MidiHandler {
         adapter = new MidiAdapter();
         chordTrack = new ArrayList<>();
         listeners = new ArrayList<>();
+
+        bpm = DEFAULT_BPM;
 
         insertChord(Note.C.getMidiValue(), Chord.MAJOR);
         insertChord(Note.G.getMidiValue(), Chord.MAJOR);
