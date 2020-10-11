@@ -1,7 +1,5 @@
 package com.pudkipz.chordplayer.util;
 
-import android.nfc.tech.Ndef;
-
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.meta.Tempo;
@@ -145,17 +143,17 @@ public class MidiHandler {
      * @param root  midi value for the root note of the chord
      * @param t     when to play the chord
      * @param l     how long to play the chord
-     * @param chord adds notes at the given intervals, counted from root.
+     * @param chordType adds notes at the given intervals, counted from root.
      */
-    public void insertChord(int root, long t, long l, int[] chord) {
+    public void insertChord(Note root, long t, long l, ChordType chordType) {
         adapter.stop();
-        chordTrack.add(new Chord(root, chord, t, l));
+        chordTrack.add(new Chord(root, chordType, t, l));
         notifyUpdateTrack();
     }
 
-    public void insertChord(int root, long l, int[] chord) {
+    public void insertChord(Note root, long l, ChordType chordType) {
         long t = getMidiTrack().getLengthInTicks();
-        insertChord(root, t, l, chord);
+        insertChord(root, t, l, chordType);
     }
 
     /**
@@ -163,17 +161,13 @@ public class MidiHandler {
      * @param root r
      * @param chord c
      */
-    public void insertChord(int root, int[] chord) {
+    public void insertChord(Note root, ChordType chord) {
         insertChord(root, DEFAULT_RESOLUTION * 4, chord);
     }
 
-    public void insertChord(Note root, int[] chord) {
-        insertChord(root.getMidiValue(), DEFAULT_RESOLUTION * 4, chord);
-    }
-
-    public void editChordButtonPressed(Chord c, Note n, int[] intervals) {
+    public void editChordButtonPressed(Chord c, Note n, ChordType chordType) {
         c.changeRoot(n);
-        c.changeIntervals(intervals);
+        c.changeChordType(chordType);
         notifyUpdateTrack();
     }
 
@@ -205,9 +199,9 @@ public class MidiHandler {
 
         bpm = DEFAULT_BPM;
 
-        insertChord(Note.C.getMidiValue(), Chord.MAJOR);
-        insertChord(Note.G.getMidiValue(), Chord.MAJOR);
-        insertChord(Note.A.getMidiValue(), Chord.MINOR);
-        insertChord(Note.F.getMidiValue(), Chord.MAJOR);
+        insertChord(Note.C, ChordType.Major);
+        insertChord(Note.G, ChordType.Major);
+        insertChord(Note.A, ChordType.Minor);
+        insertChord(Note.F, ChordType.Major);
     }
 }

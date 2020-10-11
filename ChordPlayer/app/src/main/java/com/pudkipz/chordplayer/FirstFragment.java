@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.pudkipz.chordplayer.util.Chord;
+import com.pudkipz.chordplayer.util.ChordType;
 import com.pudkipz.chordplayer.util.MidiHandler;
 import com.pudkipz.chordplayer.util.MidiHandlerListener;
 import com.pudkipz.chordplayer.util.Note;
@@ -27,7 +28,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     private Spinner chordSpinner;
     private Note selectedNote;
     private Spinner colourSpinner;
-    private int[] selectedColour;
+    private ChordType selectedChordType;
     private ChordButton selectedChordButton;
     private boolean toggleFlat;
     private EditText setBPM;
@@ -51,9 +52,9 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             @Override
             public void onClick(View view) {
                 if (toggleFlat) {
-                    midiHandler.insertChord(selectedNote.getMidiValue() - 1, selectedColour);
+                    midiHandler.insertChord(selectedNote.flat(), selectedChordType);
                 } else {
-                    midiHandler.insertChord(selectedNote, selectedColour);
+                    midiHandler.insertChord(selectedNote, selectedChordType);
                 }
             }
         });
@@ -88,9 +89,9 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
                 if (selectedChordButton != null) {
 
                     if (toggleFlat)
-                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1), selectedColour);
+                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1), selectedChordType);
                     else
-                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedColour);
+                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedChordType);
                 }
             }
         });
@@ -112,7 +113,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         colourSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colourSpinner.setAdapter(colourSpinnerAdapter);
         colourSpinner.setOnItemSelectedListener(this);
-        selectedColour = Chord.MAJOR;
+        selectedChordType = ChordType.Major;
 
 
         linearLayout_chords = view.findViewById(R.id.linearLayout_chords);
@@ -155,10 +156,10 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             case R.id.spinner_colour:
                 switch ((String) parent.getSelectedItem()) {
                     case "Major":
-                        selectedColour = Chord.MAJOR;
+                        selectedChordType = ChordType.Major;
                         break;
                     case "Minor":
-                        selectedColour = Chord.MINOR;
+                        selectedChordType = ChordType.Minor;
                         break;
             }
             break;

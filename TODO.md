@@ -7,10 +7,16 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I added functionality for setting the BPM and made it so that the playback is looped. It's a bit jerky when starting over,
-but it should be fine. Maybe the problem is because I'm stopping MidiDriver in between? Should test that.
+I refactored intervals/colour into an enum, ChordType. I think this is a good solution.
+
+The last entry is also included below:
+
+    I added functionality for setting the BPM and made it so that the playback is looped. It's a bit jerky when starting over,
+    but it should be fine. Maybe the problem is because I'm stopping MidiDriver in between? Should test that.
 
 ## Things that should be done:
+
+- Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 - Change the chord box to a vertical ScrollView.
 
@@ -21,18 +27,7 @@ but it should be fine. Maybe the problem is because I'm stopping MidiDriver in b
 
 - Make it possible to change the length of chords.
 
-- Refactor colour -> intervals.
-
 ## Things that should be considered:
-
-- Instead of having chords as an array of intervals, we could have a chord be an array with, for example, every scale
-    degree and an indicator telling whether it is sharp (#), flat (b), unchanged (1), or quiet (0). Cmin7 could then
-    look like
-        
-        [1, 0, b, 0, 1, 0, b]
-    
-    One problem with this approach is if we want to have, for instance, all of b2, 2 and b3. On the other hand, this is
-    probably not going to happen.
 
 - How should inversions and playing in different octaves be treated?
 
@@ -44,13 +39,6 @@ but it should be fine. Maybe the problem is because I'm stopping MidiDriver in b
     maybe I should use key signatures. But I fear that it would add unnecessary complexity.
     - Maybe having a pop up for adding and editing chords could work. That way, it would also be uniform, and I don't
         think that there is much use for being able to change the chord before adding it.
-
-
-    The next step should be to add functionality for changing the colour of the chord that's being added, and I don't think
-    that that will be very difficult. However, there are things to be considered. Currently I only have two colours: major
-    and minor. But I do want to add more stuff, and need to think about how to integrate that.
-
-
 
 ## Things put on ice:
 
@@ -66,6 +54,19 @@ but it should be fine. Maybe the problem is because I'm stopping MidiDriver in b
     representations of the track, since it's inefficient to have to go through the events and look for NoteOn and NoteOff
     events. This should also make tempo related things easier, although I should also look into how the library treats
     such things. Although I'm still unsure of how to remove chords.
+
+- Instead of having chords as an array of intervals, we could have a chord be an array with, for example, every scale
+    degree and an indicator telling whether it is sharp (#), flat (b), unchanged (1), or quiet (0). Cmin7 could then
+    look like
+
+        [1, 0, b, 0, 1, 0, b]
+
+    One problem with this approach is if we want to have, for instance, all of b2, 2 and b3. On the other hand, this is
+    probably not going to happen.
+
+The next step should be to add functionality for changing the colour of the chord that's being added, and I don't think
+    that that will be very difficult. However, there are things to be considered. Currently I only have two colours: major
+    and minor. But I do want to add more stuff, and need to think about how to integrate that.
 
 ## Things that are finished:
 
@@ -106,3 +107,5 @@ but it should be fine. Maybe the problem is because I'm stopping MidiDriver in b
 - Make it possible to change the playback speed.
 
 - Make it possible to loop the track.
+
+- Refactor colour -> intervals.

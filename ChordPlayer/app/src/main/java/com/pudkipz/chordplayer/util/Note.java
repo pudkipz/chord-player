@@ -30,6 +30,10 @@ public enum Note {
         return midiValue;
     }
 
+    public Note flat() {
+        return getNote(midiValue - 1);
+    }
+
     public static Note getNote(int midiValue) {
         for (Note n : Note.values()) {
             if (n.midiValue == midiValue) {
