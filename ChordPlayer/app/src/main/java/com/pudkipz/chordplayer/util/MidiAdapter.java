@@ -37,15 +37,16 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     /**
      * Plays the provided track.
      *
-     * @param track
+     * @param midiTrack
      */
-    public void playTrack(MidiTrack track) {
+    public void playTrack(MidiTrack midiTrack, MidiTrack tempoTrack) {
 
         midiDriver.start();
 
-        System.out.println(track.getEvents().toString());
-        MidiFile midiFile = new MidiFile();
-        midiFile.addTrack(track);
+        System.out.println(midiTrack.getEvents().toString());
+        MidiFile midiFile = new MidiFile(MidiFile.DEFAULT_RESOLUTION);
+        midiFile.addTrack(midiTrack);
+        midiFile.addTrack(tempoTrack);
 
         midiProcessor = new MidiProcessor(midiFile);
         midiProcessor.registerEventListener(this, MidiEvent.class);

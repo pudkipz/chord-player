@@ -1,7 +1,11 @@
 package com.pudkipz.chordplayer.util;
 
+import android.nfc.tech.Ndef;
+
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.meta.Tempo;
+import com.leff.midi.event.meta.TimeSignature;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +14,8 @@ import java.util.List;
  * Acts as the middleman between the UI and implementation.
  */
 public class MidiHandler {
+
+    private static int DEFAULT_RESOLUTION = 480; // Constant from MidiFile.
 
     private MidiAdapter adapter;
     private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
@@ -58,6 +64,18 @@ public class MidiHandler {
         return midiTrack;
     }
 
+    private MidiTrack getTempoTrack() {
+        MidiTrack tempoTrack = new MidiTrack();
+        TimeSignature ts = new TimeSignature();
+        ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
+        Tempo tempo = new Tempo();
+        tempo.setBpm(120);
+        tempoTrack.insertEvent(ts);
+        tempoTrack.insertEvent(tempo);
+
+        return tempoTrack;
+    }
+
     /**
      * Plays the current track.
      */
@@ -94,7 +112,7 @@ public class MidiHandler {
     }
 
     private void playTrack() {
-        adapter.playTrack(getMidiTrack());
+        adapter.playTrack(getMidiTrack(), getTempoTrack());
     }
 
     public void stop() {
@@ -134,12 +152,17 @@ public class MidiHandler {
         insertChord(root, t, l, chord);
     }
 
+    /**
+     * DEFAULT_RESOLUTION is the length of one beat, so *4 means hold for one bar.
+     * @param root r
+     * @param chord c
+     */
     public void insertChord(int root, int[] chord) {
-        insertChord(root, 1000, chord);
+        insertChord(root, DEFAULT_RESOLUTION * 4, chord);
     }
 
     public void insertChord(Note root, int[] chord) {
-        insertChord(root.getMidiValue(), 1000, chord);
+        insertChord(root.getMidiValue(), DEFAULT_RESOLUTION * 4, chord);
     }
 
     public void editChordButtonPressed(Chord c, Note n, int[] intervals) {
