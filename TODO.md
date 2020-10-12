@@ -29,6 +29,10 @@ The last entry is also included below:
 
 ## Things that should be considered:
 
+- The playback is a bit jerky right at the end/beginning of the loop. I'm not sure why this happens, but I believe it
+    might have to do with stopping and restarting midiDriver in between. But for some reason, it freaks out when I don't
+    do that. I should look into it, but it's also fine the way it is right now.
+
 - How should inversions and playing in different octaves be treated?
 
 - How should editing the chord that you're adding supposed to work? I'm not really happy with the current situation. I

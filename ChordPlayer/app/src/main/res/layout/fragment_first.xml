@@ -128,9 +128,11 @@
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
         android:ems="10"
+        android:hint="@string/setBPM_autofillHint"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_change_chord"
-        app:layout_constraintTop_toBottomOf="@+id/button_add" />
+        app:layout_constraintTop_toBottomOf="@+id/button_add"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
