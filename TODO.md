@@ -12,11 +12,13 @@ out of "easy" things to do :p soon I'll really have to think about UI design.
 
 ## Things that should be done:
 
+- It sometimes crashes when pressing play after having stopped.
+
 - Add a toggleable metronome track.
 
 - Make sure that the names in ChordType and the names showed in the spinner have the same source.
 
-- Pause playback while changing BPM (I think it's causing crashes sometimes).
+- Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~.
 
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
