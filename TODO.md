@@ -7,14 +7,16 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I refactored intervals/colour into an enum, ChordType. I think this is a good solution.
-
-The last entry is also included below:
-
-    I added functionality for setting the BPM and made it so that the playback is looped. It's a bit jerky when starting over,
-    but it should be fine. Maybe the problem is because I'm stopping MidiDriver in between? Should test that.
+I added some more chord types, so now we have the (according to me) most commonly used 7th chords. I'm... kind of running
+out of "easy" things to do :p soon I'll really have to think about UI design.
 
 ## Things that should be done:
+
+- Add a toggleable metronome track.
+
+- Make sure that the names in ChordType and the names showed in the spinner have the same source.
+
+- Pause playback while changing BPM (I think it's causing crashes sometimes).
 
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
@@ -24,8 +26,6 @@ The last entry is also included below:
 
 - Make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords.
   (Not actually necessary for removal.)
-
-- Make it possible to change the length of chords.
 
 ## Things that should be considered:
 
@@ -45,6 +45,9 @@ The last entry is also included below:
         think that there is much use for being able to change the chord before adding it.
 
 ## Things put on ice:
+
+- Make it possible to change the length of chords.
+  - I don't think this is necessary.
 
 ## Things that aren't relevant anymore:
 

@@ -28,5 +28,11 @@
     <string-array name="colour_spinner">
         <item>Major</item>
         <item>Minor</item>
+        <item>Major 7</item>
+        <item>Minor 7</item>
+        <item>Dominant 7</item>
+        <item>Diminished 7</item>
+        <item>Half dim 7</item>
+        <item>Augmented 7</item>
     </string-array>
 </resources>

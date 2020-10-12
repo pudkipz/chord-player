@@ -154,14 +154,8 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
         switch (parent.getId()) {
             case R.id.spinner_colour:
-                switch ((String) parent.getSelectedItem()) {
-                    case "Major":
-                        selectedChordType = ChordType.Major;
-                        break;
-                    case "Minor":
-                        selectedChordType = ChordType.Minor;
-                        break;
-            }
+                selectedChordType = ChordType.getChordType((String) parent.getSelectedItem());
+
             break;
             case R.id.spinner_root_note:
                 selectedNote = Note.valueOf((String) parent.getSelectedItem());
