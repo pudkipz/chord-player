@@ -64,6 +64,14 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         midiProcessor.start();
     }
 
+    /**
+     * Only called automatically when the track is finished.
+     */
+    private void loopTrack() {
+        midiProcessor.reset();
+        midiProcessor.start();
+    }
+
     // TODO:
     /**
      * Changes the current tracks of the MidiFile. The parameter order doesn't actually matter.
@@ -103,8 +111,8 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
     @Override
     public void onStop(boolean finished) {
-        midiDriver.stop();
-        if (shouldBePlaying) playTrack();
+        if (shouldBePlaying) loopTrack();
+        // shouldn't have to call midiDriver.stop()
     }
 
     /**
