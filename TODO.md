@@ -7,8 +7,7 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I added some more chord types, so now we have the (according to me) most commonly used 7th chords. I'm... kind of running
-out of "easy" things to do :p soon I'll really have to think about UI design.
+I did some minor fixes, see the last few commits for details.
 
 ## Things that should be done:
 
@@ -27,10 +26,6 @@ out of "easy" things to do :p soon I'll really have to think about UI design.
   (Not actually necessary for removal.)
 
 ## Things that should be considered:
-
-- The playback is a bit jerky right at the end/beginning of the loop. I'm not sure why this happens, but I believe it
-    might have to do with stopping and restarting midiDriver in between. But for some reason, it freaks out when I don't
-    do that. I should look into it, but it's also fine the way it is right now.
 
 - How should inversions and playing in different octaves be treated?
 
@@ -73,6 +68,10 @@ out of "easy" things to do :p soon I'll really have to think about UI design.
 The next step should be to add functionality for changing the colour of the chord that's being added, and I don't think
     that that will be very difficult. However, there are things to be considered. Currently I only have two colours: major
     and minor. But I do want to add more stuff, and need to think about how to integrate that.
+
+- The playback is a bit jerky right at the end/beginning of the loop. I'm not sure why this happens, but I believe it
+    might have to do with stopping and restarting midiDriver in between. But for some reason, it freaks out when I don't
+    do that. I should look into it, but it's also fine the way it is right now.
 
 ## Things that are finished:
 
