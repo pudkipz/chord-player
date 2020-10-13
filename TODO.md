@@ -14,8 +14,6 @@ out of "easy" things to do :p soon I'll really have to think about UI design.
 
 - Add a toggleable metronome track.
 
-- Make sure that the names in ChordType and the names showed in the spinner have the same source (same for root note).
-
 - Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~, or change it dynamically. It doesn't
     feel intuitive the way it is currently.
 
@@ -119,3 +117,7 @@ The next step should be to add functionality for changing the colour of the chor
 - Refactor colour -> intervals.
 
 - It sometimes crashes when pressing play after having stopped.
+
+- Make sure that the names in ChordType and the names showed in the spinner have the same source (same for root note).
+
+- Make it so playback stops when pressing Edit.

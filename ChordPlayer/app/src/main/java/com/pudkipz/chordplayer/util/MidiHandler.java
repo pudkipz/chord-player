@@ -166,6 +166,7 @@ public class MidiHandler {
     }
 
     public void editChordButtonPressed(Chord c, Note n, ChordType chordType) {
+        adapter.stop();
         c.changeRoot(n);
         c.changeChordType(chordType);
         notifyUpdateTrack();
