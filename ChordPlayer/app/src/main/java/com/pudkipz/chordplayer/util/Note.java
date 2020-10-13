@@ -1,5 +1,8 @@
 package com.pudkipz.chordplayer.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Enum for easy access to the midi value of notes and vice versa.
  */
@@ -42,5 +45,17 @@ public enum Note {
         }
 
         return getNote(midiValue % 12 + 60);
+    }
+
+    /**
+     *
+     * @return A list of the names of the Note values.
+     */
+    public static List<String> stringValues() {
+        List<String> sb = new ArrayList<>();
+        for (Note n : values()) {
+            sb.add(n.name());
+        }
+        return sb;
     }
 }

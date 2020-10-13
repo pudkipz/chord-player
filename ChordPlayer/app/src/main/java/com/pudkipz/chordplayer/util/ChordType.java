@@ -1,6 +1,8 @@
 package com.pudkipz.chordplayer.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum ChordType {
     Major(new int[]{0, 4, 7}, "Major", ""),
@@ -50,5 +52,17 @@ public enum ChordType {
             }
         }
         return null;
+    }
+
+    /**
+     *
+     * @return A list of the names of the ChordType values.
+     */
+    public static List<String> stringValues() {
+        List<String> sb = new ArrayList<>();
+        for (ChordType ct : values()) {
+            sb.add(ct.name());
+        }
+        return sb;
     }
 }

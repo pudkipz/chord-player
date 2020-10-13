@@ -100,18 +100,19 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         setBPM.setText(String.valueOf(midiHandler.getBPM()));
 
         chordSpinner = view.findViewById(R.id.spinner_root_note);
-        ArrayAdapter<CharSequence> chordSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.chord_spinner, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> chordSpinnerAdapter = new ArrayAdapter(getContext(),
+                android.R.layout.simple_spinner_item, Note.stringValues());
         chordSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chordSpinner.setAdapter(chordSpinnerAdapter);
         chordSpinner.setOnItemSelectedListener(this);
         selectedNote = Note.C;
 
         colourSpinner = view.findViewById(R.id.spinner_colour);
-        ArrayAdapter<CharSequence> colourSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.colour_spinner, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> colourSpinnerAdapter = new ArrayAdapter(getContext(),
+                android.R.layout.simple_spinner_item, ChordType.stringValues());
         colourSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colourSpinner.setAdapter(colourSpinnerAdapter);
+        colourSpinnerAdapter.addAll(ChordType.stringValues());
         colourSpinner.setOnItemSelectedListener(this);
         selectedChordType = ChordType.Major;
 
