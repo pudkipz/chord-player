@@ -30,7 +30,6 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     private Spinner colourSpinner;
     private ChordType selectedChordType;
     private ChordButton selectedChordButton;
-    private boolean toggleFlat;
     private EditText setBPM;
 
     @Override
@@ -51,11 +50,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (toggleFlat) {
-                    midiHandler.insertChord(selectedNote.flat(), selectedChordType);
-                } else {
-                    midiHandler.insertChord(selectedNote, selectedChordType);
-                }
+                midiHandler.insertChord(selectedNote, selectedChordType);
             }
         });
 
@@ -72,14 +67,8 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_remove).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedChordButton != null) midiHandler.removeButtonPressed(selectedChordButton.getChord());
-            }
-        });
-
-        view.findViewById(R.id.toggleButton_flat).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleFlat = !toggleFlat;
+                if (selectedChordButton != null)
+                    midiHandler.removeButtonPressed(selectedChordButton.getChord());
             }
         });
 
@@ -88,10 +77,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             public void onClick(View view) {
                 if (selectedChordButton != null) {
 
-                    if (toggleFlat)
-                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue() - 1), selectedChordType);
-                    else
-                        midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedChordType);
+                    midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedChordType);
                 }
             }
         });
@@ -132,7 +118,8 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (selectedChordButton != null) selectedChordButton.setBackgroundColor(Color.LTGRAY);
+                    if (selectedChordButton != null)
+                        selectedChordButton.setBackgroundColor(Color.LTGRAY);
 
                     if (selectedChordButton == b) {
                         selectedChordButton = null;
@@ -157,7 +144,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             case R.id.spinner_colour:
                 selectedChordType = ChordType.getChordType((String) parent.getSelectedItem());
 
-            break;
+                break;
             case R.id.spinner_root_note:
                 selectedNote = Note.valueOf((String) parent.getSelectedItem());
                 break;

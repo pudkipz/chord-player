@@ -9,56 +9,49 @@
 
     <Button
         android:id="@+id/button_play"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginLeft="162dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginRight="161dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
         android:text="@string/button_play"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
     <Button
         android:id="@+id/button_add"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
         android:text="@string/button_add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/spinner_root_note"
-        app:layout_constraintTop_toBottomOf="@+id/button_remove" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_colour" />
 
     <Button
         android:id="@+id/button_remove"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="@string/button_remove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+        app:layout_constraintEnd_toStartOf="@+id/button_change_chord"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
 
     <Spinner
         android:id="@+id/spinner_root_note"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="60dp"
         android:background="@android:drawable/btn_dropdown"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_play" />
 
@@ -66,15 +59,15 @@
         android:id="@+id/spinner_colour"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
         android:background="@android:drawable/btn_dropdown"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner_root_note"
         app:layout_constraintTop_toBottomOf="@+id/button_play" />
 
     <HorizontalScrollView
@@ -95,44 +88,30 @@
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
-    <ToggleButton
-        android:id="@+id/toggleButton_flat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="24dp"
-        android:textOff="@string/toggleButton_flat"
-        android:textOn="@string/toggleButton_flat"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
-
     <Button
         android:id="@+id/button_change_chord"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="@string/button_change_chord"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton_flat"
+        app:layout_constraintEnd_toStartOf="@+id/button_add"
         app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
 
     <EditText
         android:id="@+id/editTextSetBPM"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="@string/setBPM_autofillHint"
+        android:importantForAutofill="no"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_change_chord"
-        app:layout_constraintTop_toBottomOf="@+id/button_add"
-        android:importantForAutofill="no" />
+        app:layout_constraintEnd_toEndOf="@+id/spinner_root_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
