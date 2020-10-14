@@ -65,12 +65,15 @@ public class Chord {
      */
     public void changeRoot(Note n) {
         this.root = n;
-        midiEvents.clear();
-        midiEvents.addAll(createAndGetEvents());
+        rebuildEvents();
     }
 
     public void changeChordType(ChordType chordType) {
         this.chordType = chordType;
+        rebuildEvents();
+    }
+
+    private void rebuildEvents() {
         midiEvents.clear();
         midiEvents.addAll(createAndGetEvents());
     }
@@ -86,5 +89,15 @@ public class Chord {
 
     public List<MidiEvent> getMidiEvents() {
         return midiEvents;
+    }
+
+    public void setTick(long tick) {
+        t = tick;
+        rebuildEvents();
+    }
+
+    public void setLength(long length) {
+        l = length;
+        rebuildEvents();
     }
 }

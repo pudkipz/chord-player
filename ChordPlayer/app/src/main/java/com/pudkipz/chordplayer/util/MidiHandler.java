@@ -6,6 +6,7 @@ import com.leff.midi.event.meta.Tempo;
 import com.leff.midi.event.meta.TimeSignature;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
 public class MidiHandler {
 
     private static int DEFAULT_RESOLUTION = 480; // Constant from MidiFile.
-    private static int DEFAULT_BPM = 120;
+    private static int DEFAULT_BPM = 400; // Debug value (very high!).
 
     private MidiAdapter adapter;
     private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
@@ -88,13 +89,21 @@ public class MidiHandler {
     }
 
     /**
-     * Nullifies the root of the provided Chord. Effectively, makes it quiet.
-     * @param c Chord to be silenced.
+     * Removes provided Chord and moves all subsequent chords.
+     * @param removeChord Chord to be removed.
      */
-    public void removeButtonPressed(Chord c) {
+    public void removeButtonPressed(Chord removeChord) {
         adapter.stop();
 
-        c.setQuiet();
+        List<Chord> copyChordTrack = new ArrayList<>(chordTrack);
+        chordTrack.clear();
+
+        for (Chord c : copyChordTrack) {
+            System.out.println(Arrays.toString(chordTrack.toArray()));
+            if (removeChord != c) {
+                insertChord(c);
+            }
+        }
         notifyUpdateTrack();
     }
 
@@ -135,6 +144,16 @@ public class MidiHandler {
 
         // int channel, int pitch, int velocity, long tick, long duration
         // midiTrack.insertNote(1, n, DEFAULT_VELOCITY, t, l);
+    }
+
+    /**
+     * @param c c
+     */
+    public void insertChord(Chord c) {
+        adapter.stop();
+        long t = getMidiTrack().getLengthInTicks();
+        c.setTick(t);
+        chordTrack.add(c);
     }
 
     /**
