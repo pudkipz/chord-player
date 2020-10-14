@@ -27,6 +27,9 @@ I did some minor fixes, see the last few commits for details.
 
 ## Things that should be considered:
 
+- Maybe ChordType shouldn't be an enum. I think it would be cool to be able to create custom chord types, so having them
+    in a different non code dependent format could be cool. Maybe with the help of json? I should look into it.
+
 - How should inversions and playing in different octaves be treated?
 
 - How should editing the chord that you're adding supposed to work? I'm not really happy with the current situation. I
@@ -120,3 +123,5 @@ The next step should be to add functionality for changing the colour of the chor
 - Make sure that the names in ChordType and the names showed in the spinner have the same source (same for root note).
 
 - Make it so playback stops when pressing Edit.
+
+- Fix bug regarding ChordType names.
