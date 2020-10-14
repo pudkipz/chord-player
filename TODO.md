@@ -7,16 +7,19 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I did some minor fixes, see the last few commits for details.
+I made some UI improvements and also fixed the behaviour of the remove button. Next I could start with one of the tasks
+below, but I should also think about what else I can do (I'm almost running out of things to do!), and especially UI-
+related things.
 
 ## Things that should be done:
+
+- Think of a way to represent silence. Should be possible for now  to simply add a "quiet" ChordType, but the name of the
+    chord must also change (to have no root).
 
 - Add a toggleable metronome track.
 
 - Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~, or change it dynamically. It doesn't
     feel intuitive the way it is currently.
-
-- Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 - Change the chord box to a vertical ScrollView.
 
@@ -30,7 +33,7 @@ I did some minor fixes, see the last few commits for details.
 - Maybe ChordType shouldn't be an enum. I think it would be cool to be able to create custom chord types, so having them
     in a different non code dependent format could be cool. Maybe with the help of json? I should look into it.
 
-- How should inversions and playing in different octaves be treated?
+- How should inversions and playing in different octaves be treated? (Fun fact: both B and Cb exist and can be used.)
 
 - How should editing the chord that you're adding supposed to work? I'm not really happy with the current situation. I
     need to find a way that is simple, so I don't think adding chords by means of entering each individual note, like
@@ -75,6 +78,8 @@ The next step should be to add functionality for changing the colour of the chor
 - The playback is a bit jerky right at the end/beginning of the loop. I'm not sure why this happens, but I believe it
     might have to do with stopping and restarting midiDriver in between. But for some reason, it freaks out when I don't
     do that. I should look into it, but it's also fine the way it is right now.
+
+- Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 ## Things that are finished:
 
@@ -125,3 +130,5 @@ The next step should be to add functionality for changing the colour of the chor
 - Make it so playback stops when pressing Edit.
 
 - Fix bug regarding ChordType names.
+
+- Fix how chords are removed.
