@@ -61,7 +61,7 @@ public enum ChordType {
     public static List<String> stringValues() {
         List<String> sb = new ArrayList<>();
         for (ChordType ct : values()) {
-            sb.add(ct.name());
+            sb.add(ct.getName());
         }
         return sb;
     }

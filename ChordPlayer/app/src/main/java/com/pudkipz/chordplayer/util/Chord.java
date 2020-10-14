@@ -36,7 +36,6 @@ public class Chord {
 
     private List<MidiEvent> createAndGetEvents() {
         List<MidiEvent> events = new ArrayList<>();
-        System.out.println(chordType.getIntervals().toString());
 
         if (root != null) {
             for (int i : chordType.getIntervals()) {
