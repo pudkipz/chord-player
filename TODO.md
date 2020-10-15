@@ -13,15 +13,25 @@ related things.
 
 ## Things that should be done:
 
+- Fun with rhythm:
+    - Step 1: Create a way to represent the time signature.
+    - Step 2: Make it possible to divide the bar into beats (only 4/4 for now, so 4 beats.
+    - Step 3: Make it possible to divide the 1/4 beats into arbitrarily small divisions. Or, maybe have a cap at, for example 1/16.
+    - Step 4: Make it possible to change the time signature. How should the existing track be affected?
+      - Step 4a: Make it possible to change the number of 1/4 beats there are in one bar.
+      - Step 4b: Make it possible to change the size of the denominator.
+    - Step 5: Make it possible to divide the beat into arbitrary tuplets: triplets, quintuplets, septuples...
+
 - Think of a way to represent silence. Should be possible for now  to simply add a "quiet" ChordType, but the name of the
-    chord must also change (to have no root).
+    chord must also change (to have no root, or in some way show that there won't be anything playing).
 
 - Add a toggleable metronome track.
 
 - Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~, or change it dynamically. It doesn't
     feel intuitive the way it is currently.
 
-- Change the chord box to a vertical ScrollView.
+- Change the chord box to a vertical ScrollView. The problem is that I'll need some kind of horizontal inner layout, which
+    wraps to match parent size. LinearLayout doesn't do this the way I want it to.
 
 - Make it possible to decide where to insert a new chord.
 
@@ -33,16 +43,26 @@ related things.
 - Maybe ChordType shouldn't be an enum. I think it would be cool to be able to create custom chord types, so having them
     in a different non code dependent format could be cool. Maybe with the help of json? I should look into it.
 
-- How should inversions and playing in different octaves be treated? (Fun fact: both B and Cb exist and can be used.)
+- Similarly, Note may also not need to be an enum. Especially since every 12th note is the same, only an octave off. So
+    it might actually help with playing in different octaves and so on. I don't think having notes in an external format
+    would be helpful, though.
+
+- How should inversions and playing in different octaves be treated? Fun fact: both B and Cb exist and can be used,
+    but are an octave apart. Although with the removal of "flat" button, I don't actually need both anymore. But see
+    the above comment for more thought about this.
+
+- Are key signatures something I should take into consideration? Currently, all notes are either natural or flat, which
+    doesn't make sense from a music theory perspective, but on the other hand, having key signatures might add unnecessary
+    complexity, since it works fine like this. It's just a bit weird.
 
 - How should editing the chord that you're adding supposed to work? I'm not really happy with the current situation. I
-    need to find a way that is simple, so I don't think adding chords by means of entering each individual note, like
-    musescore, is good. I also need to think about how to integrate having more colours and chord variations. I could
+    need to find a way that is simple, so I don't think adding chords by means of entering each individual note
+    is good. I also need to think about how to integrate having more colours and chord variations. I could
     have another spinner with one option per variation, but might become overly verbose. I should think about the
     possible colours that I want to include to decide whether that is a good idea or not. Regarding flats and sharps,
     maybe I should use key signatures. But I fear that it would add unnecessary complexity.
     - Maybe having a pop up for adding and editing chords could work. That way, it would also be uniform, and I don't
-        think that there is much use for being able to change the chord before adding it.
+          think that there is much use for being able to change the chord before adding it.
 
 ## Things put on ice:
 
