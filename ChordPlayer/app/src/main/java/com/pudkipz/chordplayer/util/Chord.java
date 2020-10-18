@@ -19,14 +19,14 @@ public class Chord {
     private final List<MidiEvent> midiEvents;
 
     private long t;
-    private long l;
+    private int l;
 
     public Chord(Note root, int color) {
         this.root = root;
         midiEvents = new ArrayList<>();
     }
 
-    public Chord(Note root, ChordType chord, long t, long l) {
+    public Chord(Note root, ChordType chord, long t, int l) {
         this.t = t;
         this.l = l;
         this.root = root;
@@ -96,8 +96,12 @@ public class Chord {
         rebuildEvents();
     }
 
-    public void setLength(long length) {
+    public void setLength(int length) {
         l = length;
         rebuildEvents();
+    }
+
+    public int getLength() {
+        return l;
     }
 }

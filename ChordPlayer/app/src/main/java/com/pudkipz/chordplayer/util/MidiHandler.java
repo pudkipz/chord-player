@@ -15,12 +15,14 @@ import java.util.List;
 public class MidiHandler {
 
     private static int DEFAULT_RESOLUTION = 480; // Constant from MidiFile.
-    private static int DEFAULT_BPM = 400; // Debug value (very high!).
+    private static int DEFAULT_BPM = 100;
 
     private MidiAdapter adapter;
     private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
     private ArrayList<MidiHandlerListener> listeners;
-    private int bpm;
+    private TimeSignature timeSignature;
+    private MidiTrack tempoTrack;
+    private Tempo tempo;
 
     /**
      * Initializes with Track track.
@@ -63,18 +65,6 @@ public class MidiHandler {
         }
 
         return midiTrack;
-    }
-
-    private MidiTrack getTempoTrack() {
-        MidiTrack tempoTrack = new MidiTrack();
-        TimeSignature ts = new TimeSignature();
-        ts.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
-        Tempo tempo = new Tempo();
-        tempo.setBpm(bpm);
-        tempoTrack.insertEvent(ts);
-        tempoTrack.insertEvent(tempo);
-
-        return tempoTrack;
     }
 
     /**
@@ -123,7 +113,7 @@ public class MidiHandler {
         if (adapter.isPlaying()) {
             adapter.stop();
         } else {
-            adapter.setTracks(getMidiTrack(), getTempoTrack());
+            adapter.setTracks(getMidiTrack(), tempoTrack);
             adapter.playTrack();
         }
     }
@@ -161,27 +151,29 @@ public class MidiHandler {
      *
      * @param root  midi value for the root note of the chord
      * @param t     when to play the chord
-     * @param l     how long to play the chord
+     * @param l     how many beats to play the chord
      * @param chordType adds notes at the given intervals, counted from root.
      */
-    public void insertChord(Note root, long t, long l, ChordType chordType) {
+    public void insertChord(Note root, long t, int l, ChordType chordType) {
         adapter.stop();
         chordTrack.add(new Chord(root, chordType, t, l));
         notifyUpdateTrack();
     }
 
-    public void insertChord(Note root, long l, ChordType chordType) {
+    public void insertChord(Note root, int l, ChordType chordType) {
         long t = getMidiTrack().getLengthInTicks();
         insertChord(root, t, l, chordType);
     }
 
     /**
-     * DEFAULT_RESOLUTION is the length of one beat, so *4 means hold for one bar.
+     * Holds a chord for 1 bar.
      * @param root r
      * @param chord c
      */
     public void insertChord(Note root, ChordType chord) {
-        insertChord(root, DEFAULT_RESOLUTION * 4, chord);
+        System.out.println(timeSignature.getNumerator() + ", den: " + timeSignature.getDenominatorValue());
+        insertChord(root, DEFAULT_RESOLUTION * (timeSignature.getNumerator() / timeSignature.getRealDenominator()) * timeSignature.getNumerator(), chord);
+        // DEFAULT_RESOLUTION is the length of one beat, so (num^2)/den means it's held for 1 bar.
     }
 
     public void editChordButtonPressed(Chord c, Note n, ChordType chordType) {
@@ -202,11 +194,11 @@ public class MidiHandler {
     }
 
     public void setBPM(int bpm) {
-        this.bpm = bpm;
+        tempo.setBpm(bpm);
     }
 
     public int getBPM() {
-        return bpm;
+        return (int) tempo.getBpm();
     }
 
     /**
@@ -217,7 +209,15 @@ public class MidiHandler {
         chordTrack = new ArrayList<>();
         listeners = new ArrayList<>();
 
-        bpm = DEFAULT_BPM;
+        timeSignature = new TimeSignature();
+        timeSignature.setTimeSignature(4, 4, TimeSignature.DEFAULT_METER, TimeSignature.DEFAULT_DIVISION);
+        // System.out.println("NUMERATOR " + timeSignature.getNumerator() + " DENOMINATOR " + timeSignature.getDenominatorValue());
+
+        tempoTrack = new MidiTrack();
+        tempo = new Tempo();
+        tempo.setBpm(DEFAULT_BPM);
+        tempoTrack.insertEvent(timeSignature);
+        tempoTrack.insertEvent(tempo);
 
         insertChord(Note.C, ChordType.Major);
         insertChord(Note.G, ChordType.Major);
