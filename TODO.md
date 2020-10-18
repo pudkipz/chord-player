@@ -7,14 +7,19 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I made some UI improvements and also fixed the behaviour of the remove button. Next I could start with one of the tasks
-below, but I should also think about what else I can do (I'm almost running out of things to do!), and especially UI-
-related things.
+I changed the way tempo stuff was relied upon in MidiHandler, making the chord length dependent on the time signature and
+not just a constant. I have to think about how to represent the length each individual chord, however. For step 2, making
+the length be the number of quarter notes should be sufficient.
+
+The issue of how to represent the chords in the UI is becoming increasingly relevant. Maybe I should step back and think
+about that before proceeding.
 
 ## Things that should be done:
 
+- Fix chord boxes going solidly gray after clicking on them. Alternatively, think of a new way of displaying the chords.
+
 - Fun with rhythm:
-    - Step 1: Create a way to represent the time signature.
+    - ~~Step 1: Create a way to represent the time signature.~~
     - Step 2: Make it possible to divide the bar into beats (only 4/4 for now, so 4 beats.
     - Step 3: Make it possible to divide the 1/4 beats into arbitrarily small divisions. Or, maybe have a cap at, for example 1/16.
     - Step 4: Make it possible to change the time signature. How should the existing track be affected?
