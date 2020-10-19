@@ -146,7 +146,7 @@ public class MidiHandler {
      */
     public void insertChord(Note root, int l, ChordType chordType) {
         adapter.stop();
-        chordTrack.add(new Chord(root, chordType, l));
+        chordTrack.add(new Chord(root, chordType, l, 4));
         notifyUpdateTrack();
     }
 
@@ -158,19 +158,20 @@ public class MidiHandler {
      */
     public void insertChord(Note root, ChordType chord) {
         // System.out.println(timeSignature.getNumerator() + ", den: " + timeSignature.getDenominatorValue());
-        insertChord(root, 1, chord);
+        insertChord(root, 4, chord);
         // DEFAULT_RESOLUTION is the length of one beat, so (num^2)/den means it's held for 1 bar.
     }
 
     private List<MidiEvent> buildChord(Chord c) {
         List<MidiEvent> events = new ArrayList<>();
         long tick = midiTrack.getLengthInTicks();
-        long length = DEFAULT_RESOLUTION * (timeSignature.getNumerator() / timeSignature.getRealDenominator()) * timeSignature.getNumerator(); // TODO: find better name
+        long length = (long) (DEFAULT_RESOLUTION * (c.getLength()) * 4);
+        // *4 to compensate for DEFAULT_RESOLUTION being a 1/4 note.
 
         if (c.getRoot() != null) {
             for (int i : c.getChordType().getIntervals()) {
                 NoteOn on = new NoteOn(tick, 0, c.getRoot().getMidiValue() + i, DEFAULT_VELOCITY);
-                NoteOn off = new NoteOn(tick + length * c.getLength(), 0, c.getRoot().getMidiValue() + i, 0);
+                NoteOn off = new NoteOn(tick + length, 0, c.getRoot().getMidiValue() + i, 0);
 
                 events.add(on);
                 events.add(off);

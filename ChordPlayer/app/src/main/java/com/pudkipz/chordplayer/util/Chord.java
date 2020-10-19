@@ -11,20 +11,19 @@ public class Chord {
     private Note root;
     private ChordType chordType;
 
-    private int l;
+    private int numerator;
+    private int denominator;
 
-    public Chord(Note root, int color) {
-        this.root = root;
-    }
-
-    public Chord(Note root, ChordType chord, int l) {
-        this.l = l;
+    public Chord(Note root, ChordType chord, int num, int den) {
+        this.numerator = num;
+        this.denominator = den;
         this.root = root;
         chordType = chord;
     }
 
     /**
      * Returns root note + suffix.
+     *
      * @return a string representation of the chord.
      */
     @Override
@@ -34,6 +33,7 @@ public class Chord {
 
     /**
      * Changes the root note to Note n.
+     *
      * @param n note to change root to.
      */
     public void changeRoot(Note n) {
@@ -56,11 +56,21 @@ public class Chord {
         return root;
     }
 
-    public void setLength(int length) {
-        l = length;
+    public void setLength(int num, int den) {
+        this.numerator = num;
+        this.denominator = den;
+    }
+
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
     }
 
     public int getLength() {
-        return l;
+        return numerator/denominator;
     }
+
 }
