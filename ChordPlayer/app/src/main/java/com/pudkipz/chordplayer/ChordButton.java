@@ -16,9 +16,9 @@ public class ChordButton extends androidx.appcompat.widget.AppCompatButton {
         this(context);
         this.chord = c;
         if (c.getRoot() == null) {
-            setText("");
+            setText("\n");
         } else {
-            setText(c.toString());
+            setText(c.toString() + "\n" + c.getLength());
         }
     }
 

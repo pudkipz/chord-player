@@ -1,11 +1,5 @@
 package com.pudkipz.chordplayer.util;
 
-import com.leff.midi.event.MidiEvent;
-import com.leff.midi.event.NoteOn;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Contains information about its root and whether it's a major or minor chord. Also contains a
  * reference to its corresponding MidiEvents.
@@ -16,38 +10,17 @@ public class Chord {
 
     private Note root;
     private ChordType chordType;
-    private final List<MidiEvent> midiEvents;
 
-    private long t;
     private int l;
 
     public Chord(Note root, int color) {
         this.root = root;
-        midiEvents = new ArrayList<>();
     }
 
-    public Chord(Note root, ChordType chord, long t, int l) {
-        this.t = t;
+    public Chord(Note root, ChordType chord, int l) {
         this.l = l;
         this.root = root;
         chordType = chord;
-        midiEvents = createAndGetEvents();
-    }
-
-    private List<MidiEvent> createAndGetEvents() {
-        List<MidiEvent> events = new ArrayList<>();
-
-        if (root != null) {
-            for (int i : chordType.getIntervals()) {
-                NoteOn on = new NoteOn(t, 0, root.getMidiValue() + i, DEFAULT_VELOCITY);
-                NoteOn off = new NoteOn(t + l, 0, root.getMidiValue() + i, 0);
-
-                events.add(on);
-                events.add(off);
-            }
-        }
-
-        return events;
     }
 
     /**
@@ -65,40 +38,26 @@ public class Chord {
      */
     public void changeRoot(Note n) {
         this.root = n;
-        rebuildEvents();
     }
 
     public void changeChordType(ChordType chordType) {
         this.chordType = chordType;
-        rebuildEvents();
-    }
-
-    private void rebuildEvents() {
-        midiEvents.clear();
-        midiEvents.addAll(createAndGetEvents());
     }
 
     public void setQuiet() {
         root = null;
-        midiEvents.clear();
+    }
+
+    public ChordType getChordType() {
+        return chordType; //TODO: defensive copy
     }
 
     public Note getRoot() {
         return root;
     }
 
-    public List<MidiEvent> getMidiEvents() {
-        return midiEvents;
-    }
-
-    public void setTick(long tick) {
-        t = tick;
-        rebuildEvents();
-    }
-
     public void setLength(int length) {
         l = length;
-        rebuildEvents();
     }
 
     public int getLength() {

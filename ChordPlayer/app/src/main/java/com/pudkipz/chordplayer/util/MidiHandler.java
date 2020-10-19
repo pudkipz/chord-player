@@ -2,11 +2,11 @@ package com.pudkipz.chordplayer.util;
 
 import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
+import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.meta.Tempo;
 import com.leff.midi.event.meta.TimeSignature;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,11 +14,13 @@ import java.util.List;
  */
 public class MidiHandler {
 
+    private static final int DEFAULT_VELOCITY = 60;
     private static int DEFAULT_RESOLUTION = 480; // Constant from MidiFile.
     private static int DEFAULT_BPM = 100;
 
     private MidiAdapter adapter;
     private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
+    private MidiTrack midiTrack;
     private ArrayList<MidiHandlerListener> listeners;
     private TimeSignature timeSignature;
     private MidiTrack tempoTrack;
@@ -55,16 +57,22 @@ public class MidiHandler {
         return chords.toString();
     }
 
-    private MidiTrack getMidiTrack() {
-        MidiTrack midiTrack = new MidiTrack();
+    private void clearMidiTrack() {
+        midiTrack.getEvents().clear();
+    }
+
+    private void buildMidiTrack() {
+        if (midiTrack == null) {
+            midiTrack = new MidiTrack();
+        }
+
+        clearMidiTrack();
 
         for (Chord c : chordTrack) {
-            for (MidiEvent e : c.getMidiEvents()) {
+            for (MidiEvent e : buildChord(c)) {
                 midiTrack.insertEvent(e);
             }
         }
-
-        return midiTrack;
     }
 
     /**
@@ -80,20 +88,12 @@ public class MidiHandler {
 
     /**
      * Removes provided Chord and moves all subsequent chords.
+     *
      * @param removeChord Chord to be removed.
      */
     public void removeButtonPressed(Chord removeChord) {
         adapter.stop();
-
-        List<Chord> copyChordTrack = new ArrayList<>(chordTrack);
-        chordTrack.clear();
-
-        for (Chord c : copyChordTrack) {
-            System.out.println(Arrays.toString(chordTrack.toArray()));
-            if (removeChord != c) {
-                insertChord(c);
-            }
-        }
+        chordTrack.remove(removeChord);
         notifyUpdateTrack();
     }
 
@@ -113,7 +113,8 @@ public class MidiHandler {
         if (adapter.isPlaying()) {
             adapter.stop();
         } else {
-            adapter.setTracks(getMidiTrack(), tempoTrack);
+            buildMidiTrack();
+            adapter.setTracks(midiTrack, tempoTrack);
             adapter.playTrack();
         }
     }
@@ -137,43 +138,46 @@ public class MidiHandler {
     }
 
     /**
-     * @param c c
-     */
-    public void insertChord(Chord c) {
-        adapter.stop();
-        long t = getMidiTrack().getLengthInTicks();
-        c.setTick(t);
-        chordTrack.add(c);
-    }
-
-    /**
      * Inserts events into midiTrack and listTrack.
      *
-     * @param root  midi value for the root note of the chord
-     * @param t     when to play the chord
-     * @param l     how many beats to play the chord
+     * @param root      midi value for the root note of the chord
+     * @param l         how many beats to play the chord
      * @param chordType adds notes at the given intervals, counted from root.
      */
-    public void insertChord(Note root, long t, int l, ChordType chordType) {
-        adapter.stop();
-        chordTrack.add(new Chord(root, chordType, t, l));
-        notifyUpdateTrack();
-    }
-
     public void insertChord(Note root, int l, ChordType chordType) {
-        long t = getMidiTrack().getLengthInTicks();
-        insertChord(root, t, l, chordType);
+        adapter.stop();
+        chordTrack.add(new Chord(root, chordType, l));
+        notifyUpdateTrack();
     }
 
     /**
      * Holds a chord for 1 bar.
-     * @param root r
+     *
+     * @param root  r
      * @param chord c
      */
     public void insertChord(Note root, ChordType chord) {
-        System.out.println(timeSignature.getNumerator() + ", den: " + timeSignature.getDenominatorValue());
-        insertChord(root, DEFAULT_RESOLUTION * (timeSignature.getNumerator() / timeSignature.getRealDenominator()) * timeSignature.getNumerator(), chord);
+        // System.out.println(timeSignature.getNumerator() + ", den: " + timeSignature.getDenominatorValue());
+        insertChord(root, 1, chord);
         // DEFAULT_RESOLUTION is the length of one beat, so (num^2)/den means it's held for 1 bar.
+    }
+
+    private List<MidiEvent> buildChord(Chord c) {
+        List<MidiEvent> events = new ArrayList<>();
+        long tick = midiTrack.getLengthInTicks();
+        long length = DEFAULT_RESOLUTION * (timeSignature.getNumerator() / timeSignature.getRealDenominator()) * timeSignature.getNumerator(); // TODO: find better name
+
+        if (c.getRoot() != null) {
+            for (int i : c.getChordType().getIntervals()) {
+                NoteOn on = new NoteOn(tick, 0, c.getRoot().getMidiValue() + i, DEFAULT_VELOCITY);
+                NoteOn off = new NoteOn(tick + length * c.getLength(), 0, c.getRoot().getMidiValue() + i, 0);
+
+                events.add(on);
+                events.add(off);
+            }
+        }
+
+        return events;
     }
 
     public void editChordButtonPressed(Chord c, Note n, ChordType chordType) {
@@ -223,5 +227,7 @@ public class MidiHandler {
         insertChord(Note.G, ChordType.Major);
         insertChord(Note.A, ChordType.Minor);
         insertChord(Note.F, ChordType.Major);
+
+        buildMidiTrack();
     }
 }
