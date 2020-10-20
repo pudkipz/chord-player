@@ -7,12 +7,9 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I changed the way tempo stuff was relied upon in MidiHandler, making the chord length dependent on the time signature and
-not just a constant. I have to think about how to represent the length each individual chord, however. For step 2, making
-the length be the number of quarter notes should be sufficient.
-
-The issue of how to represent the chords in the UI is becoming increasingly relevant. Maybe I should step back and think
-about that before proceeding.
+I made it possible to change the length of a chord, but it's done in a really ugly manner. I should think about how I want
+to do it instead. One option that I'm rather fond of is through a Meter class, specifying numerator and denominator. I
+already created a class for it, but it's not git included.
 
 ## Things that should be done:
 
@@ -20,15 +17,16 @@ about that before proceeding.
 
 - Fun with rhythm:
     - ~~Step 1: Create a way to represent the time signature.~~
-    - Step 2: Make it possible to divide the bar into beats (only 4/4 for now, so 4 beats.
-    - Step 3: Make it possible to divide the 1/4 beats into arbitrarily small divisions. Or, maybe have a cap at, for example 1/16.
+    - ~~Step 2: Make it possible to divide the bar into beats (only 4/4 for now, so 4 beats.~~
+    - ~~Step 3: Make it possible to divide the 1/4 beats into arbitrarily small divisions. Or, maybe have a cap at, for example 1/16.~~
     - Step 4: Make it possible to change the time signature. How should the existing track be affected?
       - Step 4a: Make it possible to change the number of 1/4 beats there are in one bar.
       - Step 4b: Make it possible to change the size of the denominator.
     - Step 5: Make it possible to divide the beat into arbitrary tuplets: triplets, quintuplets, septuples...
 
 - Think of a way to represent silence. Should be possible for now  to simply add a "quiet" ChordType, but the name of the
-    chord must also change (to have no root, or in some way show that there won't be anything playing).
+    chord must also change (to have no root, or in some way show that there won't be anything playing). See considerations
+    for more details.
 
 - Add a toggleable metronome track.
 
@@ -44,6 +42,11 @@ about that before proceeding.
   (Not actually necessary for removal.)
 
 ## Things that should be considered:
+
+- How should the rest of the track be affected by changing the length of a chord, or removing a chord? I should implement
+    some kind of placeholder, or better yet, rests! to handle this. Or, just lengthen the chord before to preserve overall
+    track length. That would ensure minimal complexity for the user, and I'm not sure that having a representation for
+    is desirable anyway.
 
 - Maybe ChordType shouldn't be an enum. I think it would be cool to be able to create custom chord types, so having them
     in a different non code dependent format could be cool. Maybe with the help of json? I should look into it.
