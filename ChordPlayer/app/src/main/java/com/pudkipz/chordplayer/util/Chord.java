@@ -9,12 +9,16 @@ public class Chord {
     private Note root;
     private ChordType chordType;
 
-    private int numerator;
-    private int denominator;
+    private Meter meter;
 
     public Chord(Note root, ChordType chord, int num, int den) {
-        this.numerator = num;
-        this.denominator = den;
+        meter = new Meter(num, den);
+        this.root = root;
+        chordType = chord;
+    }
+
+    public Chord(Note root, ChordType chord, Meter m) {
+        meter = m;
         this.root = root;
         chordType = chord;
     }
@@ -55,19 +59,18 @@ public class Chord {
     }
 
     public void setLength(int num, int den) {
-        this.numerator = num;
-        this.denominator = den;
+        meter.setMeter(num, den);
     }
 
     public int getNumerator() {
-        return numerator;
+        return meter.getNumerator();
     }
 
     public int getDenominator() {
-        return denominator;
+        return meter.denominator;
     }
 
     public float getLength() {
-        return (float) numerator/(float) denominator;
+        return meter.getValue();
     }
 }

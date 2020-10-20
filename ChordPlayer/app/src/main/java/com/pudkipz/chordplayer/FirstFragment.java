@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.pudkipz.chordplayer.util.Chord;
 import com.pudkipz.chordplayer.util.ChordType;
+import com.pudkipz.chordplayer.util.Meter;
 import com.pudkipz.chordplayer.util.MidiHandler;
 import com.pudkipz.chordplayer.util.MidiHandlerListener;
 import com.pudkipz.chordplayer.util.Note;
@@ -34,13 +35,12 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     private Spinner colourSpinner;
     private ChordButton selectedChordButton;
     private EditText setBPM;
-    private EditText setLength;
     private Spinner chordDenominatorSpinner;
     private Spinner chordLengthSpinner;
 
-    // TODO: find a better way to implement. String arrays in resource file? Custom SpinnerAdapter? Meter class?
-    private final static String[] LENGTHS = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
-    private final static String[] DENOMINATORS = new String[]{"1/1", "1/2", "1/4", "1/8", "1/16"};
+    // TODO: move METERS into constants class?
+    private final static Meter[] METERS = new Meter[]{
+            new Meter(1, 1), new Meter(1, 2), new Meter(1, 4), new Meter(1, 8), new Meter(1, 16)};
 
     @Override
     public View onCreateView(
@@ -112,15 +112,15 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         selectedChordType = ChordType.Major;
 
         chordDenominatorSpinner = view.findViewById(R.id.spinner_chord_denominator);
-        ArrayAdapter<CharSequence> chordDenominatorSpinnerAdapter = new ArrayAdapter(getContext(),
-                android.R.layout.simple_spinner_item, DENOMINATORS);
+        ArrayAdapter<Meter> chordDenominatorSpinnerAdapter = new MeterSpinnerAdapter(getContext(),
+                android.R.layout.simple_spinner_item, METERS);
         chordSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chordDenominatorSpinner.setAdapter(chordDenominatorSpinnerAdapter);
         chordDenominatorSpinner.setOnItemSelectedListener(this);
 
         chordLengthSpinner = view.findViewById(R.id.spinner_length);
-        ArrayAdapter<CharSequence> chordLengthSpinnerAdapter = new ArrayAdapter(getContext(),
-                android.R.layout.simple_spinner_item, LENGTHS);
+        ArrayAdapter<CharSequence> chordLengthSpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.chord_lengths, android.R.layout.simple_spinner_item);
         chordSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chordLengthSpinner.setAdapter(chordLengthSpinnerAdapter);
         chordLengthSpinner.setOnItemSelectedListener(this);
@@ -172,7 +172,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
                 break;
 
             case R.id.spinner_chord_denominator:
-                selectedChordDenominator = parseMeter((String) parent.getSelectedItem());
+                selectedChordDenominator = ((Meter) parent.getSelectedItem()).getDenominator();
                 break;
 
             case R.id.spinner_length:
@@ -183,13 +183,5 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    /**
-     * Given a fraction as a String such as "1/8", gives the denominator. Should only be a temporary solution.
-     * @param meter meter to be parsed
-     */
-    private int parseMeter(String meter) {
-        return Integer.parseInt(meter.split("/")[1]);
     }
 }
