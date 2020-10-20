@@ -6,8 +6,6 @@ package com.pudkipz.chordplayer.util;
  */
 public class Chord {
 
-    private static final int DEFAULT_VELOCITY = 60;
-
     private Note root;
     private ChordType chordType;
 

@@ -53,9 +53,9 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     }
 
 
-    // TODO:
+    // TODO: (Consider renaming.qqq
     /**
-     * Starts playback of the current MidiFile. (Consider renaming.)
+     * Starts playback of the current MidiFile.
      */
     public void playTrack() {
         midiProcessor.reset();
@@ -72,10 +72,9 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         midiProcessor.start();
     }
 
-    // TODO:
+    // TODO: (Consider renaming parameters.)
     /**
      * Changes the current tracks of the MidiFile. The parameter order doesn't actually matter.
-     * (Consider renaming parameters.)
      * @param noteTrack n
      * @param tempoTrack t
      */
