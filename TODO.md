@@ -7,13 +7,11 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I made it possible to change the length of a chord, but it's done in a really ugly manner. I should think about how I want
-to do it instead. One option that I'm rather fond of is through a Meter class, specifying numerator and denominator. I
-already created a class for it, but it's not git included.
+I refactored things into Meter. Now, the most valuable feature would be having a toggleable metronome. Should be fine to
+have it tick every quarter note as a first step. I don't necessarily think that being able to change the time signature
+is particularly important, especially not unless you can actually hear it. For example, in terms of a metronome.
 
 ## Things that should be done:
-
-- Fix chord boxes going solidly gray after clicking on them. Alternatively, think of a new way of displaying the chords.
 
 - Fun with rhythm:
     - ~~Step 1: Create a way to represent the time signature.~~
@@ -23,6 +21,7 @@ already created a class for it, but it's not git included.
       - Step 4a: Make it possible to change the number of 1/4 beats there are in one bar.
       - Step 4b: Make it possible to change the size of the denominator.
     - Step 5: Make it possible to divide the beat into arbitrary tuplets: triplets, quintuplets, septuples...
+      - Half finished. Has support for it, only need to add it to the array METERS in FirstFragment.
 
 - Think of a way to represent silence. Should be possible for now  to simply add a "quiet" ChordType, but the name of the
     chord must also change (to have no root, or in some way show that there won't be anything playing). See considerations
@@ -40,6 +39,8 @@ already created a class for it, but it's not git included.
 
 - Make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords.
   (Not actually necessary for removal.)
+
+- Create patterns that the chord can be played in. So, multiple hits or arpeggiating the chord, for example.
 
 ## Things that should be considered:
 
@@ -160,3 +161,5 @@ The next step should be to add functionality for changing the colour of the chor
 - Fix bug regarding ChordType names.
 
 - Fix how chords are removed.
+
+- Fix chord boxes going solidly gray after clicking on them. Alternatively, think of a new way of displaying the chords.
