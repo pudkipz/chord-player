@@ -69,8 +69,7 @@ public class Chord {
         return denominator;
     }
 
-    public int getLength() {
-        return numerator/denominator;
+    public float getLength() {
+        return (float) numerator/(float) denominator;
     }
-
 }

@@ -24,13 +24,23 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
     private MidiHandler midiHandler;
 
+    private Note selectedNote;
+    private ChordType selectedChordType;
+    private int selectedLength;
+    private int selectedChordDenominator;
+
     private LinearLayout linearLayout_chords;
     private Spinner chordSpinner;
-    private Note selectedNote;
     private Spinner colourSpinner;
-    private ChordType selectedChordType;
     private ChordButton selectedChordButton;
     private EditText setBPM;
+    private EditText setLength;
+    private Spinner chordDenominatorSpinner;
+    private Spinner chordLengthSpinner;
+
+    // TODO: find a better way to implement. String arrays in resource file? Custom SpinnerAdapter? Meter class?
+    private final static String[] LENGTHS = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+    private final static String[] DENOMINATORS = new String[]{"1/1", "1/2", "1/4", "1/8", "1/16"};
 
     @Override
     public View onCreateView(
@@ -50,7 +60,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                midiHandler.insertChord(selectedNote, selectedChordType);
+                midiHandler.insertChord(selectedNote, selectedChordType, selectedLength, selectedChordDenominator);
             }
         });
 
@@ -76,8 +86,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             @Override
             public void onClick(View view) {
                 if (selectedChordButton != null) {
-
-                    midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedChordType);
+                    midiHandler.editChordButtonPressed(selectedChordButton.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedChordType, selectedLength, selectedChordDenominator);
                 }
             }
         });
@@ -102,6 +111,19 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         colourSpinner.setOnItemSelectedListener(this);
         selectedChordType = ChordType.Major;
 
+        chordDenominatorSpinner = view.findViewById(R.id.spinner_chord_denominator);
+        ArrayAdapter<CharSequence> chordDenominatorSpinnerAdapter = new ArrayAdapter(getContext(),
+                android.R.layout.simple_spinner_item, DENOMINATORS);
+        chordSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chordDenominatorSpinner.setAdapter(chordDenominatorSpinnerAdapter);
+        chordDenominatorSpinner.setOnItemSelectedListener(this);
+
+        chordLengthSpinner = view.findViewById(R.id.spinner_length);
+        ArrayAdapter<CharSequence> chordLengthSpinnerAdapter = new ArrayAdapter(getContext(),
+                android.R.layout.simple_spinner_item, LENGTHS);
+        chordSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chordLengthSpinner.setAdapter(chordLengthSpinnerAdapter);
+        chordLengthSpinner.setOnItemSelectedListener(this);
 
         linearLayout_chords = view.findViewById(R.id.linearLayout_chords);
         onUpdateTrack();
@@ -143,16 +165,31 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         switch (parent.getId()) {
             case R.id.spinner_colour:
                 selectedChordType = ChordType.getChordType((String) parent.getSelectedItem());
-
                 break;
+
             case R.id.spinner_root_note:
                 selectedNote = Note.valueOf((String) parent.getSelectedItem());
                 break;
+
+            case R.id.spinner_chord_denominator:
+                selectedChordDenominator = parseMeter((String) parent.getSelectedItem());
+                break;
+
+            case R.id.spinner_length:
+                selectedLength = Integer.parseInt((String) parent.getSelectedItem());
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    /**
+     * Given a fraction as a String such as "1/8", gives the denominator. Should only be a temporary solution.
+     * @param meter meter to be parsed
+     */
+    private int parseMeter(String meter) {
+        return Integer.parseInt(meter.split("/")[1]);
     }
 }

@@ -140,13 +140,16 @@ public class MidiHandler {
     /**
      * Inserts events into midiTrack and listTrack.
      *
-     * @param root      midi value for the root note of the chord
-     * @param l         how many beats to play the chord
-     * @param chordType adds notes at the given intervals, counted from root.
+     * @param root        midi value for the root note of the chord
+     * @param chordType   adds notes at the given intervals, counted from root.
+     * @param length      how many denominators to play the chord
+     * @param denominator the division of the chord
      */
-    public void insertChord(Note root, int l, ChordType chordType) {
+    public void insertChord(Note root, ChordType chordType, int length, int denominator) {
+        // TODO: fix descriptions of length and denominator in javadoc.
         adapter.stop();
-        chordTrack.add(new Chord(root, chordType, l, 4));
+        chordTrack.add(new Chord(root, chordType, length, denominator));
+        buildMidiTrack();
         notifyUpdateTrack();
     }
 
@@ -157,9 +160,7 @@ public class MidiHandler {
      * @param chord c
      */
     public void insertChord(Note root, ChordType chord) {
-        // System.out.println(timeSignature.getNumerator() + ", den: " + timeSignature.getDenominatorValue());
-        insertChord(root, 4, chord);
-        // DEFAULT_RESOLUTION is the length of one beat, so (num^2)/den means it's held for 1 bar.
+        insertChord(root, chord, timeSignature.getNumerator(), timeSignature.getRealDenominator());
     }
 
     private List<MidiEvent> buildChord(Chord c) {
@@ -181,10 +182,12 @@ public class MidiHandler {
         return events;
     }
 
-    public void editChordButtonPressed(Chord c, Note n, ChordType chordType) {
+    public void editChordButtonPressed(Chord c, Note n, ChordType chordType, int length, int denominator) {
         adapter.stop();
         c.changeRoot(n);
         c.changeChordType(chordType);
+        c.setLength(length, denominator);
+        buildMidiTrack();
         notifyUpdateTrack();
     }
 

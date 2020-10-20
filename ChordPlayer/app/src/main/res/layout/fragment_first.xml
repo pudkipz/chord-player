@@ -7,6 +7,34 @@
     android:background="#FFFFFF"
     tools:context=".FirstFragment">
 
+    <Spinner
+        android:id="@+id/spinner_chord_denominator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/spinner_root_note"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
+
+    <Spinner
+        android:id="@+id/spinner_length"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="24dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
+
     <Button
         android:id="@+id/button_play"
         android:layout_width="0dp"
@@ -27,7 +55,7 @@
         android:layout_marginRight="56dp"
         android:text="@string/button_add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_colour" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_length" />
 
     <Button
         android:id="@+id/button_remove"
@@ -41,7 +69,7 @@
         android:text="@string/button_remove"
         app:layout_constraintEnd_toStartOf="@+id/button_change_chord"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_length" />
 
     <Spinner
         android:id="@+id/spinner_root_note"
@@ -97,7 +125,7 @@
         android:layout_marginRight="20dp"
         android:text="@string/button_change_chord"
         app:layout_constraintEnd_toStartOf="@+id/button_add"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_root_note" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_length" />
 
     <EditText
         android:id="@+id/editTextSetBPM"
