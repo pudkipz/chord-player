@@ -136,6 +136,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
         for (final Chord c : midiHandler.getChordTrack()) {
             final ChordButton b = new ChordButton(this.getContext(), c);
+            b.setBackgroundColor(Color.LTGRAY);
 
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
