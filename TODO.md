@@ -7,9 +7,14 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I refactored things into Meter. Now, the most valuable feature would be having a toggleable metronome. Should be fine to
-have it tick every quarter note as a first step. I don't necessarily think that being able to change the time signature
-is particularly important, especially not unless you can actually hear it. For example, in terms of a metronome.
+I refactored chord types into a json file. Don't know if it's objectively better... but I like it this way, and it should
+make it easier to add more types dynamically.
+
+I'm leaving the last entry, since it still contains relevant information.
+
+    I refactored things into Meter. Now, the most valuable feature would be having a toggleable metronome. Should be fine to
+    have it tick every quarter note as a first step. I don't necessarily think that being able to change the time signature
+    is particularly important, especially not unless you can actually hear it. For example, in terms of a metronome.
 
 ## Things that should be done:
 
@@ -49,10 +54,7 @@ is particularly important, especially not unless you can actually hear it. For e
     track length. That would ensure minimal complexity for the user, and I'm not sure that having a representation for
     is desirable anyway.
 
-- Maybe ChordType shouldn't be an enum. I think it would be cool to be able to create custom chord types, so having them
-    in a different non code dependent format could be cool. Maybe with the help of json? I should look into it.
-
-- Similarly, Note may also not need to be an enum. Especially since every 12th note is the same, only an octave off. So
+- Note may also not need to be an enum. Especially since every 12th note is the same, only an octave off. So
     it might actually help with playing in different octaves and so on. I don't think having notes in an external format
     would be helpful, though.
 
@@ -163,3 +165,6 @@ The next step should be to add functionality for changing the colour of the chor
 - Fix how chords are removed.
 
 - Fix chord boxes going solidly gray after clicking on them. Alternatively, think of a new way of displaying the chords.
+
+-  Maybe ChordType shouldn't be an enum. I think it would be cool to be able to create custom chord types, so having them
+    in a different non code dependent format could be cool. Maybe with the help of json? I should look into it.

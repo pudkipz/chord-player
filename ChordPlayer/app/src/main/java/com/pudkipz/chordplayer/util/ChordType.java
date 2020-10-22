@@ -4,14 +4,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class ChordType {
-/*    Major(new int[]{0, 4, 7}, "Major", ""),
-    Minor(new int[]{0, 3, 7}, "Minor", "m"),
-    Major7(new int[]{0, 4, 7, 11}, "Major 7", "maj7"),
-    Minor7(new int[]{0, 3, 7, 10}, "Minor 7", "m7"),
-    Dominant7(new int[]{0, 4, 7, 10}, "Dominant 7", "7"),
-    Diminished7(new int[]{0, 3, 6, 9}, "Diminished 7", "dim7"),
-    HalfDim7(new int[]{0, 3, 6, 10}, "Half dim 7", "m7b5"),
-    Augmented7(new int[]{0, 4, 8, 10}, "Augmented 7", "aug7");*/
 
 private static Map<String, ChordType> chordTypes;
 

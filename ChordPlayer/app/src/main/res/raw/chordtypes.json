@@ -4,11 +4,34 @@
       "name": "Major",
       "suffix": "",
       "intervals": [0, 4, 7]
-    },
-    {
+    }, {
       "name": "Minor",
       "suffix": "m",
       "intervals": [0, 3, 7]
+    }, {
+      "name": "Major 7",
+      "suffix": "maj7",
+      "intervals": [0, 4, 7, 11]
+    }, {
+      "name": "Minor 7",
+      "suffix": "m7",
+      "intervals": [0, 3, 7, 10]
+    }, {
+      "name": "Dominant 7",
+      "suffix": "7",
+      "intervals": [0, 4, 7, 10]
+    }, {
+      "name": "Diminished 7",
+      "suffix": "dim7",
+      "intervals": [0, 3, 6, 9]
+    }, {
+      "name": "Half Diminished 7",
+      "suffix": "m7b5",
+      "intervals": [0, 3, 6, 10]
+    }, {
+      "name": "Augmented",
+      "suffix": "+",
+      "intervals": [0, 4, 8]
     }
   ]
 }
