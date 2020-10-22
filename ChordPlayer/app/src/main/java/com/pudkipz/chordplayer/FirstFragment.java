@@ -103,13 +103,12 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         selectedNote = Note.C;
 
         colourSpinner = view.findViewById(R.id.spinner_colour);
-        ArrayAdapter<CharSequence> colourSpinnerAdapter = new ArrayAdapter(getContext(),
-                android.R.layout.simple_spinner_item, ChordType.stringValues());
+        ArrayAdapter<ChordType> colourSpinnerAdapter = new ChordTypeSpinnerAdapter(getContext(),
+                android.R.layout.simple_spinner_item, ChordType.getArray());
         colourSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colourSpinner.setAdapter(colourSpinnerAdapter);
-        colourSpinnerAdapter.addAll(ChordType.stringValues());
         colourSpinner.setOnItemSelectedListener(this);
-        selectedChordType = ChordType.Major;
+        selectedChordType = (ChordType) colourSpinner.getItemAtPosition(0);
 
         chordDenominatorSpinner = view.findViewById(R.id.spinner_chord_denominator);
         ArrayAdapter<Meter> chordDenominatorSpinnerAdapter = new MeterSpinnerAdapter(getContext(),
@@ -165,7 +164,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
         switch (parent.getId()) {
             case R.id.spinner_colour:
-                selectedChordType = ChordType.getChordType((String) parent.getSelectedItem());
+                selectedChordType = (ChordType) parent.getSelectedItem();
                 break;
 
             case R.id.spinner_root_note:

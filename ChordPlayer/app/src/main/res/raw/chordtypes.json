@@ -1,0 +1,14 @@
+{
+  "chordtypes": [
+    {
+      "name": "Major",
+      "suffix": "",
+      "intervals": [0, 4, 7]
+    },
+    {
+      "name": "Minor",
+      "suffix": "m",
+      "intervals": [0, 3, 7]
+    }
+  ]
+}

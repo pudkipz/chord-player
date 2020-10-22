@@ -227,10 +227,10 @@ public class MidiHandler {
         tempoTrack.insertEvent(timeSignature);
         tempoTrack.insertEvent(tempo);
 
-        insertChord(Note.C, ChordType.Major);
-        insertChord(Note.G, ChordType.Major);
-        insertChord(Note.A, ChordType.Minor);
-        insertChord(Note.F, ChordType.Major);
+        insertChord(Note.C, ChordType.getChordType("Major"));
+        insertChord(Note.G, ChordType.getChordType("Major"));
+        insertChord(Note.A, ChordType.getChordType("Minor"));
+        insertChord(Note.F, ChordType.getChordType("Major"));
 
         buildMidiTrack();
     }
