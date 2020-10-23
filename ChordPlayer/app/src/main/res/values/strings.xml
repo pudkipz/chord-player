@@ -11,6 +11,7 @@
     <string name="toggleButton_flat">♭</string>
     <string name="button_change_chord">Edit</string>
     <string name="setBPM_autofillHint">0</string>
+    <string name="bpm_text">BPM</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
 
