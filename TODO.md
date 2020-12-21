@@ -7,14 +7,21 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
+I decided that a RecycleView was more appropriate and had a tough time implementing it. In the end, though, I think it looks
+and works much better, but it needs a bit more polishing. I also feel like I made a lot of bad code design choices. Will have
+to look it through. In hindsight, this task was too large and generally badly planned, but to a significant degree, I believe
+that this is because I did not know exactly what a RecycleView is and how much time and effort it would take to implement it.
+
+## Log of the above:
+
+(This is so I can be more verbose and "session focused" than in my commit messages.)
+
 I refactored chord types into a json file. Don't know if it's objectively better... but I like it this way, and it should
 make it easier to add more types dynamically.
 
-I'm leaving the last entry, since it still contains relevant information.
-
-    I refactored things into Meter. Now, the most valuable feature would be having a toggleable metronome. Should be fine to
-    have it tick every quarter note as a first step. I don't necessarily think that being able to change the time signature
-    is particularly important, especially not unless you can actually hear it. For example, in terms of a metronome.
+I refactored things into Meter. Now, the most valuable feature would be having a toggleable metronome. Should be fine to
+have it tick every quarter note as a first step. I don't necessarily think that being able to change the time signature
+is particularly important, especially not unless you can actually hear it. For example, in terms of a metronome.
 
 ## Things that should be done:
 
@@ -113,6 +120,8 @@ The next step should be to add functionality for changing the colour of the chor
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 ## Things that are finished:
+
+- Change the chord view to a RecycleView.
 
 - Refactor things from FirstActivity into some kind of custom MidiDriver with scheduling capabilities. Also refactor
     constants to as it were before Android stuff was implemented.

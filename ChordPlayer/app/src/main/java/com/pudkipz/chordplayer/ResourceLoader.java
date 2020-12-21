@@ -36,7 +36,7 @@ public class ResourceLoader {
             }
         }
 
-        System.out.println(writer.toString());
+        // System.out.println(writer.toString());
         String jsonString = writer.toString();
         Map<String, ChordType> chordTypes = new HashMap<>();
 
@@ -59,7 +59,7 @@ public class ResourceLoader {
             e.printStackTrace();
         }
 
-        System.out.println("ct length in resource loader " + chordTypes.values().toArray().length);
+        // System.out.println("ct length in resource loader " + chordTypes.values().toArray().length);
 
         ChordType.setMap(chordTypes);
     }
