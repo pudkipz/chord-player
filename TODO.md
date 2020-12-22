@@ -7,14 +7,16 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I decided that a RecycleView was more appropriate and had a tough time implementing it. In the end, though, I think it looks
-and works much better, but it needs a bit more polishing. I also feel like I made a lot of bad code design choices. Will have
-to look it through. In hindsight, this task was too large and generally badly planned, but to a significant degree, I believe
-that this is because I did not know exactly what a RecycleView is and how much time and effort it would take to implement it.
+I attempted to fix some issues that arose with changing to RecyclerView. See commit messages for details.
 
 ## Log of the above:
 
 (This is so I can be more verbose and "session focused" than in my commit messages.)
+
+I decided that a RecycleView was more appropriate and had a tough time implementing it. In the end, though, I think it looks
+and works much better, but it needs a bit more polishing. I also feel like I made a lot of bad code design choices. Will have
+to look it through. In hindsight, this task was too large and generally badly planned, but to a significant degree, I believe
+that this is because I did not know exactly what a RecycleView is and how much time and effort it would take to implement it.
 
 I refactored chord types into a json file. Don't know if it's objectively better... but I like it this way, and it should
 make it easier to add more types dynamically.
@@ -43,9 +45,6 @@ is particularly important, especially not unless you can actually hear it. For e
 
 - Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~, or change it dynamically. It doesn't
     feel intuitive the way it is currently.
-
-- Change the chord box to a vertical ScrollView. The problem is that I'll need some kind of horizontal inner layout, which
-    wraps to match parent size. LinearLayout doesn't do this the way I want it to.
 
 - Make it possible to decide where to insert a new chord.
 
@@ -89,6 +88,10 @@ is particularly important, especially not unless you can actually hear it. For e
 
 ## Things that aren't relevant anymore:
 
+- Change the chord box to a vertical ScrollView. The problem is that I'll need some kind of horizontal inner layout, which
+    wraps to match parent size. LinearLayout doesn't do this the way I want it to.
+  - Not relevant: changed to RecyclerView instead.
+
 - ~~Move chord arrays into a constants file.~~
 
 - ~~Move notes into a constants file, thus removing the Note enum. This should also remove the need for overloading.~~
@@ -120,6 +123,8 @@ The next step should be to add functionality for changing the colour of the chor
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 ## Things that are finished:
+
+- Fix bugs related to RecyclerView.
 
 - Change the chord view to a RecycleView.
 
