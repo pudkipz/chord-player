@@ -3,13 +3,12 @@ package com.pudkipz.chordplayer;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.View;
 
 import com.pudkipz.chordplayer.util.Chord;
 
 public class ChordButton extends androidx.appcompat.widget.AppCompatButton {
 
-    private Chord chord;
+    private BooleanChord chord; // TODO: this is a stupid and not constructive name.
 
     public ChordButton(Context context) {
         super(context);
@@ -21,31 +20,48 @@ public class ChordButton extends androidx.appcompat.widget.AppCompatButton {
         init();
     }
 
-    public ChordButton(Context context, Chord c) {
+    public ChordButton(Context context, BooleanChord c) {
         this(context);
         this.chord = c;
-        updateText();
         init();
     }
 
     public Chord getChord() {
-        return chord;
+        return chord.getChord();
     }
 
     private void init() {
-        setBackgroundColor(Color.LTGRAY);
-    }
-
-    public void setChord(Chord chord) {
-        this.chord = chord;
+        chord = new BooleanChord();
+        chord.deselect();
         updateText();
     }
 
+    public void setChord(Chord chord) {
+        this.chord.setChord(chord);
+        updateText();
+    }
+
+    public void toggle() {
+        this.chord.toggle();
+    }
+
+    public void setSelectedColor() {
+        setBackgroundColor(Color.CYAN);
+    }
+
+    public void setDeselectedColor() {
+        setBackgroundColor(Color.LTGRAY);
+    }
+
+    public boolean isSelectedMaybe() {
+        return chord.isSelected();
+    }
+
     private void updateText() {
-        if (chord.getRoot() == null) {
+        if (chord.getChord() == null) {
             setText("\n");
         } else {
-            setText(chord.toString() + "\n" + chord.getNumerator() + "/" + chord.getDenominator());
+            setText(chord.getChord().toString() + "\n" + chord.getChord().getNumerator() + "/" + chord.getChord().getDenominator());
         }
     }
 }

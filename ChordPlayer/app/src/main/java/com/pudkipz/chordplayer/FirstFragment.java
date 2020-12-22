@@ -1,6 +1,5 @@
 package com.pudkipz.chordplayer;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -37,11 +35,11 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
     private RecyclerView recyclerView;
     private ChordViewAdapter mAdapter;
-    private List<Chord> mDataset;
+    private List<BooleanChord> mDataset;
 
     private Spinner chordSpinner;
     private Spinner colourSpinner;
-    private int selectedCBPosition = -1;
+    private List<BooleanChord> selectedChords;
     private EditText setBPM;
     private Spinner chordDenominatorSpinner;
     private Spinner chordLengthSpinner;
@@ -69,6 +67,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             @Override
             public void onClick(View view) {
                 midiHandler.insertChord(selectedNote, selectedChordType, selectedLength, selectedChordDenominator);
+                selectedChords.clear();
             }
         });
 
@@ -85,20 +84,20 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_remove).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("POSITION: " + selectedCBPosition);
-                if (selectedCBPosition != -1) {
-                    midiHandler.removeButtonPressed(((ChordButton) recyclerView.getLayoutManager().findViewByPosition(selectedCBPosition).findViewById(R.id.chord_button)).getChord());
-                    selectedCBPosition = -1;
+                for (BooleanChord selectedChord : selectedChords) {
+                    midiHandler.removeButtonPressed(selectedChord.getChord());
                 }
+                selectedChords.clear();
             }
         });
 
         view.findViewById(R.id.button_change_chord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedCBPosition != -1) {
-                    midiHandler.editChordButtonPressed(((ChordButton) recyclerView.getLayoutManager().findViewByPosition(selectedCBPosition).findViewById(R.id.chord_button)).getChord(), Note.getNote(selectedNote.getMidiValue()), selectedChordType, selectedLength, selectedChordDenominator);
+                for (BooleanChord selectedChord : selectedChords) {
+                    midiHandler.editChordButtonPressed(selectedChord.getChord(), Note.getNote(selectedNote.getMidiValue()), selectedChordType, selectedLength, selectedChordDenominator);
                 }
+                selectedChords.clear();
             }
         });
 
@@ -146,6 +145,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
         mAdapter.listen(this);
 
+        selectedChords = new ArrayList<>();
         initDataset();
     }
 
@@ -153,7 +153,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
 
         for (final Chord c : midiHandler.getChordTrack()) {
-            mDataset.add(c);
+            mDataset.add(new BooleanChord(c));
         }
 
         mAdapter.notifyDataSetChanged();
@@ -162,7 +162,11 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     @Override
     public void onUpdateTrack() {
         mDataset.clear();
-        mDataset.addAll(midiHandler.getChordTrack());
+
+        for (Chord c : midiHandler.getChordTrack()) {
+            mDataset.add(new BooleanChord(c));
+        }
+
         mAdapter.notifyDataSetChanged();
     }
 
@@ -193,21 +197,12 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     }
 
     @Override
-    public void onChordButtonPressed(int position) {
-        View holder = recyclerView.getLayoutManager().findViewByPosition(selectedCBPosition);
-        ChordButton previousChord = null;
-        ChordButton selectedChord = recyclerView.getLayoutManager().findViewByPosition(position).findViewById(R.id.chord_button);
+    public void onChordButtonPressed(BooleanChord cb) {
 
-        if (holder != null) { // if there is a previously selected chord
-            previousChord = holder.findViewById(R.id.chord_button);
-            previousChord.setBackgroundColor(Color.LTGRAY);
-        }
-
-        if (previousChord != selectedChord) {
-            selectedChord.setBackgroundColor(Color.CYAN);
-            selectedCBPosition = position;
-        } else {
-            selectedCBPosition = -1;
-        }
+            if (cb.isSelected()) {
+                selectedChords.remove(cb);
+            }
+            else
+                selectedChords.add(cb);
     }
 }

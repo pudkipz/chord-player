@@ -1,24 +1,16 @@
 package com.pudkipz.chordplayer;
 
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pudkipz.chordplayer.util.Chord;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 public class ChordViewAdapter extends RecyclerView.Adapter<ChordViewAdapter.ViewHolder> {
 
-    private final List<Chord> localDataSet;
+    private final List<BooleanChord> localDataSet;
     static OnChordButtonPressedListener listener;
 
     /**
@@ -30,16 +22,6 @@ public class ChordViewAdapter extends RecyclerView.Adapter<ChordViewAdapter.View
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
-                    //listener.onChordButtonPressed(chordButton);
-                    listener.onChordButtonPressed(getAdapterPosition());
-
-                }
-            });
 
             chordButton = view.findViewById(R.id.chord_button);
         }
@@ -53,9 +35,9 @@ public class ChordViewAdapter extends RecyclerView.Adapter<ChordViewAdapter.View
      * Initialize the dataset of the Adapter.
      *
      * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
+     *                by RecyclerView.
      */
-    public ChordViewAdapter(List<Chord> dataSet) {
+    public ChordViewAdapter(List<BooleanChord> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -71,13 +53,32 @@ public class ChordViewAdapter extends RecyclerView.Adapter<ChordViewAdapter.View
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         //viewHolder.getTextView().setText(localDataSet[position]);
 
-        viewHolder.getChordButton().setChord(localDataSet.get(position));
+        // Define click listener for the ViewHolder's View
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
+                //listener.onChordButtonPressed(chordButton);
+                listener.onChordButtonPressed(localDataSet.get(position));
+                //viewHolder.getChordButton().toggle();
+                localDataSet.get(position).toggle();
+                notifyDataSetChanged();
+            }
+        });
+
+        if (localDataSet.get(position).isSelected()) {
+            viewHolder.getChordButton().setSelectedColor();
+        } else {
+            viewHolder.getChordButton().setDeselectedColor();
+        }
+
+        viewHolder.getChordButton().setChord(localDataSet.get(position).getChord());
 
     }
 
