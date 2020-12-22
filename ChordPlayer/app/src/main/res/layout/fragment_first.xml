@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:padding="4dp"
+    android:paddingLeft="4dp"
+    android:paddingTop="4dp"
+    android:paddingRight="4dp"
+    android:paddingBottom="4dp"
     tools:context=".FirstFragment">
 
     <Spinner
@@ -137,10 +142,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chord_view"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="169dp"
         android:layout_marginTop="56dp"
         android:background="#EFEFEF"
+        android:foregroundGravity="center_horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
