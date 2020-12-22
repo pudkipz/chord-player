@@ -85,8 +85,11 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         view.findViewById(R.id.button_remove).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedCBPosition != -1)
+                System.out.println("POSITION: " + selectedCBPosition);
+                if (selectedCBPosition != -1) {
                     midiHandler.removeButtonPressed(((ChordButton) recyclerView.getLayoutManager().findViewByPosition(selectedCBPosition).findViewById(R.id.chord_button)).getChord());
+                    selectedCBPosition = -1;
+                }
             }
         });
 
@@ -158,14 +161,9 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
     @Override
     public void onUpdateTrack() {
-
         mDataset.clear();
-
-        for (final Chord c : midiHandler.getChordTrack()) {
-            mDataset.add(c);
-            mAdapter.notifyDataSetChanged();
-
-        }
+        mDataset.addAll(midiHandler.getChordTrack());
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -196,14 +194,20 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
     @Override
     public void onChordButtonPressed(int position) {
-        if (selectedCBPosition > -1)
-            recyclerView.getLayoutManager().findViewByPosition(selectedCBPosition).findViewById(R.id.chord_button).setBackgroundColor(Color.LTGRAY);
+        View holder = recyclerView.getLayoutManager().findViewByPosition(selectedCBPosition);
+        ChordButton previousChord = null;
+        ChordButton selectedChord = recyclerView.getLayoutManager().findViewByPosition(position).findViewById(R.id.chord_button);
 
-        if (recyclerView.getChildAt(selectedCBPosition) == recyclerView.getChildAt(position)) {
-            selectedCBPosition = -1;
-        } else {
+        if (holder != null) { // if there is a previously selected chord
+            previousChord = holder.findViewById(R.id.chord_button);
+            previousChord.setBackgroundColor(Color.LTGRAY);
+        }
+
+        if (previousChord != selectedChord) {
+            selectedChord.setBackgroundColor(Color.CYAN);
             selectedCBPosition = position;
-            recyclerView.getLayoutManager().findViewByPosition(selectedCBPosition).findViewById(R.id.chord_button).setBackgroundColor(Color.CYAN);
+        } else {
+            selectedCBPosition = -1;
         }
     }
 }
