@@ -154,7 +154,6 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
      */
     private byte[] eventToByteArray(MidiEvent event) {
         byte[] b = new byte[3];
-        ;
 
         if (event instanceof NoteOn) {
             NoteOn e = (NoteOn) event;

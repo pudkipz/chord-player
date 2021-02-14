@@ -7,6 +7,11 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
+Update: the reason seems to be that midiProcessor.reset() doesn't reset the position of the metronome, and I can't
+tell whether it's supposed to do that or not. The problem is also that midi processor has a built in metronome, which
+I didn't even realize at first, meaning I can't just create a new one every time I restart the playback or something.
+I will have to think of another solution.
+
 I added a metronome with a switch button. It's a bit weird that it has reverb, but I didn't manage to turn that off.
 
 Another thing is that the metronome and chords don't seem to be playing in time, but maybe that's just the emulator.

@@ -5,7 +5,6 @@ import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOn;
 import com.leff.midi.event.meta.Tempo;
 import com.leff.midi.event.meta.TimeSignature;
-import com.leff.midi.util.MetronomeTick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,6 @@ public class MidiHandler {
     private TimeSignature timeSignature;
     private MidiTrack tempoTrack;
     private Tempo tempo;
-    private MetronomeTick metronome;
 
     /**
      * Initializes with Track track.
@@ -87,8 +85,6 @@ public class MidiHandler {
                 midiTrack.insertEvent(e);
             }
         }
-
-        midiTrack.insertEvent(metronome);
     }
 
     /**
@@ -242,8 +238,6 @@ public class MidiHandler {
         tempo.setBpm(DEFAULT_BPM);
         tempoTrack.insertEvent(timeSignature);
         tempoTrack.insertEvent(tempo);
-
-        metronome = new MetronomeTick(timeSignature, DEFAULT_RESOLUTION);
 
         insertChord(Note.C, ChordType.getChordType("Major"));
         insertChord(Note.G, ChordType.getChordType("Major"));
