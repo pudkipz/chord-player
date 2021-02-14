@@ -49,7 +49,6 @@
         android:layout_marginRight="56dp"
         android:text="@string/button_play"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/chord_view" />
 
     <Button
@@ -152,5 +151,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/switch_metronome"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/metronome_text"
+        app:layout_constraintEnd_toStartOf="@+id/button_play"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/chord_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
