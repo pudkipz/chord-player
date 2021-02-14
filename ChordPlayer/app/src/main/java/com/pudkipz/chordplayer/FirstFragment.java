@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -43,6 +45,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     private EditText setBPM;
     private Spinner chordDenominatorSpinner;
     private Spinner chordLengthSpinner;
+    private Switch metronomeSwitch;
 
     // TODO: move METERS into constants class?
     private final static Meter[] METERS = new Meter[]{
@@ -133,6 +136,18 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         chordSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chordLengthSpinner.setAdapter(chordLengthSpinnerAdapter);
         chordLengthSpinner.setOnItemSelectedListener(this);
+
+        metronomeSwitch = view.findViewById(R.id.switch_metronome);
+        metronomeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) { // enabled
+                    midiHandler.setMetronomeOn();
+                } else { // disabled
+                    midiHandler.setMetronomeOff();
+                }
+            }
+        });
 
         //linearLayout_chords = view.findViewById(R.id.linearLayout_chords);
 

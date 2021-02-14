@@ -7,9 +7,14 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-I attempted to fix some issues that arose with changing to RecyclerView. See commit messages for details.
+I added a metronome with a switch button. It's a bit weird that it has reverb, but I didn't manage to turn that off.
+
+Another thing is that the metronome and chords don't seem to be playing in time, but maybe that's just the emulator.
+Will have to test on phone.
 
 ## Log of the above:
+
+I attempted to fix some issues that arose with changing to RecyclerView. See commit messages for details.
 
 (This is so I can be more verbose and "session focused" than in my commit messages.)
 
@@ -27,6 +32,8 @@ is particularly important, especially not unless you can actually hear it. For e
 
 ## Things that should be done:
 
+- There are timing issues in the emulator, regarding the metronome. See if it's an actual problem. If it is, fix.
+
 - Fun with rhythm:
     - ~~Step 1: Create a way to represent the time signature.~~
     - ~~Step 2: Make it possible to divide the bar into beats (only 4/4 for now, so 4 beats.~~
@@ -40,8 +47,6 @@ is particularly important, especially not unless you can actually hear it. For e
 - Think of a way to represent silence. Should be possible for now  to simply add a "quiet" ChordType, but the name of the
     chord must also change (to have no root, or in some way show that there won't be anything playing). See considerations
     for more details.
-
-- Add a toggleable metronome track.
 
 - Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~, or change it dynamically. It doesn't
     feel intuitive the way it is currently.
@@ -123,6 +128,8 @@ The next step should be to add functionality for changing the colour of the chor
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 ## Things that are finished:
+
+- Add a toggleable metronome track.
 
 - Fix bugs related to RecyclerView.
 
