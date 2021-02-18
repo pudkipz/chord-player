@@ -7,6 +7,12 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
+The metronome is now instead a track with a note-on every quarter note for the duration of the whole track. Seems to
+work. The only thing is that I can't seem to make it default to off, but whatever.
+
+
+## Log of the above:
+
 Update: the reason seems to be that midiProcessor.reset() doesn't reset the position of the metronome, and I can't
 tell whether it's supposed to do that or not. The problem is also that midi processor has a built in metronome, which
 I didn't even realize at first, meaning I can't just create a new one every time I restart the playback or something.
@@ -16,8 +22,6 @@ I added a metronome with a switch button. It's a bit weird that it has reverb, b
 
 Another thing is that the metronome and chords don't seem to be playing in time, but maybe that's just the emulator.
 Will have to test on phone.
-
-## Log of the above:
 
 I attempted to fix some issues that arose with changing to RecyclerView. See commit messages for details.
 
@@ -36,8 +40,6 @@ have it tick every quarter note as a first step. I don't necessarily think that 
 is particularly important, especially not unless you can actually hear it. For example, in terms of a metronome.
 
 ## Things that should be done:
-
-- There are timing issues in the emulator, regarding the metronome. See if it's an actual problem. If it is, fix.
 
 - Fun with rhythm:
     - ~~Step 1: Create a way to represent the time signature.~~
@@ -133,6 +135,8 @@ The next step should be to add functionality for changing the colour of the chor
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 ## Things that are finished:
+
+- There are timing issues in the emulator, regarding the metronome. See if it's an actual problem. If it is, fix.
 
 - Add a toggleable metronome track.
 

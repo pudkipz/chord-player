@@ -24,8 +24,7 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
     private static final byte METRONOME_CHANNEL = (byte) 0xA;
     private static final byte PROGRAM_CHANGE = (byte) 0xC0;
     private static final byte METRONOME_INSTRUMENT = (byte) 0x74;
-    private static final byte METRONOME_VELOCITY = (byte) 100; // consider moving to MidiHandler
-    private static final byte METRONOME_PITCH = (byte) 50; // consider moving to MidiHandler
+    private static final byte METRONOME_VOLUME = (byte) 100;
 
     private byte metronomeVelocity = 0; // exists so that metronome can be muted by setting this to 0.
 
@@ -46,6 +45,7 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         // MidiFile changes after creating the MidiProcessor.
         midiFile.addTrack(new MidiTrack());
         midiFile.addTrack(new MidiTrack());
+        midiFile.addTrack(new MidiTrack());
 
         midiProcessor = new MidiProcessor(midiFile);
         midiProcessor.registerEventListener(this, MidiEvent.class);
@@ -60,20 +60,28 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
         }
     }
 
-    public void toggleMetronome() {
-        if (metronomeVelocity == METRONOME_VELOCITY) {
-            metronomeVelocity = 0;
-        } else {
-            metronomeVelocity = METRONOME_VELOCITY;
-        }
-    }
-
+    /**
+     * Sets the volume to the defined metronome volume on the metronome channel.
+     */
     public void setMetronomeOn() {
-        metronomeVelocity = METRONOME_VELOCITY;
+        byte[] b = new byte[3];
+        b[0] = (byte) (0xB0 | METRONOME_CHANNEL);
+        b[1] = (byte) 0x07;
+        b[2] = (byte) METRONOME_VOLUME;
+
+        midiDriver.write(b);
     }
 
+    /**
+     * Sets the volume to 0 on the metronome channel.
+     */
     public void setMetronomeOff() {
-        metronomeVelocity = 0;
+        byte[] b = new byte[3];
+        b[0] = (byte) (0xB0 | METRONOME_CHANNEL); //control change
+        b[1] = (byte) 0x07; // controller number
+        b[2] = (byte) 0x00; // value
+
+        midiDriver.write(b);
     }
 
 
@@ -105,10 +113,11 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
      * @param noteTrack  n
      * @param tempoTrack t
      */
-    public void setTracks(MidiTrack noteTrack, MidiTrack tempoTrack) {
+    public void setTracks(MidiTrack noteTrack, MidiTrack tempoTrack, MidiTrack metronomeTrack) {
         clearMidiFile();
         midiFile.addTrack(noteTrack);
         midiFile.addTrack(tempoTrack);
+        midiFile.addTrack(metronomeTrack);
         // System.out.println(midiFile.getTrackCount());
     }
 
@@ -157,35 +166,29 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
 
         if (event instanceof NoteOn) {
             NoteOn e = (NoteOn) event;
-            b[0] = NOTE_ON;
+            b[0] = (byte) (NOTE_ON | e.getChannel());
             b[1] = (byte) e.getNoteValue();
             b[2] = (byte) e.getVelocity();
         } else if (event instanceof NoteOff) {
             NoteOff e = (NoteOff) event;
-            b[0] = NOTE_OFF;
+            b[0] = (byte) (NOTE_OFF | e.getChannel());
             b[1] = (byte) e.getNoteValue();
             b[2] = (byte) 0x00;
-        } else if (event instanceof MetronomeTick) {
-            MetronomeTick e = (MetronomeTick) event;
-            b[0] = (byte) (NOTE_ON | METRONOME_CHANNEL);
-            ;
-            b[1] = (byte) METRONOME_PITCH;
-            b[2] = (byte) metronomeVelocity;
         }
 
-        return b;
-    }
+            return b;
+        }
 
 // midi driver
 
-    @Override
-    public void onMidiStart() {
-        Log.d(this.getClass().getName(), "onMidiStart()");
+        @Override
+        public void onMidiStart () {
+            Log.d(this.getClass().getName(), "onMidiStart()");
 
-        // Set metronome instrument
-        byte[] b = new byte[2];
-        b[0] = (byte) (PROGRAM_CHANGE | METRONOME_CHANNEL);
-        b[1] = (byte) (METRONOME_INSTRUMENT);
-        midiDriver.write(b);
+            // Set metronome instrument
+            byte[] b = new byte[2];
+            b[0] = (byte) (PROGRAM_CHANGE | METRONOME_CHANNEL);
+            b[1] = (byte) (METRONOME_INSTRUMENT);
+            midiDriver.write(b);
+        }
     }
-}

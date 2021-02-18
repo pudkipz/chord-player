@@ -18,12 +18,17 @@ public class MidiHandler {
     private static int DEFAULT_RESOLUTION = 480; // Constant from MidiFile.
     private static int DEFAULT_BPM = 100;
 
+    private static final int METRONOME_VELOCITY = 100;
+    private static final int METRONOME_PITCH = 50;
+    private static final int METRONOME_CHANNEL = 10;
+
     private MidiAdapter adapter;
     private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
     private MidiTrack midiTrack;
     private ArrayList<MidiHandlerListener> listeners;
     private TimeSignature timeSignature;
     private MidiTrack tempoTrack;
+    private MidiTrack metronomeTrack;
     private Tempo tempo;
 
     /**
@@ -65,10 +70,6 @@ public class MidiHandler {
         adapter.setMetronomeOff();
     }
 
-    public void toggleMetronome() {
-        adapter.toggleMetronome();
-    }
-
     private void clearMidiTrack() {
         midiTrack.getEvents().clear();
     }
@@ -85,6 +86,8 @@ public class MidiHandler {
                 midiTrack.insertEvent(e);
             }
         }
+
+        buildMetronomeTrack();
     }
 
     /**
@@ -126,7 +129,7 @@ public class MidiHandler {
             adapter.stop();
         } else {
             buildMidiTrack();
-            adapter.setTracks(midiTrack, tempoTrack);
+            adapter.setTracks(midiTrack, tempoTrack, metronomeTrack);
             adapter.playTrack();
         }
     }
@@ -194,6 +197,15 @@ public class MidiHandler {
         return events;
     }
 
+    private void buildMetronomeTrack() {
+        metronomeTrack = new MidiTrack();
+        long duration = DEFAULT_RESOLUTION; //1 quarter note
+
+        while (metronomeTrack.getLengthInTicks() < midiTrack.getLengthInTicks()) {
+            metronomeTrack.insertNote(METRONOME_CHANNEL, METRONOME_PITCH, METRONOME_VELOCITY, metronomeTrack.getLengthInTicks(), duration);
+        }
+    }
+
     public void editChordButtonPressed(Chord c, Note n, ChordType chordType, int length, int denominator) {
         adapter.stop();
         c.changeRoot(n);
@@ -245,5 +257,7 @@ public class MidiHandler {
         insertChord(Note.F, ChordType.getChordType("Major"));
 
         buildMidiTrack();
+
+        adapter.setMetronomeOff();
     }
 }
