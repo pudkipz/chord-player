@@ -7,7 +7,6 @@ import com.leff.midi.MidiTrack;
 import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.NoteOff;
 import com.leff.midi.event.NoteOn;
-import com.leff.midi.util.MetronomeTick;
 import com.leff.midi.util.MidiEventListener;
 import com.leff.midi.util.MidiProcessor;
 
@@ -176,19 +175,19 @@ public class MidiAdapter implements MidiEventListener, MidiDriver.OnMidiStartLis
             b[2] = (byte) 0x00;
         }
 
-            return b;
-        }
+        return b;
+    }
 
 // midi driver
 
-        @Override
-        public void onMidiStart () {
-            Log.d(this.getClass().getName(), "onMidiStart()");
+    @Override
+    public void onMidiStart() {
+        Log.d(this.getClass().getName(), "onMidiStart()");
 
-            // Set metronome instrument
-            byte[] b = new byte[2];
-            b[0] = (byte) (PROGRAM_CHANGE | METRONOME_CHANNEL);
-            b[1] = (byte) (METRONOME_INSTRUMENT);
-            midiDriver.write(b);
-        }
+        // Set metronome instrument
+        byte[] b = new byte[2];
+        b[0] = (byte) (PROGRAM_CHANGE | METRONOME_CHANNEL);
+        b[1] = (byte) (METRONOME_INSTRUMENT);
+        midiDriver.write(b);
     }
+}
