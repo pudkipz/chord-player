@@ -7,11 +7,13 @@ It can also be seen as a messy scrum-wannabe thing.
 
 (This is so that I can quickly recall what I was working on last.)
 
-The metronome is now instead a track with a note-on every quarter note for the duration of the whole track. Seems to
-work. The only thing is that I can't seem to make it default to off, but whatever.
+You can now drag and drop the chords!
 
 
 ## Log of the above:
+
+The metronome is now instead a track with a note-on every quarter note for the duration of the whole track. Seems to
+work. The only thing is that I can't seem to make it default to off, but whatever.
 
 Update: the reason seems to be that midiProcessor.reset() doesn't reset the position of the metronome, and I can't
 tell whether it's supposed to do that or not. The problem is also that midi processor has a built in metronome, which
@@ -58,12 +60,9 @@ is particularly important, especially not unless you can actually hear it. For e
 - Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~, or change it dynamically. It doesn't
     feel intuitive the way it is currently.
 
-- Make it possible to decide where to insert a new chord.
-
-- Make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords.
-  (Not actually necessary for removal.)
-
 - Create patterns that the chord can be played in. So, multiple hits or arpeggiating the chord, for example.
+
+- The metronome is always on when starting playback, regardless of slider setting.
 
 ## Things that should be considered:
 
@@ -100,6 +99,9 @@ is particularly important, especially not unless you can actually hear it. For e
 
 ## Things that aren't relevant anymore:
 
+- Make it possible to decide where to insert a new chord.
+  - I don't think that's necessary, now that you can move chords around easily.
+
 - Change the chord box to a vertical ScrollView. The problem is that I'll need some kind of horizontal inner layout, which
     wraps to match parent size. LinearLayout doesn't do this the way I want it to.
   - Not relevant: changed to RecyclerView instead.
@@ -135,6 +137,9 @@ The next step should be to add functionality for changing the colour of the chor
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
 ## Things that are finished:
+
+- Make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords.
+  (Not actually necessary for removal.)
 
 - There are timing issues in the emulator, regarding the metronome. See if it's an actual problem. If it is, fix.
 

@@ -7,6 +7,7 @@ import com.leff.midi.event.meta.Tempo;
 import com.leff.midi.event.meta.TimeSignature;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -122,6 +123,12 @@ public class MidiHandler {
             chordTrack.remove(chordTrack.size() - 1);
             notifyUpdateTrack();
         }
+    }
+
+    public void swap(int pos1, int pos2) {
+        stop();
+        Collections.swap(chordTrack, pos1, pos2);
+        notifyUpdateTrack();
     }
 
     private void playTrack() {

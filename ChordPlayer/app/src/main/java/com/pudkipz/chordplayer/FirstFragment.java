@@ -14,6 +14,7 @@ import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pudkipz.chordplayer.util.Chord;
@@ -160,6 +161,29 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
 
         mAdapter.listen(this);
 
+        ItemTouchHelper chordViewHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, 0) {
+            @Override
+            public boolean onMove(
+                    @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+                int draggedPosition = viewHolder.getAdapterPosition();
+                int targetPosition = target.getAdapterPosition();
+
+                midiHandler.swap(draggedPosition, targetPosition);
+                mAdapter.notifyItemMoved(draggedPosition, targetPosition);
+
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        });
+
+        chordViewHelper.attachToRecyclerView(recyclerView);
+
         selectedChords = new ArrayList<>();
         initDataset();
     }
@@ -214,10 +238,9 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
     @Override
     public void onChordButtonPressed(BooleanChord cb) {
 
-            if (cb.isSelected()) {
-                selectedChords.remove(cb);
-            }
-            else
-                selectedChords.add(cb);
+        if (cb.isSelected()) {
+            selectedChords.remove(cb);
+        } else
+            selectedChords.add(cb);
     }
 }
