@@ -3,14 +3,16 @@
 The contents of this file are my own personal records of what I'm thinking about while I'm working on this project.
 It can also be seen as a messy scrum-wannabe thing.
 
-## The point at which I am currently:
+# The point at which I am currently:
 
-(This is so that I can quickly recall what I was working on last.)
+*(This is so that I can quickly recall what I was working on last.)*
 
-You can now drag and drop the chords!
+I have added an interface for saving progressions. Next, I need to actually save stuff and think about loading stuff.
 
 
 ## Log of the above:
+
+You can now drag and drop the chords!
 
 The metronome is now instead a track with a note-on every quarter note for the duration of the whole track. Seems to
 work. The only thing is that I can't seem to make it default to off, but whatever.
@@ -41,7 +43,22 @@ I refactored things into Meter. Now, the most valuable feature would be having a
 have it tick every quarter note as a first step. I don't necessarily think that being able to change the time signature
 is particularly important, especially not unless you can actually hear it. For example, in terms of a metronome.
 
-## Things that should be done:
+# Things that should be done:
+
+- Persistence is the key to success.
+  - *Operation Saving progressions:*
+    - ~~Step 1: Create an appropriate user interface.~~
+    - Step 2: Figure out how to convert chord progressions into some saveable format (json?).
+    - Step 3: Actually save things.
+  - *Operation Loading (and managing) progressions:*
+    - Step 1: Create an appropriate user interface. Probably needs to be more extensive than the saving interface.
+    - Step 2: Be able to select and load an existing progression from a scrollable list.
+    - Step 3: Be able to delete existing progressions.
+    - Step 4: Be able to rename existing progressions.
+    - Step 5: Be able to copy/duplicate existing progression.
+  - *Extracurricular activities:*
+    - Exercise 1: Associate attributes such as bpm and instrument with a progression, and save these as well.
+    - Exercise 2: Related to ex1, let the user create tags and filter and sort by these.
 
 - Fun with rhythm:
     - ~~Step 1: Create a way to represent the time signature.~~
@@ -54,7 +71,7 @@ is particularly important, especially not unless you can actually hear it. For e
       - Half finished. Has support for it, only need to add it to the array METERS in FirstFragment.
 
 - Think of a way to represent silence. Should be possible for now  to simply add a "quiet" ChordType, but the name of the
-    chord must also change (to have no root, or in some way show that there won't be anything playing). See considerations
+    chord must also change (to have no root, or in some way show that there won't be anything playing). See *Things to think about*
     for more details.
 
 - Pause playback while changing BPM ~~(I think it's causing crashes sometimes)~~, or change it dynamically. It doesn't
@@ -64,7 +81,7 @@ is particularly important, especially not unless you can actually hear it. For e
 
 - The metronome is always on when starting playback, regardless of slider setting.
 
-## Things that should be considered:
+# Things to think about:
 
 - How should the rest of the track be affected by changing the length of a chord, or removing a chord? I should implement
     some kind of placeholder, or better yet, rests! to handle this. Or, just lengthen the chord before to preserve overall
@@ -92,12 +109,12 @@ is particularly important, especially not unless you can actually hear it. For e
     - Maybe having a pop up for adding and editing chords could work. That way, it would also be uniform, and I don't
           think that there is much use for being able to change the chord before adding it.
 
-## Things put on ice:
+# Things put on ice:
 
 - Make it possible to change the length of chords.
   - I don't think this is necessary.
 
-## Things that aren't relevant anymore:
+# Things that aren't relevant anymore:
 
 - Make it possible to decide where to insert a new chord.
   - I don't think that's necessary, now that you can move chords around easily.
@@ -136,7 +153,7 @@ The next step should be to add functionality for changing the colour of the chor
 
 - Fix length when last chord is empty - should it be quiet for 1 bar or go directly to start?
 
-## Things that are finished:
+# Things that are finished:
 
 - Make it possible to move chords around (not necessarily with UI). Necessary for ~~removal and~~ insertion of chords.
   (Not actually necessary for removal.)
