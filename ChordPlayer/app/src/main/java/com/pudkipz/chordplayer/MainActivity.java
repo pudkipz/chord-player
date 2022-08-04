@@ -8,15 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.InputType;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import com.pudkipz.chordplayer.util.ChordType;
 
@@ -68,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: Actually save stuff, using m_text.
     // TODO: Increase padding for the input field? looks a bit stupid when it covers the whole window.
+
     /**
      * Called when saving a progression. Creates and shows an AlertDialog to enter a name.
+     *
      * @param view
      */
     public void onSaveButtonPressed(View view) {
@@ -89,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
 
         builder.show();
     }
