@@ -1,6 +1,7 @@
 package com.pudkipz.chordplayer;
 
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -287,10 +289,11 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
         builder.setView(input);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String m_Text = input.getText().toString();
-//                ResourceLoader.saveProgression(midiHandler.getProgression(), m_Text, getContext());
+                ResourceLoader.saveProgression(midiHandler.getProgression(), m_Text, getContext());
             }
         });
 

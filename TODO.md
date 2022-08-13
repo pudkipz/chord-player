@@ -7,10 +7,11 @@ It can also be seen as a messy scrum-wannabe thing.
 
 *(This is so that I can quickly recall what I was working on last.)*
 
-I have added an interface for saving progressions. Next, I need to actually save stuff and think about loading stuff.
-
+I have refactored stuff. I have added code to save and load via json. Saving seems to work. Next, I need to make sure loading works.
 
 ## Log of the above:
+
+I have added an interface for saving progressions. Next, I need to actually save stuff and think about loading stuff.
 
 You can now drag and drop the chords!
 
@@ -48,8 +49,8 @@ is particularly important, especially not unless you can actually hear it. For e
 - Persistence is the key to success.
   - *Operation Saving progressions:*
     - ~~Step 1: Create an appropriate user interface.~~
-    - Step 2: Figure out how to convert chord progressions into some saveable format (json?).
-    - Step 3: Actually save things.
+    - ~~Step 2: Figure out how to convert chord progressions into some saveable format (json?).~~
+    ~~- Step 3: Actually save things.~~
   - *Operation Loading (and managing) progressions:*
     - Step 1: Create an appropriate user interface. Probably needs to be more extensive than the saving interface.
     - Step 2: Be able to select and load an existing progression from a scrollable list.

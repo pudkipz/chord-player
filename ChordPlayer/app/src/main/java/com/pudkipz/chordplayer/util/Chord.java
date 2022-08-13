@@ -17,6 +17,10 @@ public class Chord {
         chordType = chord;
     }
 
+    public Chord(int root, ChordType chord, int num, int den) {
+        new Chord(Note.getNote(root), chord, num, den);
+    }
+
     public Chord(Note root, ChordType chord, Meter m) {
         meter = m;
         this.root = root;
@@ -72,5 +76,13 @@ public class Chord {
 
     public float getLength() {
         return meter.getValue();
+    }
+
+    public String getSuffix() {
+        return chordType.getSuffix();
+    }
+
+    public int[] getIntervals() {
+        return chordType.getIntervals().clone();
     }
 }

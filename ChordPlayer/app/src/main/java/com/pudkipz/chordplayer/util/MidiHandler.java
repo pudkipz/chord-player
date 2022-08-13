@@ -230,6 +230,10 @@ public class MidiHandler {
         return progression.getChordTrack();
     }
 
+    public Progression getProgression() {
+        return progression;
+    }
+
     public void setBPM(int bpm) {
         tempo.setBpm(bpm);
     }
