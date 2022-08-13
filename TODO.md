@@ -46,6 +46,8 @@ is particularly important, especially not unless you can actually hear it. For e
 
 # Things that should be done:
 
+- Rename fragment/activity to something more useful.
+
 - Persistence is the key to success.
   - *Operation Saving progressions:*
     - ~~Step 1: Create an appropriate user interface.~~
@@ -53,6 +55,7 @@ is particularly important, especially not unless you can actually hear it. For e
     ~~- Step 3: Actually save things.~~
   - *Operation Loading (and managing) progressions:*
     - Step 1: Create an appropriate user interface. Probably needs to be more extensive than the saving interface.
+      - Step 1a: Create a super simple UI: just enter a filename to load/delete. Don't handle NoSuchFile exceptions.
     - Step 2: Be able to select and load an existing progression from a scrollable list.
     - Step 3: Be able to delete existing progressions.
     - Step 4: Be able to rename existing progressions.
@@ -83,6 +86,12 @@ is particularly important, especially not unless you can actually hear it. For e
 - The metronome is always on when starting playback, regardless of slider setting.
 
 # Things to think about:
+
+- What is really the reason for using midi? I don't think there is a reason! Honestly, it just makes things complicated.
+    I think the initial purpose was to make it more "generic" and stuff, but it doesn't seem helpful. Right now, the acutal
+    reason I want to keep it is because I think it's cool, but that's not really a valid reason.
+
+
 
 - How should the rest of the track be affected by changing the length of a chord, or removing a chord? I should implement
     some kind of placeholder, or better yet, rests! to handle this. Or, just lengthen the chord before to preserve overall
