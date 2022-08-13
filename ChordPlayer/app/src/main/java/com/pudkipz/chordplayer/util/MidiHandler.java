@@ -7,7 +7,6 @@ import com.leff.midi.event.meta.Tempo;
 import com.leff.midi.event.meta.TimeSignature;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,8 +23,8 @@ public class MidiHandler {
     private static final int METRONOME_CHANNEL = 10;
 
     private MidiAdapter adapter;
-    private List<Chord> chordTrack; // TODO: replace this and midiTrack with your own implementation of a track.
     private MidiTrack midiTrack;
+    private Progression progression;
     private ArrayList<MidiHandlerListener> listeners;
     private TimeSignature timeSignature;
     private MidiTrack tempoTrack;
@@ -56,7 +55,7 @@ public class MidiHandler {
     public String getVisualTrack() {
         StringBuilder chords = new StringBuilder();
 
-        for (Chord c : chordTrack) {
+        for (Chord c : progression.getChordTrack()) {
             chords.append(c.toString() + " ");
         }
 
@@ -82,7 +81,7 @@ public class MidiHandler {
 
         clearMidiTrack();
 
-        for (Chord c : chordTrack) {
+        for (Chord c : progression.getChordTrack()) {
             for (MidiEvent e : buildChord(c)) {
                 midiTrack.insertEvent(e);
             }
@@ -109,25 +108,24 @@ public class MidiHandler {
      */
     public void removeButtonPressed(Chord removeChord) {
         adapter.stop();
-        chordTrack.remove(removeChord);
+        progression.removeChord(removeChord);
         notifyUpdateTrack();
     }
 
     /**
      * Removes the most recently added chord.
+     *
+     * (Currently unused.)
      */
     public void removeButtonPressed() {
         adapter.stop();
-
-        if (!chordTrack.isEmpty()) {
-            chordTrack.remove(chordTrack.size() - 1);
-            notifyUpdateTrack();
-        }
+        progression.removeChord();
+        notifyUpdateTrack();
     }
 
     public void swap(int pos1, int pos2) {
         stop();
-        Collections.swap(chordTrack, pos1, pos2);
+        progression.swap(pos1, pos2);
         notifyUpdateTrack();
     }
 
@@ -170,7 +168,7 @@ public class MidiHandler {
     public void insertChord(Note root, ChordType chordType, int length, int denominator) {
         // TODO: fix descriptions of length and denominator in javadoc.
         adapter.stop();
-        chordTrack.add(new Chord(root, chordType, length, denominator));
+        progression.insertChord(root, chordType, length, denominator);
         buildMidiTrack();
         notifyUpdateTrack();
     }
@@ -229,7 +227,7 @@ public class MidiHandler {
     }
 
     public List<Chord> getChordTrack() {
-        return chordTrack;
+        return progression.getChordTrack();
     }
 
     public void setBPM(int bpm) {
@@ -245,7 +243,7 @@ public class MidiHandler {
      */
     private void init() {
         adapter = new MidiAdapter();
-        chordTrack = new ArrayList<>();
+        progression = new Progression();
         listeners = new ArrayList<>();
 
         timeSignature = new TimeSignature();
