@@ -1,7 +1,12 @@
 package com.pudkipz.chordplayer;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -57,6 +63,7 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_first, container, false);
     }
@@ -242,5 +249,69 @@ public class FirstFragment extends Fragment implements MidiHandlerListener, Adap
             selectedChords.remove(cb);
         } else
             selectedChords.add(cb);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case (R.id.action_settings):
+                return true;
+            case (R.id.action_save):
+                onSaveButtonPressed(getView());
+                return true;
+            case (R.id.action_load):
+                onLoadButtonPressed(getView());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // TODO: Actually save stuff, using m_text.
+    // TODO: Increase padding for the input field? looks a bit stupid when it covers the whole window.
+
+    /**
+     * Called when saving a progression. Creates and shows an AlertDialog to enter a name.
+     *
+     * @param view
+     */
+    public void onSaveButtonPressed(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.input_save_title);
+        builder.setMessage(R.string.input_save_desc);
+
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String m_Text = input.getText().toString();
+//                ResourceLoader.saveProgression(midiHandler.getProgression(), m_Text, getContext());
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    // TODO. Possibly turn into a whole fragment? (Manage progressions...)
+    public void onLoadButtonPressed(View view) {
+        return;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.menu_main, menu);
     }
 }
